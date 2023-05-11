@@ -1,16 +1,28 @@
 {
-  "name": "express-back-end",
+  "name": "amazin-api",
   "version": "1.0.0",
-  "description": "Boilerplate for the Express backend in an Express-React project",
+  "description": "Amazin API",
   "main": "server.js",
   "author": "garrettgsb",
   "license": "MIT",
   "scripts": {
-    "go": "nodemon server.js"
+    "start": "nodemon server.js",
+    "migrate": "npx prisma migrate dev --name user-entity && npx prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "^4.14.0",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.16.4",
-    "nodemon": "^1.18.7"
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prisma": "^4.14.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seeds/index.js"
   }
 }
