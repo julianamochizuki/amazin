@@ -1,46 +1,17 @@
 module.exports = [
-  { name: "Smartphones", departmentId: 3 },
-  { name: "Laptops", departmentId: 3 },
-  { name: "TVs", departmentId: 3 },
-  { name: "Cameras", departmentId: 3 },
-
-  { name: "Appliances", departmentId: 1 },
-  { name: "Furniture", departmentId: 1 },
-  {
-    name: "Storage & Organization",
-    departmentId: 1,
-  },
-  {
-    name: "Home Decor",
-    departmentId: 1,
-  },
-  {
-    name: "Skincare",
-    departmentId: 2,
-  },
-  {
-    name: "Makeup",
-    departmentId: 2,
-  },
-  {
-    name: "Haircare",
-    departmentId: 2,
-  },
-  {
-    name: "Personal Care",
-    departmentId: 2,
-  },
-
-  {
-    name: "Fiction",
-    departmentId: 4,
-  },
-  {
-    name: "Non-fiction",
-    departmentId: 4,
-  },
-  {
-    name: "Audible Books & Originals",
-    departmentId: 4,
-  },
+  { name: "Smartphones", departmentId: 1 },
+  { name: "Laptops", departmentId: 1 },
+  { name: "TVs", departmentId: 1 },
+  { name: "Cameras", departmentId: 1 },
+  { name: "Appliances", departmentId: 3 },
+  { name: "Furniture", departmentId: 3 },
+  { name: "Storage & Organization", departmentId: 3 },
+  { name: "Home Decor", departmentId: 3 },
+  { name: "Skincare", departmentId: 5 },
+  { name: "Makeup", departmentId: 5 },
+  { name: "Haircare", departmentId: 5 },
+  { name: "Personal Care", departmentId: 5 },
+  { name: "Fiction", departmentId: 4 },
+  { name: "Non-fiction", departmentId: 4 },
+  { name: "Audible Books & Originals", departmentId: 4 },
 ];

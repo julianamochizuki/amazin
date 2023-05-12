@@ -7,37 +7,37 @@ const Products = require("./products");
 const Reviews = require("./reviews");
 
 async function main() {
-  await Promise.all(
-    Users.map(async (user) =>
-      prisma.user.create({
-        data: user,
-      })
-    )
-  );
+  // await Promise.all(
+  //   Users.map(async (user) =>
+  //     prisma.user.create({
+  //       data: user,
+  //     })
+  //   )
+  // );
 
-  await Promise.all(
-    Departments.map(async (department) =>
-      prisma.department.create({
-        data: department,
-      })
-    )
-  );
+  // await Promise.all(
+  //   Departments.map(async (department) =>
+  //     prisma.department.create({
+  //       data: department,
+  //     })
+  //   )
+  // );
 
-  await Promise.all(
-    Categories.map(async (category) =>
-      prisma.category.create({
-        data: category,
-      })
-    )
-  );
+  // await Promise.all(
+  //   Categories.map(async (category) =>
+  //     prisma.category.create({
+  //       data: category,
+  //     })
+  //   )
+  // );
 
-  await Promise.all(
-    Products.map(async (product) =>
-      prisma.product.create({
-        data: product,
-      })
-    )
-  );
+  // await Promise.all(
+  //   Products.map(async (product) =>
+  //     prisma.product.create({
+  //       data: product,
+  //     })
+  //   )
+  // );
 
   await Promise.all(
     Reviews.map(async (review) =>

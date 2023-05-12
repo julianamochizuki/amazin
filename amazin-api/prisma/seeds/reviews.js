@@ -29,7 +29,7 @@ module.exports = [
   },
   {
     description:
-      "I wasn't sure about this product at first, but after using it for a few weeks, I'm really impressed with the results.",
+      "I wasn't sure about this product at first, but after using it for a few weeks, I'm really impressed.",
     rating: 4,
     productId: 3,
     userId: 6,
@@ -91,14 +91,14 @@ module.exports = [
   },
   {
     description:
-      "I wasn't sure about this product at first, but after using it for a few weeks, I'm really impressed with the results.",
+      "I'm really impressed with the results.",
     rating: 4,
     productId: 7,
     userId: 15,
   },
   {
     description:
-      "This product is amazing! I love it so much and use it every day.",
+      "This product is amazing! I love it so much.",
     rating: 5,
     productId: 2,
     userId: 5,
@@ -119,7 +119,7 @@ module.exports = [
   },
   {
     description:
-      "I was hesitant to try this product, but I'm glad I did. It's made a noticeable difference in my daily routine.",
+      "I was hesitant to try this product, but I'm glad I did. Higly recommend it.",
     rating: 4,
     productId: 17,
     userId: 3,
@@ -133,7 +133,7 @@ module.exports = [
   },
   {
     description:
-      "I've been using this product for a few weeks now and have already noticed a difference. It's easy to incorporate into my routine and has become a staple for me.",
+      "I've been using this product for a few weeks now and love it.",
     rating: 4,
     productId: 30,
     userId: 18,
@@ -154,31 +154,24 @@ module.exports = [
   },
   {
     description:
-      "I was a bit skeptical about this product, but it exceeded my expectations. It's now a part of my daily routine and I couldn't be happier with the results.",
+      "I was a bit skeptical about this product, but it exceeded my expectations.",
     rating: 4,
     productId: 51,
     userId: 10,
   },
   {
     description:
-      "I purchased this product on a whim and I'm so glad I did. It's now a staple in my beauty routine and has made a noticeable difference.",
+      "I purchased this product on a whim and I'm so glad I did.",
     rating: 5,
     productId: 61,
     userId: 13,
   },
   {
     description:
-      "I've used many similar products in the past, but this one stands out. It's gentle yet effective and has improved my skin significantly.",
+      "I've used many similar products in the past, but this one stands out.",
     rating: 4,
     productId: 5,
     userId: 6,
-  },
-  {
-    description:
-      "This is a great product for anyone looking for an easy way to incorporate more greens into their diet. It tastes great and has a lot of nutritional value.",
-    rating: 4,
-    productId: 7,
-    userId: 4,
   },
   {
     description:
@@ -210,14 +203,14 @@ module.exports = [
   },
   {
     description:
-      "I've been using this product for a few weeks now and I can already see a difference in my skin. Highly recommend!",
+      "I've been using this product for a few weeks now. Highly recommend!",
     rating: 4,
     productId: 49,
     userId: 7,
   },
   {
     description:
-      "I'm a big fan of this brand and this product is no exception. It's gentle on my skin and does the job.",
+      "I'm a big fan of this brand and this product is no exception.",
     rating: 5,
     productId: 17,
     userId: 8,
@@ -231,7 +224,7 @@ module.exports = [
   },
   {
     description:
-      "This product is a lifesaver for me. It's helped me get a better night's sleep and I wake up feeling refreshed.",
+      "This product is a lifesaver for me.",
     rating: 4,
     productId: 60,
     userId: 16,
@@ -245,14 +238,14 @@ module.exports = [
   },
   {
     description:
-      "I didn't really notice a difference when using this product, but maybe it's just not the right fit for me.",
+      "I didn't really like this product, but maybe it's just not the right fit for me.",
     rating: 3,
     productId: 21,
     userId: 15,
   },
   {
     description:
-      "This product is great for people with sensitive skin. It doesn't irritate my skin like other products have in the past.",
+      "This product is great!",
     rating: 4,
     productId: 38,
     userId: 18,
@@ -280,112 +273,112 @@ module.exports = [
   },
   {
     description:
-      "I'm really disappointed with this product. It's not doing anything for my skin and it's pretty expensive.",
+      "I'm really disappointed with this product.",
     rating: 2,
     productId: 42,
     userId: 9,
   },
   {
     description:
-      "I've tried many different products for my hair and this one is by far the best. It makes my hair so soft and shiny.",
+      "I've tried many different products and this one is by far the best.",
     rating: 5,
     productId: 8,
     userId: 3,
   },
   {
     description:
-      "I absolutely love this product! It's so easy to use and makes my skin look and feel amazing. I would highly recommend it!",
+      "I absolutely love this product! I would highly recommend it!",
     rating: 5,
     productId: 23,
     userId: 16,
   },
   {
     description:
-      "This book was a great read. It was engaging and informative, and I learned so much from it. Highly recommended!",
+      "Highly recommended!",
     rating: 4,
-    productId: 62,
+    productId: 55,
     userId: 8,
   },
   {
     description:
-      "I bought this camera for my upcoming trip and it did not disappoint. The picture quality is amazing and it's very user-friendly.",
+      "I really love it!",
     rating: 5,
     productId: 19,
     userId: 9,
   },
   {
     description:
-      "I've been using this shampoo for a few weeks now and I've noticed a significant improvement in the health of my hair. It smells great too!",
+      "I love this product!",
     rating: 4,
     productId: 50,
     userId: 12,
   },
   {
     description:
-      "This is a great piece of furniture. It's sturdy and looks great in my living room. I would definitely recommend it to others.",
+      "I would definitely recommend it to others.",
     rating: 4,
     productId: 30,
     userId: 14,
   },
   {
     description:
-      "I've been using this product for a few weeks and I've already noticed a difference in the brightness of my teeth. It's easy to use and tastes great too!",
+      "I've been using this product for a few weeks and I've already noticed a difference!",
     rating: 4,
     productId: 17,
     userId: 15,
   },
   {
     description:
-      "I purchased this product for my mom and she loves it. It's easy to use and has helped her with her back pain.",
+      "I purchased this product for my mom and she loves it.",
     rating: 5,
     productId: 72,
     userId: 10,
   },
   {
     description:
-      "I really enjoyed listening to this audiobook. The narrator was great and the story was engaging.",
+      "I purchased this product for my sister and she loves it.",
     rating: 4,
     productId: 71,
     userId: 3,
   },
   {
     description:
-      "This conditioner has done wonders for my hair. It's so soft and shiny now, and it smells great too!",
+      "This is amazing!",
     rating: 5,
     productId: 54,
     userId: 7,
   },
   {
     description:
-      "I bought this desk for my home office and I couldn't be happier with it. It's spacious and looks great too!",
+      "I bought this for me and I couldn't be happier with it!",
     rating: 5,
     productId: 28,
     userId: 17,
   },
   {
     description:
-      "This is a fantastic book. The writing is beautiful and the story is heartwarming. I highly recommend it!",
+      "This is fantastic! I highly recommend it!",
     rating: 5,
     productId: 64,
     userId: 2,
   },
   {
     description:
-      "I've been using this camera for a few months now and it's been a great investment. The picture quality is amazing!",
+      "I've been using this for a few months now and it's been a great investment!",
     rating: 5,
     productId: 19,
     userId: 5,
   },
   {
     description:
-      "This is a great product. It's helped me with my skin issues and it's easy to use.",
+      "This is a great product.",
     rating: 4,
     productId: 22,
     userId: 18,
   },
   {
     description:
-      "I love this chair. It's comfortable and looks great in my living room. Highly recommended!",
+      "I love this. Highly recommended!",
     rating: 5,
     productId: 31,
     userId: 13,
