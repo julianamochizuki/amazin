@@ -42,6 +42,63 @@ const DataProvider = (props: Props) => {
     });
   }, []);
 
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `/api/departments/${department_id}/categories/${category_id}/products`
+  //     )
+  //     .then((res) => {
+  //       setState((prev) => ({
+  //         ...prev,
+  //         loading: false,
+  //         products: res.data,
+  //       }));
+  //     });
+  // }, [category_id]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `/api/departments/${department_id}/categories/${category_id}.products/${product_id}`
+  //     )
+  //     .then((res) => {
+  //       setState((prev) => ({
+  //         ...prev,
+  //         loading: false,
+  //         product: res.data,
+  //         reviews: res.data.reviews,
+  //         averageRating: (() => {
+  //           const sum = res.data.reviews.reduce(
+  //             (acc: number, { rating }: { rating: number }) => acc + rating,
+  //             0
+  //           );
+  //           return sum / res.data.reviews.length;
+  //         })(),
+  //       }));
+  //     });
+  // }, [product_id]);
+
+  // useEffect(() => {
+  //   axios.get(`/api/users/${user_id}/orders}`).then((res) => {
+  //     setState((prev) => ({
+  //       ...prev,
+  //       loading: false,
+  //       orders: res.data,
+  //     }));
+  //   });
+  // }, [user_id]);
+
+  // useEffect(() => {
+  //   axios.get(`/api/users/${user_id}/cart`).then((res) => {
+  //     setState((prev) => ({
+  //       ...prev,
+  //       loading: false,
+  //       cart: res.data,
+  //       lineItems: res.data.line_items,
+  //     }));
+  //   });
+  // }, [user_id]);
+
   const value = { ...state };
 
   return (

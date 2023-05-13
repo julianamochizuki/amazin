@@ -12,7 +12,19 @@ import {
 import { Search } from 'react-bootstrap-icons';
 import Drawer from './Drawer';
 
-const NavBar = function () {
+type Props = {
+  currentDepartment: {
+    id: number;
+    name: string;
+    categories: any[];
+  };
+  setCurrentDepartment: any;
+  setCurrentCategory: any;
+};
+
+const NavBar = function (props: Props) {
+  const { currentDepartment, setCurrentDepartment, setCurrentCategory } = props;
+
   return (
     <Navbar bg="dark" variant="dark" fixed="top" expand={false}>
       <div style={{ width: '100vw', marginBottom: -7 }}>
@@ -60,7 +72,11 @@ const NavBar = function () {
             </Nav.Link>
           </Col>
         </Row>
-        <Drawer />
+        <Drawer
+          currentDepartment={currentDepartment}
+          setCurrentDepartment={setCurrentDepartment}
+          setCurrentCategory={setCurrentCategory}
+        />
       </div>
     </Navbar>
   );

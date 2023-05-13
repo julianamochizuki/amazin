@@ -7,24 +7,32 @@ type Props = {
     name: string;
     categories: any[];
   };
-  setCurrentDepartment: any;
-  handleClick: any;
+  setCurrentCategory: any;
+  setMenuOpen: any;
 };
 
 export default function CategoryList(props: Props) {
-  const { currentDepartment, handleClick } = props;
+  const { currentDepartment, setCurrentCategory, setMenuOpen } = props;
 
   const { categories } = currentDepartment;
 
   console.log('currentDepartment', currentDepartment, 'categories', categories);
 
-  const categoryLists = categories.map((category) => {
+  const categoryLists = categories.map((c) => {
     return (
       <CategoryListItem
-        key={category.id}
-        id={category.id}
-        name={category.name}
-        handleClick={handleClick}
+        key={c.id}
+        id={c.id}
+        name={c.name}
+        handleClick={() => {
+          setCurrentCategory((prev: {}) => ({
+            ...prev,
+            id: c.id,
+            name: c.name,
+            products: c.products,
+          }));
+          setMenuOpen(false);
+        }}
       />
     );
   });

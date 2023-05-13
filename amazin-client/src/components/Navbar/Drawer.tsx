@@ -6,20 +6,23 @@ import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
 import './Drawer.css';
 
-export default function Drawer() {
+type Props = {
+  currentDepartment: {
+    id: number;
+    name: string;
+    categories: any[];
+  };
+  setCurrentDepartment: any;
+  setCurrentCategory: any;
+};
+
+export default function Drawer(props: Props) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [currentDepartment, setCurrentDepartment] = useState({
-    id: 0,
-    name: '',
-    categories: [],
-  });
+  const { currentDepartment, setCurrentDepartment, setCurrentCategory } = props;
 
   const handleSelect = () => {
     setIsExpanded(true);
-  };
-
-  const handleClick = () => {
-    setIsExpanded(false);
   };
 
   return (
@@ -33,6 +36,10 @@ export default function Drawer() {
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-false-${false}`}
           className="text-light toggle"
+          onClick={() => {
+            setIsExpanded(false);
+            setMenuOpen(true);
+          }}
         >
           <List />
           All
@@ -41,8 +48,15 @@ export default function Drawer() {
           id={`offcanvasNavbar-false-${false}`}
           aria-labelledby={`offcanvasNavbarLabel-false-${false}`}
           placement="start"
+          show={menuOpen}
         >
-          <Offcanvas.Header closeButton style={{ backgroundColor: '#222F3E' }}>
+          <Offcanvas.Header
+            closeButton
+            onClick={() => {
+              setMenuOpen(false);
+            }}
+            style={{ backgroundColor: '#222F3E' }}
+          >
             <Offcanvas.Title
               id={`offcanvasNavbarLabel-false-${false}`}
               className="text-light"
@@ -59,7 +73,6 @@ export default function Drawer() {
                   <DepartmentList
                     isExpanded={isExpanded}
                     setIsExpanded={setIsExpanded}
-                    currentDepartment={currentDepartment}
                     setCurrentDepartment={setCurrentDepartment}
                   />
                 </Nav.Item>
@@ -68,8 +81,8 @@ export default function Drawer() {
                   <Nav.Item className="fs-5">{currentDepartment.name}</Nav.Item>
                   <CategoryList
                     currentDepartment={currentDepartment}
-                    setCurrentDepartment={setCurrentDepartment}
-                    handleClick={handleClick}
+                    setCurrentCategory={setCurrentCategory}
+                    setMenuOpen={setMenuOpen}
                   />
                 </Nav.Item>
               )}

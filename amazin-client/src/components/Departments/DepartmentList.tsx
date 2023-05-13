@@ -6,7 +6,6 @@ import DepartmentListItem from './DepartmentListItem';
 type Props = {
   isExpanded: boolean;
   setIsExpanded: any;
-  currentDepartment: {};
   setCurrentDepartment: any;
 };
 
