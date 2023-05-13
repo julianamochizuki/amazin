@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Row } from 'react-bootstrap';
 import ProductListItem from './ProductListItem';
 
 type Props = {
@@ -16,6 +17,8 @@ interface Product {
   id: number;
   name: string;
   image: string;
+  price_cents: number;
+  reviews: any[];
 }
 
 export default function ProductList(props: Props) {
@@ -33,9 +36,16 @@ export default function ProductList(props: Props) {
 
   const productLists = products.map((p: Product) => {
     return (
-      <ProductListItem key={p.id} id={p.id} name={p.name} image={p.image} />
+      <ProductListItem
+        key={p.id}
+        id={p.id}
+        name={p.name}
+        image={p.image}
+        price_cents={p.price_cents}
+        reviews={p.reviews}
+      />
     );
   });
 
-  return <>{productLists}</>;
+  return <Row>{productLists}</Row>;
 }
