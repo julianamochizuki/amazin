@@ -3,17 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import DataProvider from "./providers/DataProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <Provider
-      store={store}
-      > */}
+      <DataProvider>
         <App />
-      {/* </Provider> */}
+      </DataProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
