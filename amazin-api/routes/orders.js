@@ -5,9 +5,10 @@ const {
   getOrderById,
   createOrder,
 } = require("../controllers/orders.js");
+userId = require("../helpers/users");
 
-router.get("/users/:userId/orders", getAllOrdersByUserId);
-router.get("/users/:userId/orders/:orderId", getOrderById);
-router.post("/users/:userId/orders", createOrder);
+router.get("/orders", getAllOrdersByUserId);
+router.get("/orders/:orderId", getOrderById);
+router.post("/orders", createOrder);
 
 module.exports = router;
