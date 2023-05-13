@@ -25,7 +25,7 @@ function App() {
           setCurrentDepartment={setCurrentDepartment}
           setCurrentCategory={setCurrentCategory}
         />
-        <Router />
+        <Router currentCategory={currentCategory}/>
       </Container>
     </ThemeProvider>
   );

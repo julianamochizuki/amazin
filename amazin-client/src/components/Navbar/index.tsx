@@ -30,7 +30,7 @@ const NavBar = function (props: Props) {
       <div style={{ width: '100vw', marginBottom: -7 }}>
         <Row className="px-3">
           <Col xs={1} md={1} lg={1} className="d-flex align-items-center">
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/">
               <Image
                 src={process.env.PUBLIC_URL + '/logo.png'}
                 height="50"

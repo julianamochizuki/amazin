@@ -19,7 +19,11 @@ type Props = {
 export default function Drawer(props: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { currentDepartment, setCurrentDepartment, setCurrentCategory } = props;
+  const {
+    currentDepartment,
+    setCurrentDepartment,
+    setCurrentCategory,
+  } = props;
 
   const handleSelect = () => {
     setIsExpanded(true);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 type Props = {
   name: string;
@@ -10,5 +11,9 @@ type Props = {
 export default function CategoryListItem(props: Props) {
   const { name, handleClick } = props;
 
-  return <Nav.Link onClick={handleClick}>{name}</Nav.Link>;
+  return (
+    <Nav.Link onClick={handleClick}>
+      <Link to={`/products`}>{name}</Link>
+    </Nav.Link>
+  );
 }

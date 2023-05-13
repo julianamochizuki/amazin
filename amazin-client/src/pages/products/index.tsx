@@ -1,11 +1,18 @@
-import React from "react";
+import React from 'react';
+import ProductList from '../../components/Products/ProductList';
 
-const Products = () => {
-  return (
-    <main>
-      <h1>Products</h1>
-    </main>
-  );
+type Props = {
+  currentCategory: {
+    id: number;
+    name: string;
+    products: any[];
+  };
+};
+
+const Products = (props: Props) => {
+  const { currentCategory } = props;
+
+  return <ProductList currentCategory={currentCategory} />;
 };
 
 export default Products;
