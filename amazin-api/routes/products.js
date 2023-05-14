@@ -11,7 +11,7 @@ const {
 } = require("../controllers/products.js");
 
 router.get("/categories/:categoryId/products", getAllProductsByCategory);
-router.get("/categories/:categoryId/products/:productId", getProductById);
+router.get("/products/:productId", getProductById);
 router.post("/categories/:categoryId/products", isAdmin, createProduct);
 router.patch(
   "/categories/:categoryId/products/:productId",

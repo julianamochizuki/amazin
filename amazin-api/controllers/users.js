@@ -23,6 +23,35 @@ const getAllUsers = async (req, res) => {
   res.json(users);
 };
 
+const getUserById = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: Number(req.params.userId),
+    },
+    include: {
+      orders: {
+        include: {
+          lineItems: {
+            include: {
+              product: true,
+            },
+          },
+        },
+      },
+      reviews: {
+        include: {
+          product: true,
+        },
+      },
+    },
+  });
+  if (!user) {
+    res.status(401).json("Unauthorized");
+  } else {
+    res.json(user);
+  }
+};
+
 const getUserIdByEmail = async (req, res) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -68,6 +97,7 @@ const deleteUserById = async (req, res) => {
 };
 
 module.exports = {
+  getUserById,
   getUserIdByEmail,
   createUser,
   updateUserById,
