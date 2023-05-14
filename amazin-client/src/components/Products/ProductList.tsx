@@ -11,6 +11,14 @@ type Props = {
     name: string;
     products: any[];
   };
+  currentProduct: {
+    id: number;
+    name: string;
+    image: string;
+    price_cents: number;
+    reviews: any[];
+  };
+  setCurrentProduct: any;
 };
 
 interface Product {
@@ -23,7 +31,7 @@ interface Product {
 
 export default function ProductList(props: Props) {
   const [products, setProducts] = useState([]);
-  const { currentCategory } = props;
+  const { currentCategory, setCurrentProduct } = props;
 
   useEffect(() => {
     axios.get(`api/categories/${currentCategory.id}/products`).then((res) => {
@@ -43,6 +51,7 @@ export default function ProductList(props: Props) {
         image={p.image}
         price_cents={p.price_cents}
         reviews={p.reviews}
+        setCurrentProduct={setCurrentProduct}
       />
     );
   });

@@ -7,12 +7,26 @@ type Props = {
     name: string;
     products: any[];
   };
+  currentProduct: {
+    id: number;
+    name: string;
+    image: string;
+    price_cents: number;
+    reviews: any[];
+  };
+  setCurrentProduct: any;
 };
 
 const Products = (props: Props) => {
-  const { currentCategory } = props;
+  const { currentCategory, currentProduct, setCurrentProduct } = props;
 
-  return <ProductList currentCategory={currentCategory} />;
+  return (
+    <ProductList
+      currentCategory={currentCategory}
+      currentProduct={currentProduct}
+      setCurrentProduct={setCurrentProduct}
+    />
+  );
 };
 
 export default Products;
