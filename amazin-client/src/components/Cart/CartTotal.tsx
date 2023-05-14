@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { CartType } from '../../types/types';
 
 type Props = {
@@ -16,7 +17,9 @@ export default function CartTotal(props: Props) {
         Subtotal ({cart.length} items): ${total / 100}
       </Row>
       <Row>
-        <Button variant="warning">Proceed to Checkout</Button>
+        <Button variant="warning">
+          <Link to="/checkout">Proceed to Checkout</Link>
+        </Button>
       </Row>
     </Col>
   );

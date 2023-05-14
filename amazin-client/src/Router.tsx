@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Cart from './components/Cart';
+import Checkout from './pages/checkout';
 import Home from './pages/home';
 import Product from './pages/product';
 import Products from './pages/products';
@@ -17,6 +18,7 @@ const Router = (props: Props) => {
 
   return (
     <Routes>
+      <Route path="*" element={<Navigate to={'/'} />} />
       <Route path="/" element={<Home />} />
       <Route
         path="/products"
@@ -39,6 +41,7 @@ const Router = (props: Props) => {
         }
       />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/checkout" element={<Checkout />} />
 
       {/* <Route path="/orders" element={<Orders />} />
 
@@ -46,8 +49,7 @@ const Router = (props: Props) => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/admin/productlist" element={<ProductList />} />
-      <Route path="*" element={<Navigate to={"/"} />} /> */}
+      <Route path="/admin/productlist" element={<ProductList />} /> */}
     </Routes>
   );
 };
