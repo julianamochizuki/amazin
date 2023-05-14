@@ -15,12 +15,15 @@ type Props = {
 export default function ProductList(props: Props) {
   const [products, setProducts] = useState([]);
   const { currentCategory, setCurrentProduct } = props;
+  const url = process.env.REACT_APP_API_SERVER_URL;
 
   useEffect(() => {
-    axios.get(`api/categories/${currentCategory.id}/products`).then((res) => {
-      console.log('res.data', res.data);
-      setProducts(res.data);
-    });
+    axios
+      .get(`${url}/api/categories/${currentCategory.id}/products`)
+      .then((res) => {
+        console.log('res.data', res.data);
+        setProducts(res.data);
+      });
   }, [currentCategory]);
 
   console.log('products', products);

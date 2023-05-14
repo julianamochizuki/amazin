@@ -32,13 +32,13 @@ export default function ProductListItem(props: Props) {
         <Card.Body className="card-body">
           <Card.Text className="card-title">{product.name}</Card.Text>
           {product.reviews.length > 0 && (
-            <StarRating reviews={product.reviews} />
+            <StarRating key={product.id} reviews={product.reviews} />
           )}
           <Card.Text className="card-price">
             ${product.price_cents / 100}
           </Card.Text>
           <Button
-            className="card-button"
+            className="call-to-action-button"
             onClick={() => {
               setCurrentProduct({
                 ...product,

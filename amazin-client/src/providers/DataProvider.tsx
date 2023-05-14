@@ -31,9 +31,10 @@ const DataProvider = (props: Props) => {
     cart: {},
     lineItems: [],
   });
+  const url = process.env.REACT_APP_API_SERVER_URL;
 
   useEffect(() => {
-    axios.get(`/api/departments`).then((res) => {
+    axios.get(`${url}/api/departments`).then((res) => {
       setState((prev) => ({
         ...prev,
         loading: false,
@@ -45,7 +46,7 @@ const DataProvider = (props: Props) => {
   // useEffect(() => {
   //   axios
   //     .get(
-  //       `/api/departments/${department_id}/categories/${category_id}/products`
+  //       `${url}/api/departments/${department_id}/categories/${category_id}/products`
   //     )
   //     .then((res) => {
   //       setState((prev) => ({
@@ -79,7 +80,7 @@ const DataProvider = (props: Props) => {
   // }, [product_id]);
 
   // useEffect(() => {
-  //   axios.get(`/api/users/${user_id}/orders}`).then((res) => {
+  //   axios.get(`${url}/api/users/${user_id}/orders}`).then((res) => {
   //     setState((prev) => ({
   //       ...prev,
   //       loading: false,
@@ -89,7 +90,7 @@ const DataProvider = (props: Props) => {
   // }, [user_id]);
 
   // useEffect(() => {
-  //   axios.get(`/api/users/${user_id}/cart`).then((res) => {
+  //   axios${url}/api/users/${user_id}/cart`).then((res) => {
   //     setState((prev) => ({
   //       ...prev,
   //       loading: false,

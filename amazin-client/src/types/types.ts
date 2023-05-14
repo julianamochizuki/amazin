@@ -6,6 +6,7 @@ export type ProductType = {
   reviews: any[];
   description: string;
   quantity: number;
+  userId: number;
   createdAt: string;
   updatedAt: string;
 };
