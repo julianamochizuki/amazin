@@ -6,6 +6,7 @@ export type ProductType = {
   reviews: any[];
   description: string;
   quantity: number;
+  quantityInCart?: number;
   userId: number;
   createdAt: string;
   updatedAt: string;
@@ -50,3 +51,19 @@ export type UserType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export interface CartItem {
+  id: number;
+  name: string;
+  image: string;
+  quantity: number;
+  quantityInCart: number;
+  price_cents: number;
+  reviews: any[];
+  description: string;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CartType = CartItem[];

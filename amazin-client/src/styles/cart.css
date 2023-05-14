@@ -1,0 +1,24 @@
+.cart-container {
+  padding-top: 50px;
+  background-color: #EAEDED!important;
+}
+
+.product-image {
+  object-fit: cover;
+  height: 20px;
+  width: 20px;
+}
+
+.cart-total {
+  padding-left: 20px;
+}
+
+.cart-total, .cart-list {
+  background-color: #FFF;
+}
+
+.cart-list-title {
+  border-bottom: 1px solid #ccc;
+}
+
+
