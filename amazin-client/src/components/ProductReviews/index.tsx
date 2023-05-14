@@ -4,7 +4,6 @@ import getRating, { getRatingStats } from '../../helpers/products';
 import { ProductType } from '../../types/types';
 import ReviewList from './ReviewList';
 import ReviewStats from './ReviewStats';
-import ReviewStats from './ReviewStats';
 
 type Props = {
   currentProduct: ProductType;
