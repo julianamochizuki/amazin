@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import Home from './pages/home';
 import Product from './pages/product';
 import Products from './pages/products';
@@ -13,6 +13,7 @@ type Props = {
 
 const Router = (props: Props) => {
   const { currentCategory, currentProduct, setCurrentProduct } = props;
+  const { cardId } = useParams();
 
   return (
     <Routes>
@@ -29,8 +30,13 @@ const Router = (props: Props) => {
         }
       />
       <Route
-        path={`/products/${currentProduct.id}`}
-        element={<Product currentProduct={currentProduct} />}
+        path="/products/:cardId"
+        element={
+          <Product
+            currentProduct={currentProduct}
+            setCurrentProduct={setCurrentProduct}
+          />
+        }
       />
       {/* <Route path="/orders" element={<Orders />} />
 
