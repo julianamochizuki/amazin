@@ -50,3 +50,17 @@
   font-size: 14px;
   text-align: left;
 }
+
+.review-stats {
+  display: flex;
+  flex-direction: column;
+  justify-self: start;
+  justify-content: 'flex-start';
+  align-self: flex-start;
+  justify-items: flex-start;
+  justify-items: flex-start;
+}
+
+.progress-bar-review {
+  border: 1px solid #ccc;
+}

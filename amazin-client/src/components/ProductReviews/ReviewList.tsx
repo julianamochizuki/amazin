@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { ProductType } from '../../types/types';
 import ReviewListItem from './ReviewListItem';
 
@@ -14,5 +15,10 @@ export default function ReviewList(props: Props) {
     return <ReviewListItem key={r.id} review={r} />;
   });
 
-  return <>{categoryLists}</>;
+  return (
+    <Col>
+      <Row>Top reviews from Canada</Row>
+      <Col>{categoryLists} </Col>
+    </Col>
+  );
 }
