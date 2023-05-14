@@ -25,13 +25,19 @@ export type DepartmentType = {
   categories: any[];
   createdAt: string;
   updatedAt: string;
-}
+};
+
+export type ReviewUserType = {
+  id: number;
+  name: string;
+};
 
 export type ReviewType = {
   id: number;
   rating: number;
   description: string;
   userId: number;
+  user: ReviewUserType;
   createdAt: string;
   updatedAt: string;
 };

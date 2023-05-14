@@ -1,12 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import AddToCart from '../../components/Product/AddToCart';
 import ProductDetails from '../../components/Product/ProductDetails';
 import { ProductType } from '../../types/types';
 import '../../styles/product.css';
-import { Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import ProductReviews from '../../components/ProductReviews';
 
 type Props = {
   currentProduct: ProductType;
@@ -37,10 +38,13 @@ const Product = (props: Props) => {
   }, []);
 
   return (
-    <Row className="product-container">
-      <ProductDetails currentProduct={currentProduct} />
-      <AddToCart currentProduct={currentProduct} vendor={vendor} />
-    </Row>
+    <Col>
+      <Row className="product-container">
+        <ProductDetails currentProduct={currentProduct} />
+        <AddToCart currentProduct={currentProduct} vendor={vendor} />
+      </Row>
+      <ProductReviews currentProduct={currentProduct} />
+    </Col>
   );
 };
 
