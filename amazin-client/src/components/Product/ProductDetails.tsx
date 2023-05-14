@@ -33,7 +33,7 @@ export default function ProductDetails(props: Props) {
           </Col>
           <Col xs={12} sm={6} md={6} lg={7} className="product-details">
             <Row className="product-rating">
-              <StarRating reviews={currentProduct.reviews} />
+              {currentProduct.reviews.length > 0 && <StarRating reviews={currentProduct.reviews} />}
             </Row>
             <Row className="product-price">
               ${currentProduct.price_cents / 100}

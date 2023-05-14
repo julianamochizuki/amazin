@@ -43,7 +43,9 @@ const Product = (props: Props) => {
         <ProductDetails currentProduct={currentProduct} />
         <AddToCart currentProduct={currentProduct} vendor={vendor} />
       </Row>
-      <ProductReviews currentProduct={currentProduct} />
+      {currentProduct.reviews.length > 0 && (
+        <ProductReviews currentProduct={currentProduct} />
+      )}
     </Col>
   );
 };

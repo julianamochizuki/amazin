@@ -23,12 +23,6 @@ export default function ProductReviews(props: Props) {
         averageRating={averageRating}
       />
       <ReviewList key={currentProduct.id} currentProduct={currentProduct} />
-      <ReviewStats
-        currentProduct={currentProduct}
-        ratingStats={ratingStats}
-        averageRating={averageRating}
-      />
-      <ReviewList key={currentProduct.id} currentProduct={currentProduct} />
     </Row>
   );
 }
