@@ -1,12 +1,9 @@
 import React from 'react';
+import { DepartmentType } from '../../types/types';
 import CategoryListItem from './CategoryListItem';
 
 type Props = {
-  currentDepartment: {
-    id: number;
-    name: string;
-    categories: any[];
-  };
+  currentDepartment: DepartmentType;
   setCurrentCategory: any;
   setMenuOpen: any;
 };
@@ -16,21 +13,13 @@ export default function CategoryList(props: Props) {
 
   const { categories } = currentDepartment;
 
-  console.log('currentDepartment', currentDepartment, 'categories', categories);
-
   const categoryLists = categories.map((c) => {
     return (
       <CategoryListItem
         key={c.id}
-        id={c.id}
-        name={c.name}
+        category={c}
         handleClick={() => {
-          setCurrentCategory((prev: {}) => ({
-            ...prev,
-            id: c.id,
-            name: c.name,
-            products: c.products,
-          }));
+          setCurrentCategory({ ...c });
           setMenuOpen(false);
         }}
       />

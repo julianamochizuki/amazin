@@ -10,14 +10,11 @@ import {
   Row,
 } from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
+import { DepartmentType } from '../../types/types';
 import Drawer from './Drawer';
 
 type Props = {
-  currentDepartment: {
-    id: number;
-    name: string;
-    categories: any[];
-  };
+  currentDepartment: DepartmentType;
   setCurrentDepartment: any;
   setCurrentCategory: any;
 };

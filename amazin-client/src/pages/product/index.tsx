@@ -1,21 +1,21 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import ProductDetails from '../../components/Products/Product';
+import AddToCart from '../../components/Product/AddToCart';
+import ProductDetails from '../../components/Product/ProductDetails';
+import { ProductType } from '../../types/types';
 
 type Props = {
-  currentProduct: {
-    id: number;
-    name: string;
-    image: string;
-    price_cents: number;
-    reviews: any[];
-  };
+  currentProduct: ProductType;
 };
 
 const Product = (props: Props) => {
   const { currentProduct } = props;
 
-  return <ProductDetails currentProduct={currentProduct} />;
+  return (
+    <>
+      <ProductDetails currentProduct={currentProduct} />
+      <AddToCart currentProduct={currentProduct} />
+    </>
+  );
 };
 
 export default Product;

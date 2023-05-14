@@ -3,31 +3,14 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Row } from 'react-bootstrap';
+import { CategoryType, ProductType } from '../../types/types';
 import ProductListItem from './ProductListItem';
 
 type Props = {
-  currentCategory: {
-    id: number;
-    name: string;
-    products: any[];
-  };
-  currentProduct: {
-    id: number;
-    name: string;
-    image: string;
-    price_cents: number;
-    reviews: any[];
-  };
+  currentCategory: CategoryType;
+  currentProduct: ProductType;
   setCurrentProduct: any;
 };
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  price_cents: number;
-  reviews: any[];
-}
 
 export default function ProductList(props: Props) {
   const [products, setProducts] = useState([]);
@@ -42,15 +25,16 @@ export default function ProductList(props: Props) {
 
   console.log('products', products);
 
-  const productLists = products.map((p: Product) => {
+  const productLists = products.map((p: ProductType) => {
     return (
       <ProductListItem
         key={p.id}
-        id={p.id}
-        name={p.name}
-        image={p.image}
-        price_cents={p.price_cents}
-        reviews={p.reviews}
+        product={p}
+        // id={p.id}
+        // name={p.name}
+        // image={p.image}
+        // price_cents={p.price_cents}
+        // reviews={p.reviews}
         setCurrentProduct={setCurrentProduct}
       />
     );

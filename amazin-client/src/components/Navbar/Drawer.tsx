@@ -5,13 +5,10 @@ import { useState } from 'react';
 import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
 import './Drawer.css';
+import { DepartmentType } from '../../types/types';
 
 type Props = {
-  currentDepartment: {
-    id: number;
-    name: string;
-    categories: any[];
-  };
+  currentDepartment: DepartmentType;
   setCurrentDepartment: any;
   setCurrentCategory: any;
 };

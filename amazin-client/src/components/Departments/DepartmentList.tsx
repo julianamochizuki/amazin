@@ -17,15 +17,9 @@ export default function DepartmentList(props: Props) {
     return (
       <DepartmentListItem
         key={d.id}
-        id={d.id}
-        name={d.name}
+        department={d}
         handleSelect={() => {
-          setCurrentDepartment((prev: {}) => ({
-            ...prev,
-            id: d.id,
-            name: d.name,
-            categories: d.categories,
-          }));
+          setCurrentDepartment({...d});
           setIsExpanded(true);
         }}
       />

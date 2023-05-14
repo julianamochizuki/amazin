@@ -1,16 +1,11 @@
 import React from 'react';
 import { Button, Card, Col } from 'react-bootstrap';
-import StarRating from './Rating';
+import StarRating from '../Products/Rating';
 import '../../styles/products.css';
+import { ProductType } from '../../types/types';
 
 type Props = {
-  currentProduct: {
-    id: number;
-    name: string;
-    image: string;
-    price_cents: number;
-    reviews: any[];
-  };
+  currentProduct: ProductType;
 };
 
 export default function ProductDetails(props: Props) {

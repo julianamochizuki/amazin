@@ -11,11 +11,15 @@ function App() {
     id: 0,
     name: '',
     categories: [],
+    createdAt: '',
+    updatedAt: '',
   });
   const [currentCategory, setCurrentCategory] = useState({
     id: 0,
     name: '',
     products: [],
+    createdAt: '',
+    updatedAt: '',
   });
   const [currentProduct, setCurrentProduct] = useState({
     id: 0,
@@ -23,6 +27,11 @@ function App() {
     image: '',
     price_cents: 0,
     reviews: [],
+    description: '',
+    quantity: 0,
+    userId: 0,
+    createdAt: '',
+    updatedAt: '',
   });
 
   return (

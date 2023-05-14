@@ -3,20 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import Product from './pages/product';
 import Products from './pages/products';
+import { CategoryType, ProductType } from './types/types';
 
 type Props = {
-  currentCategory: {
-    id: number;
-    name: string;
-    products: any[];
-  };
-  currentProduct: {
-    id: number;
-    name: string;
-    image: string;
-    price_cents: number;
-    reviews: any[];
-  };
+  currentCategory: CategoryType;
+  currentProduct: ProductType;
   setCurrentProduct: any;
 };
 
