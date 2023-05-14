@@ -6,6 +6,14 @@ const getAllReviewsByProductId = async (req, res) => {
     where: {
       productId: Number(req.params.productId),
     },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
   });
   if (!reviews) {
     res.status(404).json("Reviews not found");
