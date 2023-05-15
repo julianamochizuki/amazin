@@ -31,8 +31,6 @@ export default function StarRating({ reviews }: Props) {
 
   const rating = getRating();
 
-  console.log(rating);
-
   const solidStars = Array.from({ length: rating }, (_, index) => <StarFill />);
 
   const halfStar = rating % 1 !== 0 ? <StarHalf /> : null;

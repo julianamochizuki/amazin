@@ -30,9 +30,9 @@ export default function ProductListItem(props: Props) {
           style={{ height: 200 }}
         />
         <Card.Body className="card-body">
-          <Card.Text className="card-title">{product.name}</Card.Text>
+          <Card.Text key={product.id} className="card-title">{product.name}</Card.Text>
           {product.reviews.length > 0 && (
-            <StarRating key={product.id} reviews={product.reviews} />
+            <StarRating  reviews={product.reviews} />
           )}
           <Card.Text className="card-price">
             ${product.price_cents / 100}

@@ -64,6 +64,7 @@ export default function AddToCart(props: Props) {
               (_, index) => index + 1
             ).map((quantity: number) => (
               <Dropdown.Item
+                key={quantity}
                 onClick={() => {
                   setQuantitySelected(quantity);
                 }}

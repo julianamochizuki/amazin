@@ -1,4 +1,3 @@
-import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ContainerListItem from './ContainerListItem';
@@ -22,7 +21,8 @@ const ContainerList = function () {
     },
     {
       title: 'Gift Cards',
-      image: 'https://images.unsplash.com/photo-1620843437920-ead942b3abd3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+      image:
+        'https://images.unsplash.com/photo-1620843437920-ead942b3abd3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
     },
     {
       title: 'Home & Kitchen',
@@ -33,8 +33,8 @@ const ContainerList = function () {
 
   const containerList = containers.map((c) => {
     return (
-      <Col>
-        <ContainerListItem key={c.title} title={c.title} image={c.image} />
+      <Col key={c.title}>
+        <ContainerListItem title={c.title} image={c.image} />
       </Col>
     );
   });

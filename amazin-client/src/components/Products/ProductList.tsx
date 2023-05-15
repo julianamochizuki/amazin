@@ -21,23 +21,15 @@ export default function ProductList(props: Props) {
     axios
       .get(`${url}/api/categories/${currentCategory.id}/products`)
       .then((res) => {
-        console.log('res.data', res.data);
         setProducts(res.data);
       });
   }, [currentCategory]);
-
-  console.log('products', products);
 
   const productLists = products.map((p: ProductType) => {
     return (
       <ProductListItem
         key={p.id}
         product={p}
-        // id={p.id}
-        // name={p.name}
-        // image={p.image}
-        // price_cents={p.price_cents}
-        // reviews={p.reviews}
         setCurrentProduct={setCurrentProduct}
       />
     );
