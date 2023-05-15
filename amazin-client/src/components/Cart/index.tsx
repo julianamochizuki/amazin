@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Row } from 'react-bootstrap';
 import CartList from './CartList';
 import CartTotal from './CartTotal';
 import '../../styles/cart.css';
-import { ProductType } from '../../types/types';
+import { CartType } from '../../types/types';
 
-export default function Cart() {
-  const [cart, setCart] = useState([]);
+type Props = {
+  cart: CartType;
+  setCart: any;
+  total: number;
+};
+
+export default function CartReview(props: Props) {
+  const { cart, setCart, total } = props;
 
   useEffect(() => {
     const cartData = localStorage.getItem('cart');
     if (cartData) {
       setCart(JSON.parse(cartData));
     }
-  }, [cart]);
-
-  const total = cart.reduce((acc, product: ProductType) => {
-    return acc + product.price_cents * (product.quantityInCart ?? 0);
-  }, 0);
+  }, [cart.length]);
 
   return (
     <Row className="cart-container">

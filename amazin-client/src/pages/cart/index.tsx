@@ -1,11 +1,17 @@
-import React from "react";
+import React from 'react';
+import CartReview from '../../components/Cart';
+import { CartType } from '../../types/types';
 
-const Cart = () => {
-  return (
-    <main>
-      <h1>Cart</h1>
-    </main>
-  );
+type Props = {
+  cart: CartType;
+  setCart: any;
+  total: number;
+};
+
+const Cart = (props: Props) => {
+  const { cart, setCart, total } = props;
+
+  return <CartReview cart={cart} setCart={setCart} total={total} />;
 };
 
 export default Cart;

@@ -52,12 +52,11 @@ export default function CartList(props: Props) {
               <Col>
                 <Button
                   onClick={() => {
-                    localStorage.setItem(
-                      'cart',
-                      JSON.stringify(
-                        cart.filter((p: ProductType) => p.id !== product.id)
-                      )
+                    const newCart = cart.filter(
+                      (p: ProductType) => p.id !== product.id
                     );
+                    localStorage.setItem('cart', JSON.stringify(newCart));
+                    setCart(newCart);
                   }}
                 >
                   Delete
