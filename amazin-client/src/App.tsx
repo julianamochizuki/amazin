@@ -5,6 +5,8 @@ import './App.css';
 import NavBar from './components/Navbar';
 import Router from './Router';
 import theme from './theme/theme';
+import '@stripe/stripe-js';
+import { CartType, ProductType } from './types/types';
 
 function App() {
   const [currentDepartment, setCurrentDepartment] = useState({
@@ -33,6 +35,11 @@ function App() {
     createdAt: '',
     updatedAt: '',
   });
+  const [cart, setCart] = useState([] as CartType);
+
+  const total = cart.reduce((acc, product: ProductType) => {
+    return acc + product.price_cents * (product.quantityInCart ?? 0);
+  }, 0);
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,6 +56,9 @@ function App() {
           currentCategory={currentCategory}
           currentProduct={currentProduct}
           setCurrentProduct={setCurrentProduct}
+          cart={cart}
+          setCart={setCart}
+          total={total}
         />
       </Container>
     </ThemeProvider>

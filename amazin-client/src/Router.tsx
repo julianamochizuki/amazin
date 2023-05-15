@@ -1,20 +1,30 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Cart from './components/Cart';
+import CartReview from './components/Cart';
 import Checkout from './pages/checkout';
 import Home from './pages/home';
 import Product from './pages/product';
 import Products from './pages/products';
-import { CategoryType, ProductType } from './types/types';
+import { CartType, CategoryType, ProductType } from './types/types';
 
 type Props = {
   currentCategory: CategoryType;
   currentProduct: ProductType;
   setCurrentProduct: any;
+  cart: CartType;
+  setCart: any;
+  total: number;
 };
 
 const Router = (props: Props) => {
-  const { currentCategory, currentProduct, setCurrentProduct } = props;
+  const {
+    currentCategory,
+    currentProduct,
+    setCurrentProduct,
+    cart,
+    setCart,
+    total,
+  } = props;
 
   return (
     <Routes>
@@ -40,8 +50,14 @@ const Router = (props: Props) => {
           />
         }
       />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
+      <Route
+        path="/cart"
+        element={<CartReview cart={cart} setCart={setCart} total={total} />}
+      />
+      <Route
+        path="/checkout"
+        element={<Checkout cart={cart} setCart={setCart} total={total} />}
+      />
 
       {/* <Route path="/orders" element={<Orders />} />
 
