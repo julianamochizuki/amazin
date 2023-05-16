@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ProductType, UserType } from '../../types/types';
 
 type Props = {
@@ -17,6 +17,7 @@ type Options = {
 export default function AddToCart(props: Props) {
   const { currentProduct, vendor } = props;
   const [quantitySelected, setQuantitySelected] = useState(1);
+  const navigate = useNavigate();
 
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 3);
@@ -44,6 +45,7 @@ export default function AddToCart(props: Props) {
       currentProduct.quantityInCart = quantitySelected;
       localStorage.setItem('cart', JSON.stringify([currentProduct]));
     }
+    navigate('/cart');
   };
 
   return (
@@ -75,7 +77,7 @@ export default function AddToCart(props: Props) {
           </Dropdown.Menu>
         </Dropdown>
         <Button className="call-to-action-button" onClick={handleAddToCart}>
-          <Link to="/cart"> Add to cart</Link>
+          Add to cart
         </Button>
       </Row>
       <Row>Sold by {vendor.name}</Row>
