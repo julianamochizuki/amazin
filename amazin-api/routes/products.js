@@ -12,6 +12,7 @@ const {
 
 router.get("/categories/:categoryId/products", getAllProductsByCategory);
 router.get("/products/:productId", getProductById);
+router.patch("/products/:productId", updateProductById);
 router.post("/categories/:categoryId/products", isAdmin, createProduct);
 router.patch(
   "/categories/:categoryId/products/:productId",

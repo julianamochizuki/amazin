@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const getAllOrdersByUserId = async (req, res) => {
   const orders = await prisma.order.findMany({
     where: {
-      userId: Number(req.params.userId),
+      userId: req.params.userId,
     },
     include: {
       lineItems: {
@@ -20,7 +20,7 @@ const getAllOrdersByUserId = async (req, res) => {
 const getOrderById = async (req, res) => {
   const order = await prisma.order.findUnique({
     where: {
-      id: Number(req.params.orderId),
+      id: req.params.orderId,
     },
     include: {
       lineItems: {
