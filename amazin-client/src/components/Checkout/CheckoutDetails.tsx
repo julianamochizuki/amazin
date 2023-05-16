@@ -3,19 +3,17 @@ import { Col, Row } from 'react-bootstrap';
 import '../../styles/checkout.css';
 import { CartType } from '../../types/types';
 import CheckoutList from './CheckoutList';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import PaymentForm from './PaymentForm';
+import { CardElement, Elements } from '@stripe/react-stripe-js';
 
 type Props = {
   cart: CartType;
   setCart: any;
   total: number;
+  stripePromise: any;
 };
 
 export default function CheckoutDetails(props: Props) {
-  const { cart, setCart, total } = props;
-  const stripePromise = loadStripe('pk_test_51MsyRDGREh42evchBRowAtkBehjiBRRxzcqr8jcxGBRQfJVQyYebrLx4F07PBTDbb9xwT1IViMv21FQ4cZSrsJlB00afg64roT');
+  const { cart, setCart, total, stripePromise } = props;
 
   return (
     <Col xs={12} md={9} className="checkout-details-section">
@@ -41,7 +39,7 @@ export default function CheckoutDetails(props: Props) {
         </Col>
         <Col md={9}>
           <Elements stripe={stripePromise}>
-            <PaymentForm />
+            <CardElement />
           </Elements>
         </Col>
       </Row>
