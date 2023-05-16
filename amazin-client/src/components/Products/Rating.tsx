@@ -31,13 +31,15 @@ export default function StarRating({ reviews }: Props) {
 
   const rating = getRating();
 
-  const solidStars = Array.from({ length: rating }, (_, index) => <StarFill />);
+  const solidStars = Array.from({ length: rating }, (_, index) => (
+    <StarFill key={`solid-star-${index}`} />
+  ));
 
-  const halfStar = rating % 1 !== 0 ? <StarHalf /> : null;
+  const halfStar = rating % 1 !== 0 ? <StarHalf key={`half-star`} /> : null;
 
   const regularStars = Array.from(
     { length: MAX_RATING - rating },
-    (_, index) => <Star />
+    (_, index) => <Star key={`regular-star-${index}`} />
   );
 
   return (

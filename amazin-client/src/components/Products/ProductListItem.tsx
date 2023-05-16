@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Col } from 'react-bootstrap';
 import StarRating from './Rating';
 import '../../styles/products.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ProductType } from '../../types/types';
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
 
 export default function ProductListItem(props: Props) {
   const { product, setCurrentProduct } = props;
+  const navigate = useNavigate();
 
   return (
     <Col
@@ -30,9 +31,11 @@ export default function ProductListItem(props: Props) {
           style={{ height: 200 }}
         />
         <Card.Body className="card-body">
-          <Card.Text key={product.id} className="card-title">{product.name}</Card.Text>
+          <Card.Text key={product.id} className="card-title">
+            {product.name}
+          </Card.Text>
           {product.reviews.length > 0 && (
-            <StarRating  reviews={product.reviews} />
+            <StarRating reviews={product.reviews} />
           )}
           <Card.Text className="card-price">
             ${product.price_cents / 100}
@@ -43,9 +46,10 @@ export default function ProductListItem(props: Props) {
               setCurrentProduct({
                 ...product,
               });
+              navigate(`/products/${product.id}`);
             }}
           >
-            <Link to={`/products/${product.id}`}>See product details</Link>
+            See product details
           </Button>
         </Card.Body>
       </Card>

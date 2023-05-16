@@ -12,11 +12,13 @@ export default function ReviewListItem(props: Props) {
   const MAX_RATING = 5;
   const rating = review.rating;
 
-  const solidStars = Array.from({ length: rating }, (_, index) => <StarFill />);
+  const solidStars = Array.from({ length: rating }, (_, index) => (
+    <StarFill key={`solid-star-${index}`} />
+  ));
 
   const regularStars = Array.from(
     { length: MAX_RATING - rating },
-    (_, index) => <Star />
+    (_, index) => <Star key={`regular-star-${index}`} />
   );
 
   return (

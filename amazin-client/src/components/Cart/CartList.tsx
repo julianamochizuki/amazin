@@ -37,6 +37,7 @@ export default function CartList(props: Props) {
                       (_, index) => index + 1
                     ).map((quantity: number) => (
                       <Dropdown.Item
+                        key={quantity}
                         onClick={() => {
                           product.quantityInCart = quantity;
                           localStorage.setItem('cart', JSON.stringify(cart));
