@@ -47,9 +47,9 @@ export default function OrderSummary(props: Props) {
     // if (!error) {
     Promise.all([
       /* add new order */
-      axios.post(`${url}/api/orders`, {
+      axios.post(`${url}/api/users/${userId}/orders`, {
         userId,
-        lineItems: {
+        orderItems: {
           createMany: {
             data: cart.map((item) => ({
               productId: item.id,

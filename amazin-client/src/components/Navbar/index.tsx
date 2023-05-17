@@ -59,7 +59,7 @@ const NavBar = function (props: Props) {
             </Nav.Link>
           </Col>
           <Col xs={1} className="d-flex align-items-center">
-            <Nav.Link href="#pricing" className="text-light">
+            <Nav.Link href="/orders" className="text-light">
               Returns & Orders
             </Nav.Link>
           </Col>

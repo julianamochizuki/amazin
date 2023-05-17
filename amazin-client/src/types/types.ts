@@ -67,3 +67,23 @@ export interface CartItem {
 }
 
 export type CartType = CartItem[];
+
+export type OrderType = {
+  id: number;
+  userId: number;
+  orderItems: OrderItemType[];
+  paymentId: number;
+  total: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OrderItemType = {
+  id: number;
+  orderId: number;
+  productId: number;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+  product: ProductType;
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import CartReview from './components/Cart';
+import Orders from './components/Orders';
 import Checkout from './pages/checkout';
 import Home from './pages/home';
 import Product from './pages/product';
@@ -58,10 +59,9 @@ const Router = (props: Props) => {
         path="/checkout"
         element={<Checkout cart={cart} setCart={setCart} total={total} />}
       />
+      <Route path="/orders" element={<Orders />} />
 
-      {/* <Route path="/orders" element={<Orders />} />
-
-
+      {/* 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<Profile />} />
