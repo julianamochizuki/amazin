@@ -10,7 +10,7 @@ type State = {
   averageRating: number;
   orders: any[];
   cart: {};
-  lineItems: any[];
+  orderItems: any[];
 };
 
 type Props = {
@@ -29,7 +29,7 @@ const DataProvider = (props: Props) => {
     averageRating: 0,
     orders: [],
     cart: {},
-    lineItems: [],
+    orderItems: [],
   });
   const url = process.env.REACT_APP_API_SERVER_URL;
 
@@ -42,6 +42,16 @@ const DataProvider = (props: Props) => {
       }));
     });
   }, []);
+
+  // useEffect(() => {
+  //   axios.get(`${url}/api/products/:productId`).then((res) => {
+  //     setState((prev) => ({
+  //       ...prev,
+  //       loading: false,
+  //       product: res.data,
+  //     }));
+  //   });
+  // }, [productId]);
 
   // useEffect(() => {
   //   axios
