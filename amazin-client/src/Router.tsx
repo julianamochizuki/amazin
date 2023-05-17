@@ -4,6 +4,7 @@ import CartReview from './components/Cart';
 import Orders from './components/Orders';
 import Checkout from './pages/checkout';
 import Home from './pages/home';
+import NewReview from './pages/new-review';
 import Product from './pages/product';
 import Products from './pages/products';
 import { CartType, CategoryType, ProductType } from './types/types';
@@ -43,7 +44,7 @@ const Router = (props: Props) => {
         }
       />
       <Route
-        path="/products/:cardId"
+        path="/products/:productId"
         element={
           <Product
             currentProduct={currentProduct}
@@ -59,7 +60,19 @@ const Router = (props: Props) => {
         path="/checkout"
         element={<Checkout cart={cart} setCart={setCart} total={total} />}
       />
-      <Route path="/orders" element={<Orders />} />
+      <Route
+        path="/orders"
+        element={
+          <Orders
+            currentProduct={currentProduct}
+            setCurrentProduct={setCurrentProduct}
+          />
+        }
+      />
+      <Route
+        path="/write-a-review"
+        element={<NewReview currentProduct={currentProduct} />}
+      />
 
       {/* 
       <Route path="/login" element={<Login />} />

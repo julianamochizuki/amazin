@@ -9,7 +9,7 @@ const {
 
 router.get("/products/:productId/reviews", getAllReviewsByProductId);
 router.post("/products/:productId/reviews", createReview);
-router.patch("/products/:productId/reviews/:reviewId", updateReviewById);
+// router.patch("/products/:productId/reviews/:reviewId", updateReviewById);
 router.delete("/products/:productId/reviews/:reviewId", deleteReviewById);
 
 module.exports = router;

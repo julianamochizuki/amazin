@@ -1,13 +1,19 @@
 import React from 'react';
 import { Button, Card, Col, Image, Row } from 'react-bootstrap';
-import { OrderType } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
+import { OrderItemType, OrderType, ProductType } from '../../types/types';
 
 type Props = {
   order: OrderType;
+  currentProduct: ProductType;
+  setCurrentProduct: any;
 };
 
 export default function OrderListItem(props: Props) {
-  const { order } = props;
+  const { order, currentProduct, setCurrentProduct } = props;
+  const navigate = useNavigate();
+
+  // considering 3 days for delivery
   const deliveryDate = new Date(order.createdAt);
   deliveryDate.setDate(deliveryDate.getDate() + 3);
 
@@ -38,7 +44,15 @@ export default function OrderListItem(props: Props) {
             </Col>
             <Col>{item.product.name}</Col>
             <Col>
-              <Button variant="warning">Write a product review</Button>
+              <Button
+                variant="warning"
+                onClick={() => {
+                  setCurrentProduct(item.product);
+                  navigate(`/write-a-review`);
+                }}
+              >
+                Write a product review
+              </Button>
             </Col>
           </Row>
         ))}

@@ -1,13 +1,24 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { ProductType } from '../../types/types';
 import OrderList from './OrderList';
 
-export default function Orders() {
+type Props = {
+  currentProduct: ProductType;
+  setCurrentProduct: any;
+};
+
+export default function Orders(props: Props) {
+  const { currentProduct, setCurrentProduct } = props;
+
   return (
     <Col>
       <Row>Your Orders</Row>
       <Row>
-        <OrderList />
+        <OrderList
+          currentProduct={currentProduct}
+          setCurrentProduct={setCurrentProduct}
+        />
       </Row>
     </Col>
   );

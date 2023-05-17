@@ -1,10 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { OrderType } from '../../types/types';
+import { OrderType, ProductType } from '../../types/types';
 import OrderListItem from './OrderListItem';
 
-export default function OrderList() {
+type Props = {
+  currentProduct: ProductType;
+  setCurrentProduct: any;
+};
+
+export default function OrderList(props: Props) {
   const [orders, setOrders] = useState([]);
+  const { currentProduct, setCurrentProduct } = props;
+
   const url = process.env.REACT_APP_API_SERVER_URL;
 
   //TODO: get userId from auth
@@ -17,7 +24,14 @@ export default function OrderList() {
   }, []);
 
   const orderList = orders.map((o: OrderType) => {
-    return <OrderListItem key={o.id} order={o} />;
+    return (
+      <OrderListItem
+        key={o.id}
+        order={o}
+        currentProduct={currentProduct}
+        setCurrentProduct={setCurrentProduct}
+      />
+    );
   });
 
   return <> {orderList} </>;
