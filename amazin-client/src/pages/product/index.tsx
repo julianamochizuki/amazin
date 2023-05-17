@@ -16,14 +16,14 @@ type Props = {
 
 const Product = (props: Props) => {
   const { currentProduct, setCurrentProduct } = props;
-  const { cardId } = useParams();
+  const { productId } = useParams();
   const [vendor, setVendor] = useState({} as any);
   const url = process.env.REACT_APP_API_SERVER_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productRes = await axios.get(`${url}/api/products/${cardId}`);
+        const productRes = await axios.get(`${url}/api/products/${productId}`);
         setCurrentProduct(productRes.data);
         const userRes = await axios.get(
           `${url}/api/users/${productRes.data.userId}`
@@ -43,7 +43,7 @@ const Product = (props: Props) => {
         <ProductDetails currentProduct={currentProduct} />
         <AddToCart currentProduct={currentProduct} vendor={vendor} />
       </Row>
-      {currentProduct.reviews.length > 0 && (
+      {currentProduct.reviews?.length > 0 && (
         <ProductReviews currentProduct={currentProduct} />
       )}
     </Col>
