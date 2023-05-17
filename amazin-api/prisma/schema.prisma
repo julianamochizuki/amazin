@@ -72,7 +72,7 @@ model Review {
 //   id        Int        @id @default(autoincrement())
 //   user      User       @relation(fields: [userId], references: [id])
 //   userId    Int
-//   lineItems LineItem[]
+//   OrderItems OrderItem[]
 //   createdAt DateTime   @default(now())
 //   updatedAt DateTime   @updatedAt
 // }
@@ -84,19 +84,19 @@ model OrderItem {
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Order     Order?   @relation(fields: [orderId], references: [id])
-  orderId   Int?
+  Order     Order    @relation(fields: [orderId], references: [id])
+  orderId   Int
   // Cart      Cart?    @relation(fields: [cartId], references: [id])
   // cartId    Int?
 }
 
 model Order {
-  id         Int         @id @default(autoincrement())
-  user       User        @relation(fields: [userId], references: [id])
-  userId     Int
-  orderItems OrderItem[]
-  paymentId  Int
-  total      Int
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id          Int         @id @default(autoincrement())
+  user        User        @relation(fields: [userId], references: [id])
+  userId      Int
+  orderItems  OrderItem[]
+  paymentId   Int
+  total Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }

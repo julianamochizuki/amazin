@@ -6,7 +6,7 @@ const getAllUsers = async (req, res) => {
     include: {
       orders: {
         include: {
-          lineItems: {
+          orderItems: {
             include: {
               product: true,
             },
@@ -31,7 +31,7 @@ const getUserById = async (req, res) => {
     include: {
       orders: {
         include: {
-          lineItems: {
+          orderItems: {
             include: {
               product: true,
             },

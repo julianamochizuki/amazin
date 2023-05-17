@@ -1,7 +1,7 @@
 module.exports = [
   {
     description:
-      "I absolutely loved this product! It was exactly what I was looking for.",
+      'I absolutely loved this product! It was exactly what I was looking for.',
     rating: 5,
     productId: 1,
     userId: 2,
@@ -15,7 +15,7 @@ module.exports = [
   },
   {
     description:
-      "This is a great product. I would highly recommend it to anyone.",
+      'This is a great product. I would highly recommend it to anyone.',
     rating: 4,
     productId: 2,
     userId: 4,
@@ -90,15 +90,13 @@ module.exports = [
     userId: 14,
   },
   {
-    description:
-      "I'm really impressed with the results.",
+    description: "I'm really impressed with the results.",
     rating: 4,
     productId: 7,
     userId: 15,
   },
   {
-    description:
-      "This product is amazing! I love it so much.",
+    description: 'This product is amazing! I love it so much.',
     rating: 5,
     productId: 2,
     userId: 5,
@@ -126,7 +124,7 @@ module.exports = [
   },
   {
     description:
-      "This is a great product for anyone looking to improve their health and wellness. Highly recommend!",
+      'This is a great product for anyone looking to improve their health and wellness. Highly recommend!',
     rating: 5,
     productId: 25,
     userId: 12,
@@ -154,14 +152,13 @@ module.exports = [
   },
   {
     description:
-      "I was a bit skeptical about this product, but it exceeded my expectations.",
+      'I was a bit skeptical about this product, but it exceeded my expectations.',
     rating: 4,
     productId: 51,
     userId: 10,
   },
   {
-    description:
-      "I purchased this product on a whim and I'm so glad I did.",
+    description: "I purchased this product on a whim and I'm so glad I did.",
     rating: 5,
     productId: 61,
     userId: 13,
@@ -189,7 +186,7 @@ module.exports = [
   },
   {
     description:
-      "This product is amazing! I use it every day and it has made such a difference in my life.",
+      'This product is amazing! I use it every day and it has made such a difference in my life.',
     rating: 5,
     productId: 62,
     userId: 13,
@@ -223,8 +220,7 @@ module.exports = [
     userId: 10,
   },
   {
-    description:
-      "This product is a lifesaver for me.",
+    description: 'This product is a lifesaver for me.',
     rating: 4,
     productId: 60,
     userId: 16,
@@ -244,8 +240,7 @@ module.exports = [
     userId: 15,
   },
   {
-    description:
-      "This product is great!",
+    description: 'This product is great!',
     rating: 4,
     productId: 38,
     userId: 18,
@@ -272,8 +267,7 @@ module.exports = [
     userId: 12,
   },
   {
-    description:
-      "I'm really disappointed with this product.",
+    description: "I'm really disappointed with this product.",
     rating: 2,
     productId: 42,
     userId: 9,
@@ -286,36 +280,31 @@ module.exports = [
     userId: 3,
   },
   {
-    description:
-      "I absolutely love this product! I would highly recommend it!",
+    description: 'I absolutely love this product! I would highly recommend it!',
     rating: 5,
     productId: 23,
     userId: 16,
   },
   {
-    description:
-      "Highly recommended!",
+    description: 'Highly recommended!',
     rating: 4,
     productId: 55,
     userId: 8,
   },
   {
-    description:
-      "I really love it!",
+    description: 'I really love it!',
     rating: 5,
     productId: 19,
     userId: 9,
   },
   {
-    description:
-      "I love this product!",
+    description: 'I love this product!',
     rating: 4,
     productId: 50,
     userId: 12,
   },
   {
-    description:
-      "I would definitely recommend it to others.",
+    description: 'I would definitely recommend it to others.',
     rating: 4,
     productId: 30,
     userId: 14,
@@ -328,36 +317,31 @@ module.exports = [
     userId: 15,
   },
   {
-    description:
-      "I purchased this product for my mom and she loves it.",
+    description: 'I purchased this product for my mom and she loves it.',
     rating: 5,
     productId: 72,
     userId: 10,
   },
   {
-    description:
-      "I purchased this product for my sister and she loves it.",
+    description: 'I purchased this product for my sister and she loves it.',
     rating: 4,
     productId: 71,
     userId: 3,
   },
   {
-    description:
-      "This is amazing!",
+    description: 'This is amazing!',
     rating: 5,
     productId: 54,
     userId: 7,
   },
   {
-    description:
-      "I bought this for me and I couldn't be happier with it!",
+    description: "I bought this for me and I couldn't be happier with it!",
     rating: 5,
     productId: 28,
     userId: 17,
   },
   {
-    description:
-      "This is fantastic! I highly recommend it!",
+    description: 'This is fantastic! I highly recommend it!',
     rating: 5,
     productId: 64,
     userId: 2,
@@ -370,15 +354,13 @@ module.exports = [
     userId: 5,
   },
   {
-    description:
-      "This is a great product.",
+    description: 'This is a great product.',
     rating: 4,
     productId: 22,
     userId: 18,
   },
   {
-    description:
-      "I love this. Highly recommended!",
+    description: 'I love this. Highly recommended!',
     rating: 5,
     productId: 31,
     userId: 13,

@@ -1,13 +1,13 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const getAllOrdersByUserId = async (req, res) => {
   const orders = await prisma.order.findMany({
     where: {
-      userId: req.params.userId,
+      userId: Number(req.params.userId),
     },
     include: {
-      lineItems: {
+      orderItems: {
         include: {
           product: true,
         },
@@ -15,26 +15,6 @@ const getAllOrdersByUserId = async (req, res) => {
     },
   });
   res.json(orders);
-};
-
-const getOrderById = async (req, res) => {
-  const order = await prisma.order.findUnique({
-    where: {
-      id: req.params.orderId,
-    },
-    include: {
-      lineItems: {
-        include: {
-          product: true,
-        },
-      },
-    },
-  });
-  if (!order) {
-    res.status(404).json("Order not found");
-  } else {
-    res.json(order);
-  }
 };
 
 const createOrder = async (req, res) => {
@@ -48,6 +28,5 @@ const createOrder = async (req, res) => {
 
 module.exports = {
   getAllOrdersByUserId,
-  getOrderById,
   createOrder,
 };
