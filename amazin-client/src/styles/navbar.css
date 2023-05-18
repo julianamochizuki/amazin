@@ -1,0 +1,9 @@
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+}
+
+.flag {
+  height: 30px;
+}
