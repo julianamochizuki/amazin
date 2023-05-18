@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const getAllReviewsByProductId = async (req, res) => {
@@ -16,7 +16,28 @@ const getAllReviewsByProductId = async (req, res) => {
     },
   });
   if (!reviews) {
-    res.status(404).json("Reviews not found");
+    res.status(404).json('Reviews not found');
+  } else {
+    res.json(reviews);
+  }
+};
+
+const getAllReviewsByUserId = async (req, res) => {
+  const reviews = await prisma.review.findMany({
+    where: {
+      userId: Number(req.params.userId),
+    },
+    include: {
+      product: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+  if (!reviews) {
+    res.status(404).json('Reviews not found');
   } else {
     res.json(reviews);
   }
@@ -54,7 +75,7 @@ const deleteReviewById = async (req, res) => {
     },
   });
   if (!review) {
-    res.status(404).json("Review not found");
+    res.status(404).json('Review not found');
   } else {
     res.json(review);
   }
@@ -62,6 +83,7 @@ const deleteReviewById = async (req, res) => {
 
 module.exports = {
   getAllReviewsByProductId,
+  getAllReviewsByUserId,
   createReview,
   // updateReviewById,
   deleteReviewById,
