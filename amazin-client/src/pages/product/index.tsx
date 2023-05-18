@@ -17,23 +17,19 @@ type Props = {
 const Product = (props: Props) => {
   const { currentProduct, setCurrentProduct } = props;
   const { productId } = useParams();
-  const [vendor, setVendor] = useState({} as any);
+  const [vendor, setVendor] = useState('');
   const url = process.env.REACT_APP_API_SERVER_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productRes = await axios.get(`${url}/api/products/${productId}`);
-        setCurrentProduct(productRes.data);
-        const userRes = await axios.get(
-          `${url}/api/users/${productRes.data.userId}`
-        );
-        setVendor(userRes.data);
+        const res = await axios.get(`${url}/api/products/${productId}`);
+        setCurrentProduct(res.data);
+        setVendor(res.data.User.name);
       } catch (e) {
         console.error('Error fetching product details', e);
       }
     };
-
     fetchData();
   }, []);
 
