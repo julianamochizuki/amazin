@@ -38,6 +38,11 @@ const getProductById = async (req, res) => {
           },
         },
       },
+      User: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
   if (!product) {
