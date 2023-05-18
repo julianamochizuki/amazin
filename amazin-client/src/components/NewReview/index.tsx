@@ -5,6 +5,7 @@ import { Row, Form, Col, Button } from 'react-bootstrap';
 import { StarFill, Star } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { ProductType } from '../../types/types';
+import jwt_decode from 'jwt-decode';
 
 type Props = {
   currentProduct: ProductType;
@@ -16,7 +17,9 @@ const WriteReview = (props: Props) => {
   const { currentProduct } = props;
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_SERVER_URL;
-  const userId = Number(Cookies.get('userId'));
+  const token = Cookies.get('token') || null;
+  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
+  const userId = decodedToken?.id || null;
 
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
@@ -25,12 +28,20 @@ const WriteReview = (props: Props) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await axios.post(`${url}/api/products/${currentProduct.id}/reviews`, {
-      rating,
-      description,
-      productId: currentProduct.id,
-      userId,
-    });
+    await axios.post(
+      `${url}/api/products/${currentProduct.id}/reviews`,
+      {
+        rating,
+        description,
+        productId: currentProduct.id,
+        userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     navigate(`/add-a-review/thank-you`);
   };

@@ -18,6 +18,7 @@ import Drawer from './Drawer';
 import '../../styles/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 type Props = {
   currentDepartment: DepartmentType;
@@ -28,7 +29,11 @@ type Props = {
 const NavBar = function (props: Props) {
   const { currentDepartment, setCurrentDepartment, setCurrentCategory } = props;
   const [show, setShow] = useState(false);
-  const userName = Cookies.get('name');
+  const token = Cookies.get('token') || null;
+  const decodedToken: { name?: string } | null = token
+    ? jwt_decode(token)
+    : null;
+  const userName = decodedToken?.name || null;
   const navigate = useNavigate();
 
   const showDropdown = (e: any) => {
@@ -39,8 +44,6 @@ const NavBar = function (props: Props) {
   };
 
   const handleSignOut = () => {
-    Cookies.remove('name');
-    Cookies.remove('userId');
     Cookies.remove('token');
     navigate('/login');
   };
@@ -83,10 +86,10 @@ const NavBar = function (props: Props) {
           </Col>
           <Col
             className="text-light d-flex-column align-self-center"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate(token ? '/account' : '/login')}
           >
             <Row className="text-light">
-              {userName ? `Hello, ${userName}` : 'Hello, sign in'}
+              {token ? `Hello, ${userName}` : 'Hello, sign in'}
             </Row>
             <Row className="text-light">
               <NavDropdown
@@ -97,13 +100,13 @@ const NavBar = function (props: Props) {
                 onMouseEnter={showDropdown}
                 onMouseLeave={hideDropdown}
               >
-                <Dropdown.Item href={userName ? '/account' : '/login'}>
+                <Dropdown.Item href={token ? '/account' : '/login'}>
                   Your Account
                 </Dropdown.Item>
-                <Dropdown.Item href={userName ? '/orders' : '/login'}>
+                <Dropdown.Item href={token ? '/orders' : '/login'}>
                   Your Orders
                 </Dropdown.Item>
-                {userName && (
+                {token && (
                   <Dropdown.Item onClick={handleSignOut}>
                     Sign Out
                   </Dropdown.Item>
@@ -113,7 +116,7 @@ const NavBar = function (props: Props) {
           </Col>
           <Col className="d-flex align-items-center">
             <Nav.Link
-              href={userName ? '/orders' : '/login'}
+              href={token ? '/orders' : '/login'}
               className="text-light"
             >
               Returns & Orders

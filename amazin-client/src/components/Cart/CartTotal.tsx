@@ -12,7 +12,7 @@ type Props = {
 export default function CartTotal(props: Props) {
   const { cart, total } = props;
   const navigate = useNavigate();
-  const user = Cookies.get('name');
+  const token = Cookies.get('token') || null;
 
   return (
     <Col xs={12} md={2} className="cart-total">
@@ -22,7 +22,7 @@ export default function CartTotal(props: Props) {
       <Row>
         <Button
           variant="warning"
-          onClick={() => navigate(user ? '/checkout' : '/login')}
+          onClick={() => navigate(token ? '/checkout' : '/login')}
         >
           Proceed to Checkout
         </Button>

@@ -21,33 +21,27 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_SERVER_URL;
 
-  console.log(email);
-  console.log('password: ', password);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    await axios
-      .post(`${url}/api/login`, {
+    try {
+      const res = await axios.post(`${url}/api/login`, {
         email,
         password,
-      })
-      .then((res) => {
-        if (res.data) {
-          setError(false);
-          setErrorMessage('');
-          Cookies.set('name', res.data.name);
-          Cookies.set('userId', res.data.id);
-          navigate('/');
-        } else {
-          setError(true);
-          setErrorMessage(res.data.error);
-          return;
-        }
-      })
-      .catch((e) => {
-        console.log('error fetching user: ', e);
       });
+      if (res.data) {
+        setError(false);
+        setErrorMessage('');
+        Cookies.set('token', res.data);
+        navigate('/');
+      } else {
+        setError(true);
+        setErrorMessage('There was a problem signing you in.');
+      }
+    } catch (e) {
+      console.log('Error authenticating user:', e);
+      setError(true);
+      setErrorMessage("We're sorry, there was a problem signing you in.");
+    }
   };
 
   return (

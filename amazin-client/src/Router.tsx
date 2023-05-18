@@ -31,7 +31,8 @@ const Router = (props: Props) => {
     setCart,
     total,
   } = props;
-  const user = Cookies.get('name');
+  const token = Cookies.get('token') || null;
+
 
   return (
     <Routes>
@@ -61,13 +62,13 @@ const Router = (props: Props) => {
         path="/cart"
         element={<CartReview cart={cart} setCart={setCart} total={total} />}
       />
-      {user && (
+      {token && (
         <Route
           path="/checkout"
           element={<Checkout cart={cart} setCart={setCart} total={total} />}
         />
       )}
-      {user && (
+      {token && (
         <Route
           path="/orders"
           element={
@@ -78,13 +79,13 @@ const Router = (props: Props) => {
           }
         />
       )}
-      {user && (
+      {token && (
         <Route
           path="/write-a-review"
           element={<NewReview currentProduct={currentProduct} />}
         />
       )}
-      {user && <Route path="/add-a-review/thank-you" element={<ThankYou />} />}
+      {token && <Route path="/add-a-review/thank-you" element={<ThankYou />} />}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       {/* 

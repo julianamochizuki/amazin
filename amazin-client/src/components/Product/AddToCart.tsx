@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { ProductType, UserType } from '../../types/types';
+import { ProductType } from '../../types/types';
 
 type Props = {
   currentProduct: ProductType;
-  vendor: UserType;
+  vendor: string;
 };
 
 type Options = {
@@ -80,7 +80,7 @@ export default function AddToCart(props: Props) {
           Add to cart
         </Button>
       </Row>
-      <Row>Sold by {vendor.name}</Row>
+      <Row>Sold by {vendor}</Row>
     </Col>
   );
 }

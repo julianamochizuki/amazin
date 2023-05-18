@@ -22,6 +22,28 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_SERVER_URL;
 
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post(`${url}/api/login`, {
+        email,
+        password,
+      });
+      if (res.data) {
+        setError(false);
+        setErrorMessage('');
+        Cookies.set('token', res.data);
+        navigate('/');
+      } else {
+        setError(true);
+        setErrorMessage('There was a problem signing you in.');
+      }
+    } catch (e) {
+      console.log('Error authenticating user:', e);
+      setError(true);
+      setErrorMessage("We're sorry, there was a problem signing you in.");
+    }
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -35,8 +57,7 @@ export default function RegisterForm() {
         if (res.data) {
           setError(false);
           setErrorMessage('');
-          Cookies.set('name', res.data.name);
-          Cookies.set('userId', res.data.id);
+          handleLogin();
           navigate('/');
         } else {
           setError(true);
