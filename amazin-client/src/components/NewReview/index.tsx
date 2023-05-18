@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { Row, Form, Col, Button } from 'react-bootstrap';
 import { StarFill, Star } from 'react-bootstrap-icons';
@@ -15,9 +16,7 @@ const WriteReview = (props: Props) => {
   const { currentProduct } = props;
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_SERVER_URL;
-
-  //TODO: get userId from auth
-  const userId = 1;
+  const userId = Number(Cookies.get('userId'));
 
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
@@ -33,7 +32,7 @@ const WriteReview = (props: Props) => {
       userId,
     });
 
-    navigate(`/products/${currentProduct.id}`);
+    navigate(`/add-a-review/thank-you`);
   };
 
   return (

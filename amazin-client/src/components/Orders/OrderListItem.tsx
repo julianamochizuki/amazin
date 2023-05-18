@@ -1,16 +1,16 @@
 import React from 'react';
 import { Button, Card, Col, Image, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { OrderItemType, OrderType, ProductType } from '../../types/types';
+import { OrderType } from '../../types/types';
+import '../../App.css'
 
 type Props = {
   order: OrderType;
-  currentProduct: ProductType;
   setCurrentProduct: any;
 };
 
 export default function OrderListItem(props: Props) {
-  const { order, currentProduct, setCurrentProduct } = props;
+  const { order, setCurrentProduct } = props;
   const navigate = useNavigate();
 
   // considering 3 days for delivery
@@ -39,10 +39,22 @@ export default function OrderListItem(props: Props) {
         </Row>
         {order.orderItems.map((item) => (
           <Row key={item.id}>
-            <Col>
+            <Col
+              className="pointer-cursor"
+              onClick={() => {
+                navigate(`/products/${item.product.id}`);
+              }}
+            >
               <Image className="product-image" src={item.product.image} />
             </Col>
-            <Col>{item.product.name}</Col>
+            <Col
+              className="pointer-cursor"
+              onClick={() => {
+                navigate(`/products/${item.product.id}`);
+              }}
+            >
+              {item.product.name}
+            </Col>
             <Col>
               <Button
                 variant="warning"

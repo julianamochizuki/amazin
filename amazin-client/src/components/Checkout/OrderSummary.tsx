@@ -1,8 +1,8 @@
-import { useElements, useStripe } from '@stripe/react-stripe-js';
+// import { useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { CartType } from '../../types/types';
 
 type Props = {
@@ -15,12 +15,12 @@ export default function OrderSummary(props: Props) {
   const [message, setMessage] = useState<string | undefined>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [order, setOrder] = useState<any>(null);
-  const stripe = useStripe();
-  const elements = useElements();
+  // const stripe = useStripe();
+  // const elements = useElements();
   const url = process.env.REACT_APP_API_SERVER_URL;
+  const userId = Number(Cookies.get('userId'));
 
-  //TODO: get userId from auth and paymentId from stripe
-  const userId = 1;
+  //TODO: get paymentId from stripe
   const paymentId = 1;
 
   const handleSubmit = async (e: React.FormEvent) => {
