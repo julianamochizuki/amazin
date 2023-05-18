@@ -1,28 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcryptjs');
-
-const getAllUsers = async (req, res) => {
-  const users = await prisma.user.findMany({
-    include: {
-      orders: {
-        include: {
-          orderItems: {
-            include: {
-              product: true,
-            },
-          },
-        },
-      },
-      reviews: {
-        include: {
-          product: true,
-        },
-      },
-    },
-  });
-  res.json(users);
-};
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.JWT_SECRET_KEY;
 
 const getUserById = async (req, res) => {
   const user = await prisma.user.findUnique({
@@ -66,9 +46,20 @@ const authenticateUser = async (req, res) => {
       req.body.password,
       user.password
     );
-    passwordMatch
-      ? res.json(user)
-      : res.status(401).json('Your password is incorrect');
+    if (passwordMatch) {
+      const token = jwt.sign(
+        {
+          id: user.id,
+          name: user.name,
+          isAdmin: user.isAdmin,
+        },
+        secretKey,
+        { expiresIn: '1h' }
+      );
+      res.json(token);
+    } else {
+      res.status(401).json('Your password is incorrect');
+    }
   }
 };
 
@@ -112,5 +103,4 @@ module.exports = {
   createUser,
   updateUserById,
   deleteUserById,
-  getAllUsers,
 };

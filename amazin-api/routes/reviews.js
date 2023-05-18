@@ -4,14 +4,16 @@ const {
   getAllReviewsByProductId,
   getAllReviewsByUserId,
   createReview,
-  updateReviewById,
   deleteReviewById,
 } = require('../controllers/reviews.js');
+const authenticateToken = require('../helpers/authToken.js');
 
 router.get('/products/:productId/reviews', getAllReviewsByProductId);
-router.get('/users/:userId/reviews', getAllReviewsByUserId);
-router.post('/products/:productId/reviews', createReview);
-// router.patch("/products/:productId/reviews/:reviewId", updateReviewById);
-router.delete('/products/:productId/reviews/:reviewId', deleteReviewById);
+router.post('/products/:productId/reviews', authenticateToken, createReview);
+router.delete(
+  '/products/:productId/reviews/:reviewId',
+  authenticateToken,
+  deleteReviewById
+);
 
 module.exports = router;

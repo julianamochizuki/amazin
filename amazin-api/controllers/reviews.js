@@ -52,22 +52,6 @@ const createReview = async (req, res) => {
   res.json(review);
 };
 
-// const updateReviewById = async (req, res) => {
-//   const review = await prisma.review.update({
-//     where: {
-//       id: Number(req.params.reviewId),
-//     },
-//     data: {
-//       ...req.body,
-//     },
-//   });
-//   if (!review) {
-//     res.status(404).json("Review not found");
-//   } else {
-//     res.json(review);
-//   }
-// };
-
 const deleteReviewById = async (req, res) => {
   const review = await prisma.review.delete({
     where: {
@@ -85,6 +69,5 @@ module.exports = {
   getAllReviewsByProductId,
   getAllReviewsByUserId,
   createReview,
-  // updateReviewById,
   deleteReviewById,
 };
