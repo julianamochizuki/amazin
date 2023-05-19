@@ -9,7 +9,11 @@ const getAllOrdersByUserId = async (req, res) => {
     include: {
       orderItems: {
         include: {
-          product: true,
+          product: {
+            include: {
+              reviews: true,
+            },
+          },
         },
       },
     },

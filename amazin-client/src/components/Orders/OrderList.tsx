@@ -22,7 +22,7 @@ export default function OrderList(props: Props) {
     axios
       .get(`${url}/api/users/${userId}/orders`, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Form, Col, Button } from 'react-bootstrap';
 import { StarFill, Star } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
@@ -21,28 +21,69 @@ const WriteReview = (props: Props) => {
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const userId = decodedToken?.id || null;
 
+  console.log('currentProduct', currentProduct);
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
   };
 
+  const userHasReviewed = currentProduct.reviews.find((review) => {
+    if (review.userId === userId) {
+      return true;
+    }
+    return false;
+  });
+
+  const userReview = currentProduct.reviews.find(
+    (review) => review.userId === userId
+  );
+
+  useEffect(() => {
+    if (userHasReviewed) {
+      setDescription(userReview?.description || '');
+      setRating(userReview?.rating || 0);
+    }
+  }, []);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await axios.post(
-      `${url}/api/products/${currentProduct.id}/reviews`,
-      {
-        rating,
-        description,
-        productId: currentProduct.id,
-        userId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    if (!userHasReviewed) {
+      await axios.post(
+        `${url}/api/products/${currentProduct.id}/reviews`,
+        {
+          rating,
+          description,
+          productId: currentProduct.id,
+          userId,
         },
-      }
-    );
-
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } else {
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews/${userReview.id}`,
+          {
+            description,
+            rating,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          userReview.description = res.data.description;
+          userReview.rating = res.data.rating;
+        })
+        .catch((e) => {
+          console.log('error editing review', e);
+        });
+    }
     navigate(`/add-a-review/thank-you`);
   };
 
@@ -66,9 +107,13 @@ const WriteReview = (props: Props) => {
       </Col>
       <Form>
         <Form.Group>
-          <Form.Label>Add a written review</Form.Label>
+          <Form.Label>
+            {userHasReviewed ? 'Edit review' : 'Add a written review'}
+          </Form.Label>
           <Form.Control
             as="textarea"
+            placeholder="What did you like or dislike? What did you use this product for?"
+            value={description}
             rows={3}
             onChange={(e) => setDescription(e.target.value)}
           />

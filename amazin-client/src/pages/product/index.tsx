@@ -16,6 +16,7 @@ type Props = {
 
 const Product = (props: Props) => {
   const { currentProduct, setCurrentProduct } = props;
+  const [reviewsEdited, setReviewsEdited] = useState(false);
   const { productId } = useParams();
   const [vendor, setVendor] = useState('');
   const url = process.env.REACT_APP_API_SERVER_URL;
@@ -31,7 +32,7 @@ const Product = (props: Props) => {
       }
     };
     fetchData();
-  }, []);
+  }, [currentProduct.reviews.length, reviewsEdited]);
 
   return (
     <Col>
@@ -40,7 +41,10 @@ const Product = (props: Props) => {
         <AddToCart currentProduct={currentProduct} vendor={vendor} />
       </Row>
       {currentProduct.reviews?.length > 0 && (
-        <ProductReviews currentProduct={currentProduct} />
+        <ProductReviews
+          currentProduct={currentProduct}
+          setReviewsEdited={setReviewsEdited}
+        />
       )}
     </Col>
   );

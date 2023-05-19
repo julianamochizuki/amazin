@@ -5,14 +5,23 @@ import ReviewListItem from './ReviewListItem';
 
 type Props = {
   currentProduct: ProductType;
+  setReviewsEdited: any;
 };
 
 export default function ReviewList(props: Props) {
-  const { currentProduct } = props;
+  const { currentProduct, setReviewsEdited } = props;
   const { reviews } = currentProduct;
 
   const categoryLists = reviews.map((r) => {
-    return <ReviewListItem key={r.id} review={r} />;
+    return (
+      <ReviewListItem
+        key={r.id}
+        review={r}
+        currentProduct={currentProduct}
+        setReviewsEdited={setReviewsEdited}
+        // setCurrentProduct={setCurrentProduct}
+      />
+    );
   });
 
   return (

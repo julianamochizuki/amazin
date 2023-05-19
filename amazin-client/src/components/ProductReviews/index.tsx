@@ -7,10 +7,11 @@ import ReviewStats from './ReviewStats';
 
 type Props = {
   currentProduct: ProductType;
+  setReviewsEdited: any;
 };
 
 export default function ProductReviews(props: Props) {
-  const { currentProduct } = props;
+  const { currentProduct, setReviewsEdited } = props;
 
   const averageRating = getRating(currentProduct.reviews);
   const ratingStats = getRatingStats(currentProduct.reviews);
@@ -22,7 +23,11 @@ export default function ProductReviews(props: Props) {
         ratingStats={ratingStats}
         averageRating={averageRating}
       />
-      <ReviewList key={currentProduct.id} currentProduct={currentProduct} />
+      <ReviewList
+        key={currentProduct.id}
+        currentProduct={currentProduct}
+        setReviewsEdited={setReviewsEdited}
+      />
     </Row>
   );
 }
