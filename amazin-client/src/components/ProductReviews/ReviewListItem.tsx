@@ -49,6 +49,7 @@ export default function ReviewListItem(props: Props) {
           }
         )
         .then(() => {
+          setReviewsEdited((prev: boolean) => !prev);
           navigate(`/products/${currentProduct.id}`);
         })
         .catch((e) => {
