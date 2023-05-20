@@ -6,6 +6,7 @@ import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
 import './Drawer.css';
 import { DepartmentType } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   currentDepartment: DepartmentType;
@@ -16,11 +17,8 @@ type Props = {
 export default function Drawer(props: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const {
-    currentDepartment,
-    setCurrentDepartment,
-    setCurrentCategory,
-  } = props;
+  const { currentDepartment, setCurrentDepartment, setCurrentCategory } = props;
+  const navigate = useNavigate();
 
   const handleSelect = () => {
     setIsExpanded(true);
@@ -107,7 +105,11 @@ export default function Drawer(props: Props) {
         <Nav.Link href="#features" className="text-light nav-link">
           Deals Store
         </Nav.Link>
-        <Nav.Link href="#features" className="text-light nav-link">
+        <Nav.Link
+          href="#features"
+          className="text-light nav-link"
+          onClick={() => navigate('/sell')}
+        >
           Sell
         </Nav.Link>
       </div>

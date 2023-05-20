@@ -10,6 +10,8 @@ export type ProductType = {
   userId: number;
   createdAt: string;
   updatedAt: string;
+  category?: CategoryType;
+  isActive?: boolean;
 };
 
 export type CategoryType = {
