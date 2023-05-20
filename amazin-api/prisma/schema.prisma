@@ -54,6 +54,7 @@ model Product {
   OrderItem   OrderItem[]
   User        User?       @relation(fields: [userId], references: [id])
   userId      Int?
+  isActive    Boolean     @default(true)
 }
 
 model Review {

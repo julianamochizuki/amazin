@@ -5,6 +5,7 @@ const getAllProductsByCategory = async (req, res) => {
   const products = await prisma.product.findMany({
     where: {
       categoryId: Number(req.params.categoryId),
+      isActive: true,
     },
     include: {
       reviews: {
