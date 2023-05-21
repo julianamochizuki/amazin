@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   getAllSellerProducts,
+  getAllSellerOrders,
   getProductById,
   createProduct,
   updateProductById,
@@ -15,6 +16,12 @@ router.get(
   '/seller/:sellerId/inventory',
   authenticateToken,
   getAllSellerProducts
+);
+
+router.get(
+  '/seller/:sellerId/orders',
+  authenticateToken,
+  getAllSellerOrders
 );
 
 router.get(

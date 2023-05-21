@@ -53,6 +53,40 @@ const getAllSellerProducts = async (req, res) => {
   res.json(products);
 };
 
+const getAllSellerOrders = async (req, res) => {
+  const orders = await prisma.order.findMany({
+    where: {
+      orderItems: {
+        some: {
+          product: {
+            userId: Number(req.params.sellerId),
+          },
+        },
+      },
+    },
+    include: {
+      orderItems: {
+        select: {
+          quantity: true,
+          createdAt: true,
+          product: true,
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          address: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  res.json(orders);
+};
+
 const getProductById = async (req, res) => {
   const product = await prisma.product.findUnique({
     where: {
@@ -111,6 +145,7 @@ const deleteProductById = async (req, res) => {
 
 module.exports = {
   getAllSellerProducts,
+  getAllSellerOrders,
   getProductById,
   createProduct,
   updateProductById,
