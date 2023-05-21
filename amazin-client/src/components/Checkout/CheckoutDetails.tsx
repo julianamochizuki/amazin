@@ -4,6 +4,8 @@ import '../../styles/checkout.css';
 import { CartType } from '../../types/types';
 import CheckoutList from './CheckoutList';
 import { CardElement, Elements } from '@stripe/react-stripe-js';
+import Cookies from 'js-cookie';
+import jwt_decode from 'jwt-decode';
 
 type Props = {
   cart: CartType;
@@ -14,6 +16,12 @@ type Props = {
 
 export default function CheckoutDetails(props: Props) {
   const { cart, setCart, total, stripePromise } = props;
+  const token = Cookies.get('token') || null;
+  const decodedToken: { name?: string; address?: string } | null = token
+    ? jwt_decode(token)
+    : null;
+  const userName = decodedToken?.name || null;
+  const userAddress = decodedToken?.address || null;
 
   return (
     <Col xs={12} md={9} className="checkout-details-section">
@@ -25,8 +33,8 @@ export default function CheckoutDetails(props: Props) {
           <h3>Shipping Address</h3>
         </Col>
         <Col md={9}>
-          <p>John Doe</p>
-          <p>1234 Main St</p>
+          <p>{userName}</p>
+          <p>{userAddress}</p>
         </Col>
       </Row>
 

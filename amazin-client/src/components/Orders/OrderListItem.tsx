@@ -33,18 +33,6 @@ export default function OrderListItem(props: Props) {
         <Col>Order #{order.id}</Col>
       </Card.Title>
       <Card.Text>
-        <Row>
-          {today > deliveryDate
-            ? `Delivered ${deliveryDate.toDateString()}`
-            : 'Arriving soon'}
-        </Row>
-
-        <Row>
-          {today > deliveryDate
-            ? 'Your package was delivered. It was handed directly to a resident.'
-            : `Your package is on the way. It will be delivered by ${deliveryDate}.`}
-        </Row>
-
         {order.orderItems.map((item) => (
           <Row key={item.id}>
             <Col
@@ -61,8 +49,16 @@ export default function OrderListItem(props: Props) {
                 navigate(`/products/${item.product.id}`);
               }}
             >
-              {item.product.name}
+              <Row>{item.product.name}</Row>
+              {today < deliveryDate && <Row>On the way</Row>}
+              <Row>
+                {today > deliveryDate
+                  ? 'Your package was delivered. It was handed directly to a resident.'
+                  : `Delivery estimate:
+                  ${deliveryDate}.`}
+              </Row>
             </Col>
+
             {/* {today > deliveryDate && ( */}
             <Col>
               <Button

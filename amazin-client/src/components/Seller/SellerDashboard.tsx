@@ -3,11 +3,15 @@ import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import InventoryList from './InventoryList';
+import OrderList from './OrderList';
+import { OrderType } from '../../types/types';
+import { Nav } from 'react-bootstrap';
 
 export default function SellerDashboard() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<OrderType[]>([]);
   const [inventory, setInventory] = useState([]);
   const [inventoryUpdated, setInventoryUpdated] = useState(false);
+  const [mode, setMode] = useState('inventory');
   const token = Cookies.get('token') || null;
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const sellerId = decodedToken?.id || null;
@@ -25,18 +29,49 @@ export default function SellerDashboard() {
       .then((res) => {
         setInventory(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((e) => console.log('error fetching seller products', e));
   }, [inventoryUpdated === true]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/orders`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((e) => console.log('error fetching seller orders', e));
+  }, []);
 
   return (
     <>
-      <div>Inventory Orders</div>
-      <div>Inventory List</div>
-      <InventoryList
-        inventory={inventory}
-        inventoryUpdated={inventoryUpdated}
-        setInventoryUpdated={setInventoryUpdated}
-      />
+      <Nav variant="tabs" defaultActiveKey="Inventory">
+        <Nav.Item>
+          <Nav.Link eventKey="Inventory" onClick={() => setMode('Inventory')}>
+            Inventory
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="Orders" onClick={() => setMode('Orders')}>
+            Orders
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+      {mode === 'Inventory' ? (
+        <InventoryList
+          inventory={inventory}
+          inventoryUpdated={inventoryUpdated}
+          setInventoryUpdated={setInventoryUpdated}
+        />
+      ) : (
+        <OrderList orders={orders} />
+      )}
     </>
   );
 }

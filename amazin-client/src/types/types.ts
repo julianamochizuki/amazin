@@ -49,6 +49,7 @@ export type UserType = {
   id: number;
   email: string;
   name: string;
+  address: string;
   role: string;
   createdAt: string;
   updatedAt: string;
@@ -70,6 +71,14 @@ export interface CartItem {
 
 export type CartType = CartItem[];
 
+export type UserOrderType = {
+  id: number;
+  name: string;
+  address: string;
+};
+
+export type SellerOrdersType = OrderType[];
+
 export type OrderType = {
   id: number;
   userId: number;
@@ -78,6 +87,7 @@ export type OrderType = {
   total: number;
   createdAt: string;
   updatedAt: string;
+  user?: UserOrderType;
 };
 
 export type OrderItemType = {
