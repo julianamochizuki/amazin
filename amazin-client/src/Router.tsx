@@ -40,7 +40,7 @@ const Router = (props: Props) => {
       <Route path="*" element={<Navigate to={'/'} />} />
       <Route path="/" element={<Home />} />
       <Route
-        path="/products"
+        path="/categories/:categoryId/products"
         element={
           <Products
             {...props}
@@ -93,10 +93,8 @@ const Router = (props: Props) => {
       <Route path="/seller/dashboard" element={<SellerDashboard />} />
 
       {/* 
-      
-      
       <Route path="/profile" element={<Profile />} />
-      <Route path="/admin/productlist" element={<ProductList />} /> */}
+       */}
     </Routes>
   );
 };

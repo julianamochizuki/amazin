@@ -1,16 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DepartmentType } from '../../types/types';
+import { CategoryType, DepartmentType } from '../../types/types';
 import CategoryListItem from './CategoryListItem';
 
 type Props = {
   currentDepartment: DepartmentType;
+  currentCategory: CategoryType;
   setCurrentCategory: any;
   setMenuOpen: any;
 };
 
 export default function CategoryList(props: Props) {
-  const { currentDepartment, setCurrentCategory, setMenuOpen } = props;
+  const { currentDepartment, currentCategory, setCurrentCategory, setMenuOpen } = props;
   const { categories } = currentDepartment;
   const navigate = useNavigate();
 
@@ -22,8 +23,8 @@ export default function CategoryList(props: Props) {
         category={c}
         handleClick={() => {
           setCurrentCategory({ ...c });
-          setMenuOpen(false);
-          navigate(`/products`);
+          setMenuOpen(false)
+          navigate(`/categories/${c.id}/products`);
         }}
       />
     );
