@@ -51,6 +51,7 @@ const authenticateUser = async (req, res) => {
         {
           id: user.id,
           name: user.name,
+          address: user.address,
           isAdmin: user.isAdmin,
         },
         secretKey,
