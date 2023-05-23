@@ -1,24 +1,21 @@
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import {
-  Button,
   Col,
   Dropdown,
-  Form,
-  FormControl,
   Image,
   Nav,
   Navbar,
   NavDropdown,
   Row,
 } from 'react-bootstrap';
-import { Search } from 'react-bootstrap-icons';
 import { DepartmentType } from '../../types/types';
 import Drawer from './Drawer';
 import '../../styles/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import SearchBar from '../SearchBar';
 
 type Props = {
   currentDepartment: DepartmentType;
@@ -68,7 +65,8 @@ const NavBar = function (props: Props) {
             <Row>Select your address</Row>
           </Col>
           <Col md={6} className="d-flex align-items-center">
-            <Form className="d-flex flex-grow-1">
+            <SearchBar />
+            {/* <Form className="d-flex flex-grow-1">
               <FormControl
                 type="search"
                 placeholder="Search Amazin"
@@ -78,7 +76,7 @@ const NavBar = function (props: Props) {
               <Button variant="warning">
                 <Search />
               </Button>
-            </Form>
+            </Form> */}
           </Col>
           <Col className="d-flex align-items-center justify-content-center">
             <Image

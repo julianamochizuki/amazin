@@ -5,7 +5,6 @@ import CartReview from './components/Cart';
 import ThankYou from './components/NewReview/ThankYou';
 import Orders from './components/Orders';
 import SellerDashboard from './components/Seller/SellerDashboard';
-import ChangePassword from './components/UserAccount/ChangePassword';
 import Checkout from './pages/checkout';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -37,6 +36,7 @@ const Router = (props: Props) => {
         path="/categories/:categoryId/products"
         element={<Products {...props} />}
       />
+      <Route path="/products/search/:searchTerm" element={<Products {...props} />} />
       <Route
         path="/products/:productId"
         element={

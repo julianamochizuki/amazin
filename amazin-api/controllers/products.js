@@ -23,6 +23,31 @@ const getAllProductsByCategory = async (req, res) => {
   res.json(products);
 };
 
+const getAllProductsBySearch = async (req, res) => {
+  const products = await prisma.product.findMany({
+    where: {
+      name: {
+        contains: req.query.s,
+        mode: 'insensitive',
+      },
+      isActive: true,
+    },
+    include: {
+      reviews: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  res.json(products);
+};
+
 const getProductById = async (req, res) => {
   const product = await prisma.product.findUnique({
     where: {
@@ -85,6 +110,7 @@ const deleteProductById = async (req, res) => {
 
 module.exports = {
   getAllProductsByCategory,
+  getAllProductsBySearch,
   getProductById,
   createProduct,
   updateProductById,
