@@ -11,13 +11,12 @@ import { useNavigate } from 'react-router-dom';
 type Props = {
   currentDepartment: DepartmentType;
   setCurrentDepartment: any;
-  setCurrentCategory: any;
 };
 
 export default function Drawer(props: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { currentDepartment, setCurrentDepartment, setCurrentCategory } = props;
+  const { currentDepartment, setCurrentDepartment } = props;
   const navigate = useNavigate();
 
   const handleSelect = () => {
@@ -80,7 +79,6 @@ export default function Drawer(props: Props) {
                   <Nav.Item className="fs-5">{currentDepartment.name}</Nav.Item>
                   <CategoryList
                     currentDepartment={currentDepartment}
-                    setCurrentCategory={setCurrentCategory}
                     setMenuOpen={setMenuOpen}
                   />
                 </Nav.Item>

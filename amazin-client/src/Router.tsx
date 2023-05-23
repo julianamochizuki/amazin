@@ -5,18 +5,19 @@ import CartReview from './components/Cart';
 import ThankYou from './components/NewReview/ThankYou';
 import Orders from './components/Orders';
 import SellerDashboard from './components/Seller/SellerDashboard';
+import ChangePassword from './components/UserAccount/ChangePassword';
 import Checkout from './pages/checkout';
 import Home from './pages/home';
 import Login from './pages/login';
 import NewReview from './pages/new-review';
 import Product from './pages/product';
 import Products from './pages/products';
+import Profile from './pages/profile';
 import Register from './pages/register';
 import Sell from './pages/seller';
-import { CartType, CategoryType, ProductType } from './types/types';
+import { CartType, ProductType } from './types/types';
 
 type Props = {
-  currentCategory: CategoryType;
   currentProduct: ProductType;
   setCurrentProduct: any;
   cart: CartType;
@@ -25,14 +26,7 @@ type Props = {
 };
 
 const Router = (props: Props) => {
-  const {
-    currentCategory,
-    currentProduct,
-    setCurrentProduct,
-    cart,
-    setCart,
-    total,
-  } = props;
+  const { currentProduct, setCurrentProduct, cart, setCart, total } = props;
   const token = Cookies.get('token') || null;
 
   return (
@@ -41,14 +35,7 @@ const Router = (props: Props) => {
       <Route path="/" element={<Home />} />
       <Route
         path="/categories/:categoryId/products"
-        element={
-          <Products
-            {...props}
-            currentProduct={currentProduct}
-            setCurrentProduct={setCurrentProduct}
-            currentCategory={currentCategory}
-          />
-        }
+        element={<Products {...props} />}
       />
       <Route
         path="/products/:productId"
@@ -90,11 +77,10 @@ const Router = (props: Props) => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/sell" element={<Sell />} />
-      <Route path="/seller/dashboard" element={<SellerDashboard />} />
-
-      {/* 
-      <Route path="/profile" element={<Profile />} />
-       */}
+      {token && (
+        <Route path="/seller/dashboard" element={<SellerDashboard />} />
+      )}
+      {token && <Route path="/profile" element={<Profile />} />}
     </Routes>
   );
 };

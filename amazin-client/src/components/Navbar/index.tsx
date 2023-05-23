@@ -23,11 +23,13 @@ import jwt_decode from 'jwt-decode';
 type Props = {
   currentDepartment: DepartmentType;
   setCurrentDepartment: any;
-  setCurrentCategory: any;
 };
 
 const NavBar = function (props: Props) {
-  const { currentDepartment, setCurrentDepartment, setCurrentCategory } = props;
+  const {
+    currentDepartment,
+    setCurrentDepartment,
+  } = props;
   const [show, setShow] = useState(false);
   const token = Cookies.get('token') || null;
   const decodedToken: { name?: string } | null = token
@@ -100,7 +102,7 @@ const NavBar = function (props: Props) {
                 onMouseEnter={showDropdown}
                 onMouseLeave={hideDropdown}
               >
-                <Dropdown.Item href={token ? '/account' : '/login'}>
+                <Dropdown.Item href={token ? '/profile' : '/login'}>
                   Your Account
                 </Dropdown.Item>
                 <Dropdown.Item href={token ? '/orders' : '/login'}>
@@ -131,7 +133,6 @@ const NavBar = function (props: Props) {
         <Drawer
           currentDepartment={currentDepartment}
           setCurrentDepartment={setCurrentDepartment}
-          setCurrentCategory={setCurrentCategory}
         />
       </div>
     </Navbar>

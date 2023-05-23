@@ -21,7 +21,6 @@ const WriteReview = (props: Props) => {
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const userId = decodedToken?.id || null;
 
-  console.log('currentProduct', currentProduct);
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
   };

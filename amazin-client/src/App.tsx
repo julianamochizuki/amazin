@@ -16,13 +16,7 @@ function App() {
     createdAt: '',
     updatedAt: '',
   });
-  const [currentCategory, setCurrentCategory] = useState({
-    id: 0,
-    name: '',
-    products: [],
-    createdAt: '',
-    updatedAt: '',
-  });
+
   const [currentProduct, setCurrentProduct] = useState({
     id: 0,
     name: '',
@@ -50,10 +44,8 @@ function App() {
         <NavBar
           currentDepartment={currentDepartment}
           setCurrentDepartment={setCurrentDepartment}
-          setCurrentCategory={setCurrentCategory}
         />
         <Router
-          currentCategory={currentCategory}
           currentProduct={currentProduct}
           setCurrentProduct={setCurrentProduct}
           cart={cart}

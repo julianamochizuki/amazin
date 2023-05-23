@@ -4,18 +4,17 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { CategoryType, ProductType } from '../../types/types';
+import { ProductType } from '../../types/types';
 import ProductListItem from './ProductListItem';
 
 type Props = {
-  currentCategory: CategoryType;
   currentProduct: ProductType;
   setCurrentProduct: any;
 };
 
 export default function ProductList(props: Props) {
   const [products, setProducts] = useState([]);
-  const { currentCategory, setCurrentProduct } = props;
+  const { setCurrentProduct } = props;
   const url = process.env.REACT_APP_API_SERVER_URL;
   const { categoryId } = useParams();
 
@@ -25,7 +24,7 @@ export default function ProductList(props: Props) {
       .then((res) => {
         setProducts(res.data);
       });
-  }, [currentCategory.id]);
+  }, [categoryId]);
 
   const productLists = products.map((p: ProductType) => {
     return (
