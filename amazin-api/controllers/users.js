@@ -95,6 +95,33 @@ const updateUserById = async (req, res) => {
   res.json(updatedToken);
 };
 
+const updatePasswordById = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: Number(req.params.userId),
+    },
+  });
+  const passwordMatch = await bcrypt.compare(
+    req.body.oldPassword,
+    user.password
+  );
+  if (!passwordMatch) {
+    res.status(401).json('Your password is incorrect');
+  } else {
+    const hashedPassword = await bcrypt.hash(req.body.newPassword, 10);
+    const user = await prisma.user.update({
+      where: {
+        id: Number(req.params.userId),
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+    res.status(200).json('Your password has been updated');
+  }
+};
+
+
 const deleteUserById = async (req, res) => {
   const user = await prisma.user.delete({
     where: {
@@ -109,5 +136,6 @@ module.exports = {
   authenticateUser,
   createUser,
   updateUserById,
+  updatePasswordById,
   deleteUserById,
 };

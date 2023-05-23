@@ -38,7 +38,7 @@ export default function RegisterForm() {
         setErrorMessage('There was a problem signing you in.');
       }
     } catch (e) {
-      console.log('Error authenticating user:', e);
+      console.log('error authenticating user:', e);
       setError(true);
       setErrorMessage("We're sorry, there was a problem signing you in.");
     }
