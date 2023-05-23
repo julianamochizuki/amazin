@@ -9,21 +9,12 @@ const getUserById = async (req, res) => {
     where: {
       id: Number(req.params.userId),
     },
-    include: {
-      orders: {
-        include: {
-          orderItems: {
-            include: {
-              product: true,
-            },
-          },
-        },
-      },
-      reviews: {
-        include: {
-          product: true,
-        },
-      },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      address: true,
+      isAdmin: true,
     },
   });
   if (!user) {
@@ -47,15 +38,19 @@ const authenticateUser = async (req, res) => {
       user.password
     );
     if (passwordMatch) {
+      const expiresIn = new Date();
+      expiresIn.setDate(expiresIn.getDate() + 1);
       const token = jwt.sign(
         {
           id: user.id,
           name: user.name,
+          email: user.email,
           address: user.address,
           isAdmin: user.isAdmin,
+          expiresAt: expiresIn,
         },
         secretKey,
-        { expiresIn: '1h' }
+        { expiresIn: '1d' }
       );
       res.json(token);
     } else {
@@ -76,17 +71,28 @@ const createUser = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const user = await prisma.user.update({
     where: {
       id: Number(req.params.userId),
     },
     data: {
       ...req.body,
-      password: hashedPassword,
     },
   });
-  res.json(user);
+
+  const updatedToken = jwt.sign(
+    {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      address: user.address,
+      isAdmin: user.isAdmin,
+      expiresAt: new Date(),
+    },
+    secretKey,
+    { expiresIn: '1d' }
+  );
+  res.json(updatedToken);
 };
 
 const deleteUserById = async (req, res) => {
