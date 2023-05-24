@@ -6,9 +6,14 @@ import { useNavigate } from 'react-router-dom';
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const productFilter = {
+    rating: 0,
+    minPrice: 0,
+    maxPrice: 1000000,
+  };
 
   const handleClick = () => {
-    navigate(`/products/search/${searchTerm}`);
+    navigate(`/products/search/${searchTerm}/${productFilter.rating}/${productFilter.minPrice}/${productFilter.maxPrice}`);
     setSearchTerm('');
   };
 

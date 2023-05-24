@@ -30,13 +30,19 @@ const Router = (props: Props) => {
 
   return (
     <Routes>
-      <Route path="*" element={<Navigate to={'/'} />} />
       <Route path="/" element={<Home />} />
-      <Route
+      {/* <Route
         path="/categories/:categoryId/products"
         element={<Products {...props} />}
+      /> */}
+      <Route
+        path="/products/search/:searchTerm/:rating/:minPrice/:maxPrice"
+        element={<Products {...props} />}
       />
-      <Route path="/products/search/:searchTerm" element={<Products {...props} />} />
+      <Route
+        path="/categories/:categoryId/products/:rating/:minPrice/:maxPrice"
+        element={<Products {...props} />}
+      />
       <Route
         path="/products/:productId"
         element={
@@ -81,6 +87,7 @@ const Router = (props: Props) => {
         <Route path="/seller/dashboard" element={<SellerDashboard />} />
       )}
       {token && <Route path="/profile" element={<Profile />} />}
+      {/* <Route path="*" element={<Navigate to={'/'} />} /> */}
     </Routes>
   );
 };

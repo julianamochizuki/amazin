@@ -11,10 +11,20 @@ type Props = {
 export default function CategoryListItem(props: Props) {
   const { category, setMenuOpen } = props;
   const navigate = useNavigate();
+  const productFilter = {
+    rating: 0,
+    minPrice: 0,
+    maxPrice: 1000000,
+  };
+
+  console.log('category', category.id);
 
   const handleClick = () => {
     setMenuOpen(false);
-    navigate(`/categories/${category.id}/products`);
+    // navigate(`/categories/${category.id}/products`);
+    navigate(
+      `/categories/${category.id}/products/${productFilter.rating}/${productFilter.minPrice}/${productFilter.maxPrice}`
+    );
   };
 
   return <Nav.Link onClick={handleClick}>{category.name}</Nav.Link>;
