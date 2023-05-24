@@ -1,19 +1,17 @@
 import React from 'react';
 import { Col, Dropdown, Image, Row } from 'react-bootstrap';
-import { CartType, ProductType } from '../../types/types';
+import { RootState } from '../../app/store';
+import { CartItem } from '../../types/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateCart } from '../../app/cartReducer';
 
-type Props = {
-  cart: CartType;
-  setCart: any;
-  total: number;
-};
-
-export default function CheckoutList(props: Props) {
-  const { cart, setCart } = props;
+export default function CheckoutList() {
+  const cart = useSelector((state: RootState) => state.cart.cartItems);
+  const dispatch = useDispatch();
 
   return (
     <Col xs={12} className="cart-list">
-      {cart.map((product: ProductType) => (
+      {cart.map((product: CartItem) => (
         <Row>
           <Col xs={12} sm={4} md={3} lg={3}>
             <Image
@@ -37,9 +35,11 @@ export default function CheckoutList(props: Props) {
                     ).map((quantity: number) => (
                       <Dropdown.Item
                         onClick={() => {
-                          product.quantityInCart = quantity;
-                          localStorage.setItem('cart', JSON.stringify(cart));
-                          setCart([...cart]);
+                          const updatedProduct = {
+                            ...product,
+                            quantityInCart: quantity,
+                          };
+                          dispatch(updateCart(updatedProduct));
                         }}
                       >
                         {quantity}
@@ -51,7 +51,9 @@ export default function CheckoutList(props: Props) {
             </Row>
           </Col>
 
-          <Col xs={12} sm={1} md={1} lg={1}>${product.price_cents / 100}</Col>
+          <Col xs={12} sm={1} md={1} lg={1}>
+            ${product.price_cents / 100}
+          </Col>
         </Row>
       ))}
     </Col>

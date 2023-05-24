@@ -1,20 +1,20 @@
 import React from 'react';
 import { Button, Col, Dropdown, Image, Row } from 'react-bootstrap';
-import { CartType, ProductType } from '../../types/types';
+import { RootState } from '../../app/store';
+import { CartItem } from '../../types/types';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { updateCart, removeFromCart } from '../../app/cartReducer';
 
-type Props = {
-  cart: CartType;
-  setCart: any;
-  total: number;
-};
-
-export default function CartList(props: Props) {
-  const { cart, setCart, total } = props;
+export default function CartList() {
+  const cart = useSelector((state: RootState) => state.cart.cartItems);
+  const total = useSelector((state: RootState) => state.cart.total);
+  const dispatch = useDispatch();
 
   return (
     <Col xs={12} md={10} className="cart-list">
       <Row className="cart-list-title">Shopping Cart</Row>
-      {cart.map((product: ProductType) => (
+      {cart.map((product: CartItem) => (
         <Row>
           <Col xs={12} sm={6} md={3} lg={3}>
             <Image
@@ -39,9 +39,11 @@ export default function CartList(props: Props) {
                       <Dropdown.Item
                         key={quantity}
                         onClick={() => {
-                          product.quantityInCart = quantity;
-                          localStorage.setItem('cart', JSON.stringify(cart));
-                          setCart([...cart]);
+                          const updatedProduct = {
+                            ...product,
+                            quantityInCart: quantity,
+                          };
+                          dispatch(updateCart(updatedProduct));
                         }}
                       >
                         {quantity}
@@ -53,11 +55,7 @@ export default function CartList(props: Props) {
               <Col>
                 <Button
                   onClick={() => {
-                    const newCart = cart.filter(
-                      (p: ProductType) => p.id !== product.id
-                    );
-                    localStorage.setItem('cart', JSON.stringify(newCart));
-                    setCart(newCart);
+                    dispatch(removeFromCart(product.id))
                   }}
                 >
                   Delete

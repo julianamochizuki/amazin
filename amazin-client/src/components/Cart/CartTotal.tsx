@@ -2,15 +2,12 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { CartType } from '../../types/types';
+import { RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
 
-type Props = {
-  cart: CartType;
-  total: number;
-};
-
-export default function CartTotal(props: Props) {
-  const { cart, total } = props;
+export default function CartTotal() {
+  const cart = useSelector((state: RootState) => state.cart.cartItems);
+  const total = useSelector((state: RootState) => state.cart.total);
   const navigate = useNavigate();
   const token = Cookies.get('token') || null;
 

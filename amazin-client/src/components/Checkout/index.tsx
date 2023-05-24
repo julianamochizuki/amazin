@@ -2,18 +2,10 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React, { useEffect, useState } from 'react';
 import { Row } from 'react-bootstrap';
-import { CartType } from '../../types/types';
 import CheckoutDetails from './CheckoutDetails';
 import OrderSummary from './OrderSummary';
 
-type Props = {
-  cart: CartType;
-  setCart: any;
-  total: number;
-};
-
-export default function CheckoutReview(props: Props) {
-  const { cart, setCart, total } = props;
+export default function CheckoutReview() {
   const [clientSecret, setClientSecret] = useState('');
   const [stripePromise, setStripePromise] = useState<any>(null);
 
@@ -49,12 +41,9 @@ export default function CheckoutReview(props: Props) {
     <Row>
       <Elements stripe={stripePromise} options={{ clientSecret }}>
         <CheckoutDetails
-          cart={cart}
-          setCart={setCart}
-          total={total}
           stripePromise={stripePromise}
         />
-        <OrderSummary cart={cart} total={total} />
+        <OrderSummary />
       </Elements>
     </Row>
   );
