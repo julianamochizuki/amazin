@@ -5,19 +5,17 @@ import { useState } from 'react';
 import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
 import './Drawer.css';
-import { DepartmentType } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
-type Props = {
-  currentDepartment: DepartmentType;
-  setCurrentDepartment: any;
-};
-
-export default function Drawer(props: Props) {
+export default function Drawer() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { currentDepartment, setCurrentDepartment } = props;
   const navigate = useNavigate();
+  const currentDepartment = useSelector(
+    (state: RootState) => state.departments.currentDepartment
+  );
 
   const handleSelect = () => {
     setIsExpanded(true);
@@ -71,14 +69,13 @@ export default function Drawer(props: Props) {
                   <DepartmentList
                     isExpanded={isExpanded}
                     setIsExpanded={setIsExpanded}
-                    setCurrentDepartment={setCurrentDepartment}
                   />
                 </Nav.Item>
               ) : (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="fs-5">{currentDepartment.name}</Nav.Item>
+                  <Nav.Item className="fs-5">{currentDepartment!.name}</Nav.Item>
                   <CategoryList
-                    currentDepartment={currentDepartment}
+                    currentDepartment={currentDepartment!}
                     setMenuOpen={setMenuOpen}
                   />
                 </Nav.Item>

@@ -9,7 +9,6 @@ import {
   NavDropdown,
   Row,
 } from 'react-bootstrap';
-import { DepartmentType } from '../../types/types';
 import Drawer from './Drawer';
 import '../../styles/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,16 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import SearchBar from '../SearchBar';
 
-type Props = {
-  currentDepartment: DepartmentType;
-  setCurrentDepartment: any;
-};
-
-const NavBar = function (props: Props) {
-  const {
-    currentDepartment,
-    setCurrentDepartment,
-  } = props;
+const NavBar = function () {
   const [show, setShow] = useState(false);
   const token = Cookies.get('token') || null;
   const decodedToken: { name?: string } | null = token
@@ -129,8 +119,6 @@ const NavBar = function (props: Props) {
           </Col>
         </Row>
         <Drawer
-          currentDepartment={currentDepartment}
-          setCurrentDepartment={setCurrentDepartment}
         />
       </div>
     </Navbar>
