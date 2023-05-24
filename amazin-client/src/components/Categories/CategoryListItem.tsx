@@ -17,8 +17,6 @@ export default function CategoryListItem(props: Props) {
     maxPrice: 1000000,
   };
 
-  console.log('category', category.id);
-
   const handleClick = () => {
     setMenuOpen(false);
     // navigate(`/categories/${category.id}/products`);
