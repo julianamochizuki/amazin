@@ -1,15 +1,14 @@
 import React from 'react';
 import { Col, Image, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import '../../styles/products.css';
-import { ProductType } from '../../types/types';
 import StarRating from '../Products/Rating';
 
-type Props = {
-  currentProduct: ProductType;
-};
-
-export default function ProductDetails(props: Props) {
-  const { currentProduct } = props;
+export default function ProductDetails() {
+  const currentProduct = useSelector(
+    (state: RootState) => state.products.currentProduct
+  );
 
   return (
     <Col

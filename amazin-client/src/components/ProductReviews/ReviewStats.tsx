@@ -1,16 +1,20 @@
 import React from 'react';
 import { Col, ProgressBar, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import { ProductType } from '../../types/types';
 import StarRating from '../Products/Rating';
 
 type Props = {
-  currentProduct: ProductType;
   averageRating: number;
   ratingStats: any;
 };
 
 export default function ReviewStats(props: Props) {
-  const { currentProduct, ratingStats, averageRating } = props;
+  const { ratingStats, averageRating } = props;
+  const currentProduct = useSelector(
+    (state: RootState) => state.products.currentProduct
+  );
 
   return (
     <Col className="review-stats">

@@ -3,14 +3,16 @@ import { Button, Card, Col, Image, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { OrderType } from '../../types/types';
 import '../../App.css';
+import { useDispatch } from 'react-redux';
+import { setCurrentProduct } from '../../app/productReducer';
 
 type Props = {
   order: OrderType;
-  setCurrentProduct: any;
 };
 
 export default function OrderListItem(props: Props) {
-  const { order, setCurrentProduct } = props;
+  const dispatch = useDispatch();
+  const { order } = props;
   const navigate = useNavigate();
   const today = new Date();
   // considering 3 days for delivery
@@ -38,18 +40,18 @@ export default function OrderListItem(props: Props) {
             <Col
               className="pointer-cursor"
               onClick={() => {
-                navigate(`/products/${item.product.id}`);
+                navigate(`/products/${item.product!.id}`);
               }}
             >
-              <Image className="product-image" src={item.product.image} />
+              <Image className="product-image" src={item.product!.image} />
             </Col>
             <Col
               className="pointer-cursor"
               onClick={() => {
-                navigate(`/products/${item.product.id}`);
+                navigate(`/products/${item.product!.id}`);
               }}
             >
-              <Row>{item.product.name}</Row>
+              <Row>{item.product!.name}</Row>
               {today < deliveryDate && <Row>On the way</Row>}
               <Row>
                 {today > deliveryDate
@@ -64,7 +66,7 @@ export default function OrderListItem(props: Props) {
               <Button
                 variant="warning"
                 onClick={() => {
-                  setCurrentProduct(item.product);
+                  dispatch(setCurrentProduct(item.product));
                   navigate(`/write-a-review`);
                 }}
               >

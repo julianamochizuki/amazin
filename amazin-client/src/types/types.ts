@@ -3,7 +3,7 @@ export type ProductType = {
   name: string;
   image: string;
   price_cents: number;
-  reviews: any[];
+  reviews: ReviewType[];
   description: string;
   quantity: number;
   quantityInCart?: number;
@@ -39,11 +39,12 @@ export type ReviewType = {
   id: number;
   rating: number;
   description: string;
+  productId: number;
   userId: number;
   user: ReviewUserType;
   createdAt: string;
   updatedAt: string;
-};
+} | null;
 
 export type UserType = {
   id: number;
@@ -68,8 +69,6 @@ export interface CartItem {
   createdAt: string;
   updatedAt: string;
 }
-
-export type CartType = CartItem[];
 
 export type UserOrderType = {
   id: number;

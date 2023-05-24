@@ -4,36 +4,35 @@ import React, { useState, useEffect } from 'react';
 import { Row, Form, Col, Button } from 'react-bootstrap';
 import { StarFill, Star } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
-import { ProductType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
-type Props = {
-  currentProduct: ProductType;
-};
-
-const WriteReview = (props: Props) => {
+const WriteReview = () => {
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState('');
-  const { currentProduct } = props;
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_SERVER_URL;
   const token = Cookies.get('token') || null;
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const userId = decodedToken?.id || null;
+  const currentProduct = useSelector(
+    (state: RootState) => state.products.currentProduct
+  );
 
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
   };
 
   const userHasReviewed = currentProduct.reviews.find((review) => {
-    if (review.userId === userId) {
+    if (review!.userId === userId) {
       return true;
     }
     return false;
   });
 
   const userReview = currentProduct.reviews.find(
-    (review) => review.userId === userId
+    (review) => review!.userId === userId
   );
 
   useEffect(() => {
@@ -64,7 +63,7 @@ const WriteReview = (props: Props) => {
     } else {
       axios
         .patch(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews/${userReview.id}`,
+          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews/${userReview!.id}`,
           {
             description,
             rating,
@@ -76,8 +75,8 @@ const WriteReview = (props: Props) => {
           }
         )
         .then((res) => {
-          userReview.description = res.data.description;
-          userReview.rating = res.data.rating;
+          userReview!.description = res.data.description;
+          userReview!.rating = res.data.rating;
         })
         .catch((e) => {
           console.log('error editing review', e);

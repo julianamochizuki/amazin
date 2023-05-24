@@ -4,14 +4,12 @@ import StarRating from './Rating';
 import '../../styles/products.css';
 import { useNavigate } from 'react-router-dom';
 import { ProductType } from '../../types/types';
+import { useDispatch } from 'react-redux';
+import { setCurrentProduct } from '../../app/productReducer';
 
-type Props = {
-  product: ProductType;
-  setCurrentProduct: any;
-};
-
-export default function ProductListItem(props: Props) {
-  const { product, setCurrentProduct } = props;
+export default function ProductListItem(props: { product: ProductType }) {
+  const { product } = props;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -20,33 +18,33 @@ export default function ProductListItem(props: Props) {
       sm={6}
       md={4}
       lg={3}
-      key={product.id}
+      key={product?.id}
       style={{ borderRadius: 3 }}
     >
       <Card className="card-container">
         <Card.Img
           variant="top"
-          src={product.image}
+          src={product?.image}
           className="card-image"
           style={{ height: 200 }}
         />
         <Card.Body className="card-body">
-          <Card.Text key={product.id} className="card-title">
-            {product.name}
+          <Card.Text key={product?.id} className="card-title">
+            {product?.name}
           </Card.Text>
-          {product.reviews.length > 0 && (
-            <StarRating reviews={product.reviews} />
+          {product!.reviews.length > 0 && (
+            <StarRating reviews={product!.reviews} />
           )}
           <Card.Text className="card-price">
-            ${product.price_cents / 100}
+            ${product!.price_cents / 100}
           </Card.Text>
           <Button
             className="call-to-action-button"
             onClick={() => {
-              setCurrentProduct({
-                ...product,
-              });
-              navigate(`/products/${product.id}`);
+              dispatch(setCurrentProduct(
+                product
+              ));
+              navigate(`/products/${product?.id}`);
             }}
           >
             See product details

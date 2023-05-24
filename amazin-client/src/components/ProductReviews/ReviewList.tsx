@@ -1,25 +1,26 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { ProductType } from '../../types/types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import ReviewListItem from './ReviewListItem';
 
 type Props = {
-  currentProduct: ProductType;
   setReviewsEdited: any;
 };
 
 export default function ReviewList(props: Props) {
-  const { currentProduct, setReviewsEdited } = props;
+  const { setReviewsEdited } = props;
+  const currentProduct = useSelector(
+    (state: RootState) => state.products.currentProduct
+  );
   const { reviews } = currentProduct;
 
   const categoryLists = reviews.map((r) => {
     return (
       <ReviewListItem
-        key={r.id}
+        key={r!.id}
         review={r}
-        currentProduct={currentProduct}
         setReviewsEdited={setReviewsEdited}
-        // setCurrentProduct={setCurrentProduct}
       />
     );
   });

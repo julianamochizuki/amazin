@@ -1,29 +1,23 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { ChevronDown, Star, StarFill, StarHalf } from 'react-bootstrap-icons';
+import { ReviewType } from '../../types/types';
 
 type Props = {
-  reviews: {
-    id: number;
-    description: string;
-    rating: number;
-    productId: number;
-    userId: number;
-    createdAt: string;
-    updatedAt: string;
-  }[];
+  reviews: ReviewType[];
 };
 
 const MAX_RATING = 5;
 
 export default function StarRating({ reviews }: Props) {
+
   const getRating = () => {
     if (reviews.length === 0) {
       return 0;
     }
 
     const totalRating = reviews.reduce((acc, review) => {
-      return acc + review.rating;
+      return acc + review!.rating;
     }, 0);
 
     return totalRating / reviews.length;

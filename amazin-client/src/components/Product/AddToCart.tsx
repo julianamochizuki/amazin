@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../app/store';
 import { ProductType } from '../../types/types';
+import { useDispatch } from 'react-redux';
+import { addToCart, updateCart } from '../../app/cartReducer';
 
 type Props = {
-  currentProduct: ProductType;
   vendor: string;
 };
 
@@ -15,10 +18,14 @@ type Options = {
 };
 
 export default function AddToCart(props: Props) {
-  const { currentProduct, vendor } = props;
+  const { vendor } = props;
   const [quantitySelected, setQuantitySelected] = useState(1);
   const navigate = useNavigate();
-
+  const currentProduct = useSelector(
+    (state: RootState) => state.products.currentProduct
+  );
+  const cart = useSelector((state: RootState) => state.cart.cartItems);
+  const dispatch = useDispatch();
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 3);
   const options: Options = { weekday: 'long', month: 'long', day: 'numeric' };
@@ -28,26 +35,32 @@ export default function AddToCart(props: Props) {
   );
 
   const handleAddToCart = () => {
-    const cart = localStorage.getItem('cart');
     if (cart) {
-      const cartArray = JSON.parse(cart);
-      const productInCart = cartArray.find(
+      const productInCart = cart.find(
         (product: ProductType) => product.id === currentProduct.id
       );
       if (productInCart) {
-        productInCart.quantityInCart += quantitySelected;
+        const updatedProduct = {
+          ...productInCart,
+          quantityInCart: productInCart.quantityInCart + quantitySelected,
+        };
+        dispatch(updateCart(updatedProduct));
       } else {
-        currentProduct.quantityInCart = quantitySelected;
-        cartArray.push(currentProduct);
+        const newProduct = {
+          ...currentProduct,
+          quantityInCart: quantitySelected,
+        };
+        dispatch(addToCart(newProduct));
       }
-      localStorage.setItem('cart', JSON.stringify(cartArray));
     } else {
-      currentProduct.quantityInCart = quantitySelected;
-      localStorage.setItem('cart', JSON.stringify([currentProduct]));
+      const newProduct = {
+        ...currentProduct,
+        quantityInCart: quantitySelected,
+      };
+      dispatch(addToCart(newProduct));
     }
     navigate('/cart');
   };
-
   return (
     <Col xs={12} sm={6} md={3} lg={3} className="add-to-cart-container">
       <Row>${currentProduct.price_cents / 100}</Row>

@@ -1,10 +1,7 @@
-import { type } from '@testing-library/user-event/dist/type';
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Star, StarFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
-import { ProductType } from '../../types/types';
 
 interface ProductFilterType {
   rating: number;

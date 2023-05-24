@@ -9,14 +9,8 @@ import Error from './Error';
 import ProductFilter from './ProductFilter';
 import ProductListItem from './ProductListItem';
 
-type Props = {
-  currentProduct: ProductType;
-  setCurrentProduct: any;
-};
-
-export default function ProductList(props: Props) {
-  const [products, setProducts] = useState([]);
-  const { setCurrentProduct } = props;
+export default function ProductList() {
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [currentCategoryId, setCurrentCategoryId] = useState('');
   const { categoryId, searchTerm, rating, minPrice, maxPrice } = useParams();
   const categoryIdValue = categoryId !== undefined ? categoryId : null;
@@ -51,12 +45,11 @@ export default function ProductList(props: Props) {
 
   console.log(currentCategoryId, 'currentCategoryId');
 
-  const productLists = products.map((p: ProductType) => {
+  const productLists = products.map((p) => {
     return (
       <ProductListItem
         key={p.id}
         product={p}
-        setCurrentProduct={setCurrentProduct}
       />
     );
   });
