@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import CartReview from './components/Cart';
 import ThankYou from './components/NewReview/ThankYou';
 import Orders from './components/Orders';
@@ -14,18 +14,8 @@ import Products from './pages/products';
 import Profile from './pages/profile';
 import Register from './pages/register';
 import Sell from './pages/seller';
-import { CartType, ProductType } from './types/types';
 
-type Props = {
-  currentProduct: ProductType;
-  setCurrentProduct: any;
-  cart: CartType;
-  setCart: any;
-  total: number;
-};
-
-const Router = (props: Props) => {
-  const { currentProduct, setCurrentProduct, cart, setCart, total } = props;
+const Router = () => {
   const token = Cookies.get('token') || null;
 
   return (
@@ -37,48 +27,17 @@ const Router = (props: Props) => {
       /> */}
       <Route
         path="/products/search/:searchTerm/:rating/:minPrice/:maxPrice"
-        element={<Products {...props} />}
+        element={<Products />}
       />
       <Route
         path="/categories/:categoryId/products/:rating/:minPrice/:maxPrice"
-        element={<Products {...props} />}
+        element={<Products />}
       />
-      <Route
-        path="/products/:productId"
-        element={
-          <Product
-            currentProduct={currentProduct}
-            setCurrentProduct={setCurrentProduct}
-          />
-        }
-      />
-      <Route
-        path="/cart"
-        element={<CartReview cart={cart} setCart={setCart} total={total} />}
-      />
-      {token && (
-        <Route
-          path="/checkout"
-          element={<Checkout cart={cart} setCart={setCart} total={total} />}
-        />
-      )}
-      {token && (
-        <Route
-          path="/orders"
-          element={
-            <Orders
-              currentProduct={currentProduct}
-              setCurrentProduct={setCurrentProduct}
-            />
-          }
-        />
-      )}
-      {token && (
-        <Route
-          path="/write-a-review"
-          element={<NewReview currentProduct={currentProduct} />}
-        />
-      )}
+      <Route path="/products/:productId" element={<Product />} />
+      <Route path="/cart" element={<CartReview />} />
+      {token && <Route path="/checkout" element={<Checkout />} />}
+      {token && <Route path="/orders" element={<Orders />} />}
+      {token && <Route path="/write-a-review" element={<NewReview />} />}
       {token && <Route path="/add-a-review/thank-you" element={<ThankYou />} />}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
