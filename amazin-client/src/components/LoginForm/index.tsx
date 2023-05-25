@@ -97,7 +97,9 @@ export default function LoginForm() {
           </Card>
           <Row className="justify-content-center">New to Amazin? </Row>
           <Row className="justify-content-center">
-            <Button href="/register">Create your Amazin account</Button>
+            <Button onClick={() => navigate('/register')}>
+              Create your Amazin account
+            </Button>
           </Row>
         </Col>
       </Row>

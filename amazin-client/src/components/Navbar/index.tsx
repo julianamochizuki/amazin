@@ -42,7 +42,7 @@ const NavBar = function () {
       <div style={{ width: '100vw', marginTop: -7 }}>
         <Row>
           <Col className="d-flex align-items-center navbar-brand">
-            <Navbar.Brand href="/">
+            <Navbar.Brand onClick={() => navigate('/')}>
               <Image
                 src={process.env.PUBLIC_URL + '/logo.png'}
                 height="50"
@@ -90,10 +90,14 @@ const NavBar = function () {
                 onMouseEnter={showDropdown}
                 onMouseLeave={hideDropdown}
               >
-                <Dropdown.Item href={token ? '/profile' : '/login'}>
+                <Dropdown.Item
+                  onClick={() => navigate(token ? '/profile' : '/login')}
+                >
                   Your Account
                 </Dropdown.Item>
-                <Dropdown.Item href={token ? '/orders' : '/login'}>
+                <Dropdown.Item
+                  onClick={() => navigate(token ? '/orders' : '/login')}
+                >
                   Your Orders
                 </Dropdown.Item>
                 {token && (
@@ -106,20 +110,19 @@ const NavBar = function () {
           </Col>
           <Col className="d-flex align-items-center">
             <Nav.Link
-              href={token ? '/orders' : '/login'}
+              onClick={() => navigate(token ? '/orders' : '/login')}
               className="text-light"
             >
               Returns & Orders
             </Nav.Link>
           </Col>
           <Col className="d-flex align-items-center">
-            <Nav.Link href="/cart" className="text-light">
+            <Nav.Link className="text-light" onClick={() => navigate('/cart')}>
               Cart
             </Nav.Link>
           </Col>
         </Row>
-        <Drawer
-        />
+        <Drawer />
       </div>
     </Navbar>
   );
