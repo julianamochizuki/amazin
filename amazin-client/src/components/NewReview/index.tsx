@@ -46,24 +46,30 @@ const WriteReview = () => {
     e.preventDefault();
 
     if (!userHasReviewed) {
-      await axios.post(
-        `${url}/api/products/${currentProduct.id}/reviews`,
-        {
-          rating,
-          description,
-          productId: currentProduct.id,
-          userId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      await axios
+        .post(
+          `${url}/api/products/${currentProduct.id}/reviews`,
+          {
+            rating,
+            description,
+            productId: currentProduct.id,
+            userId,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .catch((e) => {
+          console.log('error creating review', e);
+        });
     } else {
       axios
         .patch(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews/${userReview!.id}`,
+          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${
+            currentProduct.id
+          }/reviews/${userReview!.id}`,
           {
             description,
             rating,
@@ -74,10 +80,6 @@ const WriteReview = () => {
             },
           }
         )
-        .then((res) => {
-          userReview!.description = res.data.description;
-          userReview!.rating = res.data.rating;
-        })
         .catch((e) => {
           console.log('error editing review', e);
         });

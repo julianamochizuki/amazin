@@ -97,7 +97,7 @@ export default function ReviewListItem(props: Props) {
 
   return (
     <Col>
-      <Row>{review!.user.name}</Row>
+      <Row>{review?.user?.name}</Row>
       {isEditing ? (
         <Col style={{ color: '#FFA41C' }}>
           {[...Array(5)].map((_, index) => {
@@ -128,12 +128,12 @@ export default function ReviewListItem(props: Props) {
       ) : (
         <Row>{review!.description}</Row>
       )}
-      {userId === review!.user.id && (
+      {userId === review?.user?.id && (
         <Button variant="warning" onClick={handleEdit}>
           {isEditing ? 'Save' : 'Edit'}
         </Button>
       )}
-      {userId === review!.user.id && (
+      {userId === review?.user?.id && (
         <Button variant="warning" onClick={handleClick}>
           {isEditing ? 'Cancel' : 'Delete'}
         </Button>
