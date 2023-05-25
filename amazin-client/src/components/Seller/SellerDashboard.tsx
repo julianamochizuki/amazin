@@ -6,6 +6,7 @@ import InventoryList from './InventoryList';
 import OrderList from './OrderList';
 import { OrderType } from '../../types/types';
 import { Nav } from 'react-bootstrap';
+import AddProduct from './AddProduct';
 
 export default function SellerDashboard() {
   const [orders, setOrders] = useState<OrderType[]>([]);
@@ -61,16 +62,26 @@ export default function SellerDashboard() {
             Orders
           </Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="AddProduct" onClick={() => setMode('NewProduct')}>
+            Add Product
+          </Nav.Link>
+        </Nav.Item>
       </Nav>
 
-      {mode === 'Inventory' ? (
+      {mode === 'Inventory' && (
         <InventoryList
           inventory={inventory}
           inventoryUpdated={inventoryUpdated}
           setInventoryUpdated={setInventoryUpdated}
         />
-      ) : (
-        <OrderList orders={orders} />
+      )}
+      {mode === 'Orders' && <OrderList orders={orders} />}
+      {mode === 'NewProduct' && (
+        <AddProduct
+          inventoryUpdated={inventoryUpdated}
+          setInventoryUpdated={setInventoryUpdated}
+        />
       )}
     </>
   );

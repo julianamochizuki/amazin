@@ -12,6 +12,8 @@ export default function InventoryList(props: Props) {
   const { inventory, inventoryUpdated, setInventoryUpdated } =
     props;
 
+  setInventoryUpdated(false);
+
   const handleSave = () => {
     setInventoryUpdated(true);
   };
