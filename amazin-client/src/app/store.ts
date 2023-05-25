@@ -1,13 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { cartReducer } from './cartReducer';
 import { departmentReducer } from './departmentReducer';
+import { productFilterReducer } from './productFilterReducer';
 import { productReducer } from './productReducer';
 
 const rootReducer = combineReducers({
   departments: departmentReducer,
   products: productReducer,
-  cart: cartReducer,
+  productFilters: productFilterReducer,
 });
 
 export const store = configureStore({

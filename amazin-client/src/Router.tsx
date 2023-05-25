@@ -14,30 +14,61 @@ import Products from './pages/products';
 import Profile from './pages/profile';
 import Register from './pages/register';
 import Sell from './pages/seller';
+import { CartType } from './types/types';
 
-const Router = () => {
+type Props = {
+  cart: CartType;
+  setCart: any;
+  total: number;
+};
+
+const Router = (props: Props) => {
+  const { cart, setCart, total } = props;
   const token = Cookies.get('token') || null;
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      {/* <Route
+      <Route
+        path="/products/search/:searchTerm"
+        element={<Products />}
+      />
+      <Route
         path="/categories/:categoryId/products"
-        element={<Products {...props} />}
-      /> */}
-      <Route
-        path="/products/search/:searchTerm/:rating/:minPrice/:maxPrice"
         element={<Products />}
       />
       <Route
-        path="/categories/:categoryId/products/:rating/:minPrice/:maxPrice"
-        element={<Products />}
+        path="/products/:productId"
+        element={
+          <Product
+          />
+        }
       />
-      <Route path="/products/:productId" element={<Product />} />
-      <Route path="/cart" element={<CartReview />} />
-      {token && <Route path="/checkout" element={<Checkout />} />}
-      {token && <Route path="/orders" element={<Orders />} />}
-      {token && <Route path="/write-a-review" element={<NewReview />} />}
+      <Route
+        path="/cart"
+        element={<CartReview cart={cart} setCart={setCart} total={total} />}
+      />
+      {token && (
+        <Route
+          path="/checkout"
+          element={<Checkout cart={cart} setCart={setCart} total={total} />}
+        />
+      )}
+      {token && (
+        <Route
+          path="/orders"
+          element={
+            <Orders
+            />
+          }
+        />
+      )}
+      {token && (
+        <Route
+          path="/write-a-review"
+          element={<NewReview />}
+        />
+      )}
       {token && <Route path="/add-a-review/thank-you" element={<ThankYou />} />}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

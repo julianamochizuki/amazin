@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentProduct } from '../../app/productReducer';
 import { RootState } from '../../app/store';
 import { ProductType } from '../../types/types';
 import { useDispatch } from 'react-redux';
-import { addToCart, updateCart } from '../../app/cartReducer';
 
 type Props = {
   vendor: string;
@@ -24,8 +24,8 @@ export default function AddToCart(props: Props) {
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
   );
-  const cart = useSelector((state: RootState) => state.cart.cartItems);
   const dispatch = useDispatch();
+
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 3);
   const options: Options = { weekday: 'long', month: 'long', day: 'numeric' };
@@ -35,32 +35,30 @@ export default function AddToCart(props: Props) {
   );
 
   const handleAddToCart = () => {
+    const cart = localStorage.getItem('cart');
     if (cart) {
-      const productInCart = cart.find(
+      const cartArray = JSON.parse(cart);
+      const productInCart = cartArray.find(
         (product: ProductType) => product.id === currentProduct.id
       );
       if (productInCart) {
-        const updatedProduct = {
-          ...productInCart,
-          quantityInCart: productInCart.quantityInCart + quantitySelected,
-        };
-        dispatch(updateCart(updatedProduct));
+        productInCart.quantityInCart += quantitySelected;
       } else {
-        const newProduct = {
-          ...currentProduct,
-          quantityInCart: quantitySelected,
-        };
-        dispatch(addToCart(newProduct));
+        const udpatedCurrentProduct = { ...currentProduct };
+        udpatedCurrentProduct.quantityInCart = quantitySelected;
+        dispatch(setCurrentProduct({ ...udpatedCurrentProduct }));
+        cartArray.push(udpatedCurrentProduct);
       }
+      localStorage.setItem('cart', JSON.stringify(cartArray));
     } else {
-      const newProduct = {
-        ...currentProduct,
-        quantityInCart: quantitySelected,
-      };
-      dispatch(addToCart(newProduct));
+      const updatedCurrentProduct = { ...currentProduct };
+      updatedCurrentProduct.quantityInCart = quantitySelected;
+      dispatch(setCurrentProduct({ ...updatedCurrentProduct }));
+      localStorage.setItem('cart', JSON.stringify([updatedCurrentProduct]));
     }
     navigate('/cart');
   };
+
   return (
     <Col xs={12} sm={6} md={3} lg={3} className="add-to-cart-container">
       <Row>${currentProduct.price_cents / 100}</Row>

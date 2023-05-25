@@ -4,12 +4,15 @@ import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
 import React, { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
-import { RootState } from '../../app/store';
-import { useSelector, useDispatch } from 'react-redux';
+import { CartType } from '../../types/types';
 
-export default function OrderSummary() {
-  const cart = useSelector((state: RootState) => state.cart.cartItems);
-  const total = useSelector((state: RootState) => state.cart.total);
+type Props = {
+  cart: CartType;
+  total: number;
+};
+
+export default function OrderSummary(props: Props) {
+  const { cart, total } = props;
   const [message, setMessage] = useState<string | undefined>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [order, setOrder] = useState<any>(null);

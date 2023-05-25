@@ -70,6 +70,8 @@ export interface CartItem {
   updatedAt: string;
 }
 
+export type CartType = CartItem[];
+
 export type UserOrderType = {
   id: number;
   name: string;
@@ -97,4 +99,10 @@ export type OrderItemType = {
   createdAt: string;
   updatedAt: string;
   product: ProductType;
+};
+
+export type ProductFilterType = {
+  rating: number;
+  minPrice: number;
+  maxPrice: number;
 };

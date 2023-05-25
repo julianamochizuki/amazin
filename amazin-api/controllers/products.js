@@ -24,6 +24,7 @@ const getAllProductsByCategory = async (req, res) => {
 };
 
 const getAllProductsBySearch = async (req, res) => {
+  console.log('req.query' ,req.query);
   const products = await prisma.product.findMany({
     where: {
       name: {
