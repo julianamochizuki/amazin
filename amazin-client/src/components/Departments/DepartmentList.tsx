@@ -1,9 +1,13 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCurrentDepartment } from '../../app/departmentReducer';
-import { DepartmentType } from '../../types/types';
+import {
+  setCurrentDepartment,
+  setDepartments,
+} from '../../app/departmentReducer';
+import { RootState } from '../../app/store';
 import DepartmentListItem from './DepartmentListItem';
+import { useSelector } from 'react-redux';
 
 type Props = {
   isExpanded: boolean;
@@ -13,15 +17,18 @@ type Props = {
 export default function DepartmentList(props: Props) {
   const { setIsExpanded } = props;
   const dispatch = useDispatch();
-  const [departments, setDepartments] = useState<DepartmentType[]>([]);
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_SERVER_URL}/api/departments`)
       .then((res) => {
-        setDepartments(res.data);
+        dispatch(setDepartments(res.data));
       });
   }, []);
+
+  const departments = useSelector(
+    (state: RootState) => state.departments.departments
+  );
 
   const departmentLists = departments.map((d) => {
     return (

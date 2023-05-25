@@ -15,6 +15,11 @@ interface SetCurrentDepartmentAction {
   payload: DepartmentType | null;
 }
 
+interface SetDepartmentsAction {
+  type: 'SET_DEPARTMENTS';
+  payload: DepartmentType[];
+}
+
 export const setCurrentDepartment = (
   department: DepartmentType | null
 ): SetCurrentDepartmentAction => ({
@@ -22,15 +27,27 @@ export const setCurrentDepartment = (
   payload: department,
 });
 
+export const setDepartments = (
+  departments: DepartmentType[]
+): SetDepartmentsAction => ({
+  type: 'SET_DEPARTMENTS',
+  payload: departments,
+});
+
 export const departmentReducer = (
   state = initialState,
-  action: SetCurrentDepartmentAction
+  action: SetCurrentDepartmentAction | SetDepartmentsAction
 ): DepartmentState => {
   switch (action.type) {
     case 'SET_CURRENT_DEPARTMENT':
       return {
         ...state,
         currentDepartment: action.payload,
+      };
+    case 'SET_DEPARTMENTS':
+      return {
+        ...state,
+        departments: action.payload,
       };
     default:
       return state;
