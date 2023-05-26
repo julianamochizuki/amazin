@@ -41,21 +41,26 @@ model Category {
 }
 
 model Product {
-  id          Int         @id @default(autoincrement())
-  name        String
-  price_cents Int
-  description String
-  image       String
-  quantity    Int
-  category    Category    @relation(fields: [categoryId], references: [id])
-  categoryId  Int
-  reviews     Review[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  OrderItem   OrderItem[]
-  User        User?       @relation(fields: [userId], references: [id])
-  userId      Int?
-  isActive    Boolean     @default(true)
+  id              Int         @id @default(autoincrement())
+  name            String
+  price_cents     Int
+  description     String
+  image           String
+  quantity        Int
+  quantitySold    Int         @default(0)
+  category        Category    @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  reviews         Review[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  OrderItem       OrderItem[]
+  User            User?       @relation(fields: [userId], references: [id])
+  userId          Int?
+  isActive        Boolean     @default(true)
+  isOnSale        Boolean     @default(false)
+  discountPercent Int?
+  saleStartDate   DateTime?
+  saleEndDate     DateTime?
 }
 
 model Review {
