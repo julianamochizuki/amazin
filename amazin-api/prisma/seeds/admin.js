@@ -10,19 +10,19 @@ module.exports = [
   },
   {
     name: 'TopSellerz',
-    email: 'john@store.com',
+    email: 'topsellerz@store.com',
     password: hashedPassword,
     address: '456 Market Avenue, Vancouver, Canada',
   },
   {
     name: 'AmazeShop',
-    email: 'michael@store.com',
+    email: 'amazeshop@store.com',
     password: hashedPassword,
     address: '789 Commercial Lane, Montreal, Canada',
   },
   {
     name: 'PrimeGoods',
-    email: 'samantha@store.com',
+    email: 'primegoods@store.com',
     password: hashedPassword,
     address: '987 Retail Street, Calgary, Canada',
   },
