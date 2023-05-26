@@ -43,6 +43,9 @@ export default function InventoryList(props: Props) {
           <th>Date Created</th>
           <th>Quantity</th>
           <th>Price</th>
+          <th>Sales Discount (%)</th>
+          <th>Sales Start Date</th>
+          <th>Sales End Date</th>
           <th>
             <Button variant="warning" onClick={handleSave}>
               Save all

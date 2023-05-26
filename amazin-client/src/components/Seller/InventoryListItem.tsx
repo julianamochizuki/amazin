@@ -22,7 +22,12 @@ export default function InventoryListItem(props: Props) {
     image: product.image,
     name: product.name,
     price_cents: product.price_cents,
+    discountPercent: product.discountPercent,
+    saleStartDate: product.saleStartDate,
+    saleEndDate: product.saleEndDate,
   });
+
+  const today = new Date().toISOString().slice(0, 10);
 
   const handleOptionSelect = (eventKey: any) => {
     setSelectedOption(eventKey);
@@ -30,6 +35,12 @@ export default function InventoryListItem(props: Props) {
 
   useEffect(() => {
     if (inventoryUpdated) {
+      const formattedSaleStartDate = new Date(
+        form.saleStartDate!
+      ).toISOString();
+
+      const formattedSaleEndDate = new Date(form.saleEndDate!).toISOString();
+
       if (selectedOption === 'Edit') {
         axios
           .patch(
@@ -39,6 +50,11 @@ export default function InventoryListItem(props: Props) {
               image: form.image,
               name: form.name,
               price_cents: form.price_cents,
+              discountPercent: form.discountPercent,
+              saleStartDate: formattedSaleStartDate,
+              saleEndDate: formattedSaleEndDate,
+              isOnSale:
+                form.saleStartDate?.split('T')[0] === today ? true : false,
             },
             {
               headers: {
@@ -46,6 +62,9 @@ export default function InventoryListItem(props: Props) {
               },
             }
           )
+          .then(() => {
+            setInventoryUpdated(true);
+          })
           .catch((e) => console.log(`error updating product ${product.id}`, e));
       }
       if (
@@ -106,7 +125,7 @@ export default function InventoryListItem(props: Props) {
           product.name
         )}
       </td>
-      <td>{product.createdAt}</td>
+      <td>{product.createdAt.substring(0, 10)}</td>
       <td>
         {selectedOption === 'Edit' ? (
           <input
@@ -135,6 +154,54 @@ export default function InventoryListItem(props: Props) {
           />
         ) : (
           product.price_cents / 100
+        )}
+      </td>
+      <td>
+        {selectedOption === 'Edit' ? (
+          <input
+            type="number"
+            value={form.discountPercent}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                discountPercent: parseFloat(e.target.value) || 0,
+              })
+            }
+          />
+        ) : product.isOnSale ? (
+          product.discountPercent
+        ) : (
+          0
+        )}
+      </td>
+      <td>
+        {selectedOption === 'Edit' ? (
+          <input
+            type="date"
+            value={form.saleStartDate?.substring(0, 10)}
+            min={today}
+            onChange={(e) =>
+              setForm({ ...form, saleStartDate: e.target.value })
+            }
+          />
+        ) : product.isOnSale ? (
+          product.saleStartDate?.substring(0, 10)
+        ) : (
+          'N/A'
+        )}
+      </td>
+      <td>
+        {selectedOption === 'Edit' ? (
+          <input
+            type="date"
+            min={form.saleStartDate?.substring(0, 10)}
+            value={form.saleEndDate?.substring(0, 10)}
+            onChange={(e) => setForm({ ...form, saleEndDate: e.target.value })}
+          />
+        ) : product.isOnSale ? (
+          product.saleEndDate?.substring(0, 10)
+        ) : (
+          'N/A'
         )}
       </td>
       <td>
