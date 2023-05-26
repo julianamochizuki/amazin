@@ -61,13 +61,22 @@ const authenticateUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const user = await prisma.user.create({
-    data: {
-      ...req.body,
-      password: hashedPassword,
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email: req.body.email,
     },
   });
-  res.json(user);
+  if (existingUser) {
+    res.status(401).json('An account with that e-mail address already exists');
+  } else {
+    const user = await prisma.user.create({
+      data: {
+        ...req.body,
+        password: hashedPassword,
+      },
+    });
+    res.json(user);
+  }
 };
 
 const updateUserById = async (req, res) => {
@@ -120,7 +129,6 @@ const updatePasswordById = async (req, res) => {
     res.status(200).json('Your password has been updated');
   }
 };
-
 
 const deleteUserById = async (req, res) => {
   const user = await prisma.user.delete({
