@@ -1,6 +1,54 @@
 const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const getAllProductsByDepartment = async (req, res) => {
+  const products = await prisma.product.findMany({
+    where: {
+      category: {
+        departmentId: Number(req.params.departmentId),
+      },
+      isActive: true,
+      price_cents: {
+        gte: Number(req.query.min),
+        lte: Number(req.query.max),
+      },
+    },
+    include: {
+      reviews: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  let averageRating = 0;
+  let totalReviews = 0;
+  let totalRating = 0;
+  products.forEach((product) => {
+    if (!product.reviews.length) {
+      product.averageRating = 0;
+      return;
+    }
+    product.reviews.forEach((review) => {
+      totalReviews += 1;
+      totalRating += review.rating;
+    });
+    averageRating = totalRating / totalReviews;
+    product.averageRating = averageRating;
+  });
+
+  const filteredProducts = products.filter((product) => {
+    return product.averageRating >= Number(req.query.rating);
+  });
+  res.json(filteredProducts);
+};
+
 const getAllProductsByCategory = async (req, res) => {
   const products = await prisma.product.findMany({
     where: {
@@ -167,6 +215,57 @@ const getAllDealsProducts = async (req, res) => {
   res.json(filteredProducts);
 };
 
+const getBestSellersProducts = async (req, res) => {
+  let products = await prisma.product.findMany({
+    where: {
+      isActive: true,
+      price_cents: {
+        gte: Number(req.query.min),
+        lte: Number(req.query.max),
+      },
+    },
+    include: {
+      reviews: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      quantitySold: 'desc',
+    },
+  });
+
+  products = products.slice(0, 20);
+
+  let averageRating = 0;
+  let totalReviews = 0;
+  let totalRating = 0;
+  products.forEach((product) => {
+    if (!product.reviews.length) {
+      product.averageRating = 0;
+      return;
+    }
+    product.reviews.forEach((review) => {
+      totalReviews += 1;
+      totalRating += review.rating;
+    });
+    averageRating = totalRating / totalReviews;
+    product.averageRating = averageRating;
+  });
+
+  const filteredProducts = products.filter((product) => {
+    return product.averageRating >= Number(req.query.rating);
+  });
+
+  res.json(filteredProducts);
+};
+
 const getProductById = async (req, res) => {
   const product = await prisma.product.findUnique({
     where: {
@@ -228,10 +327,12 @@ const deleteProductById = async (req, res) => {
 };
 
 module.exports = {
+  getAllProductsByDepartment,
   getAllProductsByCategory,
   getAllProductsBySearch,
   getAllProductsByFilter,
   getAllDealsProducts,
+  getBestSellersProducts,
   getProductById,
   createProduct,
   updateProductById,
