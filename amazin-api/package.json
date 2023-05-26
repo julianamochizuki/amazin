@@ -19,6 +19,7 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
+    "node-cron": "^3.0.2",
     "stripe": "^12.5.0"
   },
   "devDependencies": {
