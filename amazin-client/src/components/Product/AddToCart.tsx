@@ -61,6 +61,18 @@ export default function AddToCart(props: Props) {
 
   return (
     <Col xs={12} sm={6} md={3} lg={3} className="add-to-cart-container">
+      {currentProduct.isOnSale ? (
+        <Row>
+          $
+          {(
+            ((currentProduct!.price_cents / 100) *
+              (100 - currentProduct!.discountPercent! ?? 0)) /
+            100
+          ).toFixed(2)}
+        </Row>
+      ) : (
+        <Row>${(currentProduct!.price_cents / 100).toFixed(2)}</Row>
+      )}
       <Row>${currentProduct.price_cents / 100}</Row>
       <Row>FREE delivery {formattedDeliveryDate}</Row>
       <Row>

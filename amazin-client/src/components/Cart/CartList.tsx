@@ -65,7 +65,20 @@ export default function CartList(props: Props) {
               </Col>
             </Row>
           </Col>
-          <Col>${product.price_cents / 100}</Col>
+          {product.isOnSale ? (
+            <Col>
+              $
+              {(
+                ((product!.price_cents / 100) *
+                  (100 - product!.discountPercent! ?? 0)) /
+                100
+              ).toFixed(2)}
+            </Col>
+          ) : (
+            <Col xs={12} sm={1} md={1} lg={1}>
+              ${(product!.price_cents / 100).toFixed(2)}
+            </Col>
+          )}
         </Row>
       ))}
       <Row>

@@ -17,7 +17,7 @@ export default function CartTotal(props: Props) {
   return (
     <Col xs={12} md={2} className="cart-total">
       <Row>
-        Subtotal ({cart.length} items): ${total / 100}
+        Subtotal ({cart.length} items): ${total}
       </Row>
       <Row>
         <Button

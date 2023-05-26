@@ -1,15 +1,18 @@
 .card-container {
-  margin-top: 30px
+  margin-top: 30px;
+  height: 430px;
 }
 
 .card-image {
-  object-fit: cover
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   height: 300;
 }
@@ -17,18 +20,46 @@
 .card-title {
   display: flex;
   text-align: left;
-  font-size: 16px,
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-price {
-  font-size: 24px;
-  font-weight: medium;
-  color: #0F1111,
+  font-size: 20px;
+  font-weight: 10px;
+  color: #0F1111;
+  text-align: left;
+  height: 30%;
 }
 
-.call-to-action-button {
+.product-details-button {
   background-color: #FCD200 !important;
   border-color: #FCD200 !important;
   color: #0F1111 !important;
-  font-size: 13px !important
+  font-size: 13px !important;
+  justify-self: baseline !important;
+  align-content: flex-end !important;
+  align-items: flex-end !important;
 }
+
+.card-regular-price {
+  font-size: 14px;
+  color: #777;
+  text-decoration: line-through;
+}
+
+.card-sale-price {
+  font-size: 20px;
+  font-weight: 15px;
+  color: #B12704;
+}
+
+.card-sale-discount {
+  font-size: 14px;
+  color: #B12704;
+}
+

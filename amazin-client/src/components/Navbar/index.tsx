@@ -76,7 +76,7 @@ const NavBar = function () {
           </Col>
           <Col
             className="text-light d-flex-column align-self-center"
-            onClick={() => navigate(token ? '/account' : '/login')}
+            onClick={() => navigate(token ? '/profile' : '/login')}
           >
             <Row className="text-light">
               {token ? `Hello, ${userName}` : 'Hello, sign in'}

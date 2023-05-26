@@ -29,21 +29,38 @@ export default function ProductListItem(props: { product: ProductType }) {
           style={{ height: 200 }}
         />
         <Card.Body className="card-body">
+          {product.isOnSale ? (
+            <Card.Text className="card-price">
+              <Col className="card-sale-price">
+                $
+                {(
+                  ((product!.price_cents / 100) *
+                    (100 - product!.discountPercent! ?? 0)) /
+                  100
+                ).toFixed(2)}
+              </Col>
+              <Col className="card-regular-price">
+                ${(product!.price_cents / 100).toFixed(2)}
+              </Col>
+              <Col className="card-sale-discount">
+                {product!.discountPercent}% off
+              </Col>
+            </Card.Text>
+          ) : (
+            <Card.Text className="card-price">
+              ${(product!.price_cents / 100).toFixed(2)}
+            </Card.Text>
+          )}
           <Card.Text key={product?.id} className="card-title">
             {product?.name}
           </Card.Text>
           {product!.reviews.length > 0 && (
             <StarRating reviews={product!.reviews} />
           )}
-          <Card.Text className="card-price">
-            ${product!.price_cents / 100}
-          </Card.Text>
           <Button
-            className="call-to-action-button"
+            className="product-details-button"
             onClick={() => {
-              dispatch(setCurrentProduct(
-                product
-              ));
+              dispatch(setCurrentProduct(product));
               navigate(`/products/${product?.id}`);
             }}
           >

@@ -28,6 +28,23 @@
   padding: 20px;
 }
 
+.product-regular-price {
+  font-size: 14px;
+  color: #777;
+  text-decoration: line-through;
+}
+
+.product-sale-price {
+  font-size: 24px;
+  font-weight: 15px;
+  color: #B12704;
+}
+
+.product-sale-discount {
+  font-size: 14px;
+  color: #B12704;
+}
+
 .product-title {
   font-size: 18px;
   font-weight: bold;
@@ -38,6 +55,7 @@
   font-size: 24px;
   font-weight: medium;
   color: #0f1111;
+  text-align: left;
 }
 
 .about-item {

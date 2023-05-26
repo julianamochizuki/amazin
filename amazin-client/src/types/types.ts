@@ -12,6 +12,11 @@ export type ProductType = {
   updatedAt: string;
   category?: CategoryType;
   isActive?: boolean;
+  isOnSale?: boolean;
+  quantitySold?: number;
+  discountPercent?: number;
+  saleStartDate?: string;
+  saleEndDate?: string;
 };
 
 export type CategoryType = {
@@ -68,6 +73,8 @@ export interface CartItem {
   userId: number;
   createdAt: string;
   updatedAt: string;
+  isOnSale?: boolean;
+  discountPercent?: number;
 }
 
 export type CartType = CartItem[];

@@ -51,7 +51,20 @@ export default function CheckoutList(props: Props) {
             </Row>
           </Col>
 
-          <Col xs={12} sm={1} md={1} lg={1}>${product.price_cents / 100}</Col>
+          {product.isOnSale ? (
+            <Col xs={12} sm={1} md={1} lg={1}>
+              $
+              {(
+                ((product!.price_cents / 100) *
+                  (100 - product!.discountPercent! ?? 0)) /
+                100
+              ).toFixed(2)}
+            </Col>
+          ) : (
+            <Col xs={12} sm={1} md={1} lg={1}>
+              ${(product!.price_cents / 100).toFixed(2)}
+            </Col>
+          )}
         </Row>
       ))}
     </Col>

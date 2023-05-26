@@ -106,7 +106,7 @@ export default function OrderSummary(props: Props) {
       <Row>Order Summary</Row>
       <Row>
         <Col>Items ({cart.length}):</Col>
-        <Col>${total / 100}</Col>
+        <Col>${total}</Col>
       </Row>
       <Row>
         <Col>Shipping & Handling:</Col>
@@ -114,7 +114,7 @@ export default function OrderSummary(props: Props) {
       </Row>
       <Row>
         <Col>Order Total</Col>
-        <Col>${total / 100}</Col>
+        <Col>${total}</Col>
       </Row>
     </Col>
   );
