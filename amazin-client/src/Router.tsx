@@ -45,6 +45,10 @@ const Router = (props: Props) => {
         }
       />
       <Route
+        path="/deals"
+        element={<Products />}
+      />
+      <Route
         path="/cart"
         element={<CartReview cart={cart} setCart={setCart} total={total} />}
       />
