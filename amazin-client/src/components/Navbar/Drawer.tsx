@@ -1,5 +1,5 @@
 import React from 'react';
-import { List } from 'react-bootstrap-icons';
+import { ArrowLeft, List } from 'react-bootstrap-icons';
 import { Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 import DepartmentList from '../Departments/DepartmentList';
@@ -23,6 +23,29 @@ export default function Drawer() {
   const handleSelect = () => {
     setIsExpanded(true);
   };
+
+  const menu = [
+    {
+      title: 'Best Sellers',
+      path: '/bestsellers',
+    },
+    {
+      title: 'Deals Store',
+      path: '/deals',
+    },
+    {
+      title: 'Sell',
+      path: '/seller/dashboard',
+    },
+    {
+      title: 'Books',
+      path: '/departments/1/products',
+    },
+    {
+      title: 'Health & Beauty',
+      path: '/departments/4/products',
+    },
+  ];
 
   return (
     <Navbar
@@ -75,17 +98,29 @@ export default function Drawer() {
                   />
                 </Nav.Item>
               ) : (
-                <Nav.Item className="drawer-section">
-                  <Nav.Item className="fs-5">
-                    {currentDepartment!.name}
+                <>
+                  <Nav.Link
+                    className="cursor-pointer drawer-section"
+                    onClick={() => {
+                      setIsExpanded(false);
+                    }}
+                  >
+                    <span>
+                      <ArrowLeft />
+                      {' '}MAIN MENU
+                    </span>
+                  </Nav.Link>
+                  <Nav.Item className="drawer-section">
+                    <Nav.Item className="fs-5">
+                      {currentDepartment!.name}
+                    </Nav.Item>
+                    <CategoryList
+                      currentDepartment={currentDepartment!}
+                      setMenuOpen={setMenuOpen}
+                    />
                   </Nav.Item>
-                  <CategoryList
-                    currentDepartment={currentDepartment!}
-                    setMenuOpen={setMenuOpen}
-                  />
-                </Nav.Item>
+                </>
               )}
-
               <Nav.Item className="drawer-section">
                 <Nav.Item className="fs-5">Settings</Nav.Item>
                 <Nav.Link onClick={handleSelect}>Your Account</Nav.Link>
@@ -99,25 +134,17 @@ export default function Drawer() {
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
-        <Nav.Link href="#features" className="text-light nav-link">
-          Best Sellers
-        </Nav.Link>
-        <Nav.Link
-          className="text-light nav-link"
-          onClick={() => {
-            dispatch(resetCurrentProductFilter());
-            navigate('/deals');
-          }}
-        >
-          Deals Store
-        </Nav.Link>
-        <Nav.Link
-          href="#features"
-          className="text-light nav-link"
-          onClick={() => navigate('/sell')}
-        >
-          Sell
-        </Nav.Link>
+        {menu.map((item) => (
+          <Nav.Link
+            className="text-light nav-link"
+            onClick={() => {
+              dispatch(resetCurrentProductFilter());
+              navigate(item.path);
+            }}
+          >
+            {item.title}
+          </Nav.Link>
+        ))}
       </div>
     </Navbar>
   );

@@ -1,15 +1,11 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Star, StarFill } from 'react-bootstrap-icons';
+import { ChevronLeft, Star, StarFill } from 'react-bootstrap-icons';
 import { RootState } from '../../app/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentProductFilter } from '../../app/productFilterReducer';
 
-type Props = {
-  currentCategoryId: string;
-};
-
-export default function ProductFilter(props: Props) {
+export default function ProductFilter() {
   const productFilter = useSelector(
     (state: RootState) => state.productFilters.currentProductFilter
   );
@@ -38,6 +34,21 @@ export default function ProductFilter(props: Props) {
   return (
     <Col>
       <Row>Customer Review</Row>
+      <Row
+        className="pointer-cursor"
+        onClick={() => {
+          dispatch(
+            setCurrentProductFilter({
+              ...productFilter,
+              rating: 0,
+            })
+          );
+        }}
+      >
+        <span>
+          <ChevronLeft /> Clear
+        </span>
+      </Row>
       {[4, 3, 2, 1].map((rating) => (
         <Col
           key={rating}
@@ -55,6 +66,22 @@ export default function ProductFilter(props: Props) {
         </Col>
       ))}
       <Row>Price</Row>
+      <Row
+        className="pointer-cursor"
+        onClick={() => {
+          dispatch(
+            setCurrentProductFilter({
+              ...productFilter,
+              minPrice: 0,
+              maxPrice: 10000000,
+            })
+          );
+        }}
+      >
+        <span>
+          <ChevronLeft /> Clear
+        </span>
+      </Row>
       {priceRanges.map((range) => (
         <Col
           key={range.min}
@@ -64,7 +91,7 @@ export default function ProductFilter(props: Props) {
               setCurrentProductFilter({
                 ...productFilter,
                 minPrice: range.min! * 100,
-                maxPrice: range.max! * 100,
+                maxPrice: range.max === 0 ? 10000000 : range.max! * 100,
               })
             );
           }}

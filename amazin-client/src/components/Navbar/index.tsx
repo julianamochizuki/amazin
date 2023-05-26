@@ -44,6 +44,7 @@ const NavBar = function () {
           <Col className="d-flex align-items-center navbar-brand">
             <Navbar.Brand onClick={() => navigate('/')}>
               <Image
+                className="pointer-cursor"
                 src={process.env.PUBLIC_URL + '/logo.png'}
                 height="50"
                 width="110"

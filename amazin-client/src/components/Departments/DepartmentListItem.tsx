@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Nav } from 'react-bootstrap';
-import { ChevronCompactRight } from 'react-bootstrap-icons';
+import { ChevronRight } from 'react-bootstrap-icons';
 import { DepartmentType } from '../../types/types';
 
 type Props = {
@@ -15,7 +15,7 @@ export default function DepartmentListItem(props: Props) {
     <Nav.Link onClick={handleSelect}>
       <Container className="drawer-item">
         {department.name}
-        <ChevronCompactRight className="icon" />
+        <ChevronRight className="icon" />
       </Container>
     </Nav.Link>
   );

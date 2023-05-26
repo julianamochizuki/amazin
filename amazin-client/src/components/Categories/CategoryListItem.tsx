@@ -3,7 +3,7 @@ import { Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { CategoryType } from '../../types/types';
 import { useDispatch } from 'react-redux';
-import { resetCurrentProductFilter, setCurrentProductFilter } from '../../app/productFilterReducer';
+import { resetCurrentProductFilter } from '../../app/productFilterReducer';
 
 type Props = {
   category: CategoryType;

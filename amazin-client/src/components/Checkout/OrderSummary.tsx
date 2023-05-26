@@ -63,7 +63,7 @@ export default function OrderSummary(props: Props) {
             },
           },
           paymentId,
-          total,
+          total: total * 100,
         },
         {
           headers: {

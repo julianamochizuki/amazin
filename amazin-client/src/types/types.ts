@@ -113,3 +113,9 @@ export type ProductFilterType = {
   minPrice: number;
   maxPrice: number;
 };
+
+export type ContainerType = {
+  title: string;
+  image: string;
+  path: string;
+};

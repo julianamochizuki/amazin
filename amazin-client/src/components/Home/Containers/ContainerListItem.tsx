@@ -1,15 +1,32 @@
 import React from 'react';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { resetCurrentProductFilter } from '../../../app/productFilterReducer';
+import { ContainerType } from '../../../types/types';
 
-const ContainerListItem = function (props: any) {
-  const { title, image } = props;
+type Props = {
+  container: ContainerType;
+};
+
+const ContainerListItem = function (props: Props) {
+  const { container } = props;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Card>
-      <Card.Title>{title}</Card.Title>
-      <Card.Img src={image} />
-      <Link to="">Shop now</Link>
+      <Card.Title>{container.title}</Card.Title>
+      <Card.Img src={container.image} />
+      <Card.Text
+        className="pointer-cursor"
+        onClick={() => {
+          dispatch(resetCurrentProductFilter());
+          navigate(container.path);
+        }}
+      >
+        Shop now
+      </Card.Text>
     </Card>
   );
 };

@@ -13,32 +13,27 @@ import NoProductsFound from './NoProductsFound';
 
 export default function ProductList() {
   const [products, setProducts] = useState<ProductType[]>([]);
-  const [currentCategoryId, setCurrentCategoryId] = useState('');
-  const { categoryId, searchTerm } = useParams();
+  const { categoryId, departmentId, searchTerm } = useParams();
   const productFilter = useSelector(
     (state: RootState) => state.productFilters.currentProductFilter
   );
-  const categoryIdValue = categoryId !== undefined ? categoryId : null;
-  const searchTermValue = searchTerm !== undefined || '' ? searchTerm : null;
   const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
-    if (categoryIdValue) {
+    if (location.pathname.includes('/categories')) {
       axios
         .get(
           `${process.env.REACT_APP_API_SERVER_URL}/api/categories/${categoryId}/products/filter?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
         )
         .then((res) => {
-          setCurrentCategoryId(categoryIdValue!);
           setProducts(res.data);
         })
         .catch((e) => {
-          console.log('error fetching products based on filter', e);
+          console.log('error fetching products based on category', e);
         });
     }
 
-    if (searchTermValue) {
+    if (location.pathname.includes('/search')) {
       axios
         .get(
           `${process.env.REACT_APP_API_SERVER_URL}/api/products/search?s=${searchTerm}&rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
@@ -51,6 +46,21 @@ export default function ProductList() {
         });
     }
 
+    if (location.pathname.includes('/departments')) {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_SERVER_URL}/api/departments/${departmentId}/products?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+        )
+        .then((res) => {
+          setProducts(res.data);
+
+          console.log('products', res.data);
+        })
+        .catch((e) => {
+          console.log('error fetching products based on department', e);
+        });
+    }
+
     if (location.pathname === '/deals') {
       axios
         .get(
@@ -60,25 +70,23 @@ export default function ProductList() {
           setProducts(res.data);
         })
         .catch((e) => {
-          console.log('error fetching products based on search term', e);
+          console.log('error fetching deals', e);
         });
     }
-  }, [categoryIdValue, searchTermValue, productFilter, location.pathname]);
 
-  // useEffect(() => {
-  //   if (location.pathname === '/deals') {
-  //     axios
-  //       .get(
-  //         `${process.env.REACT_APP_API_SERVER_URL}/api/products/deals?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
-  //       )
-  //       .then((res) => {
-  //         setProducts(res.data);
-  //       })
-  //       .catch((e) => {
-  //         console.log('error fetching products based on deals', e);
-  //       });
-  //   }
-  // }, [path]);
+    if (location.pathname === '/bestsellers') {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_SERVER_URL}/api/products/bestsellers?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+        )
+        .then((res) => {
+          setProducts(res.data);
+        })
+        .catch((e) => {
+          console.log('error fetching best sellers', e);
+        });
+    }
+  }, [categoryId, searchTerm, departmentId, productFilter, location.pathname]);
 
   const productLists = products.map((p) => {
     return <ProductListItem key={p.id} product={p} />;
@@ -89,7 +97,7 @@ export default function ProductList() {
       {products.length ? (
         <>
           <Col xs={2}>
-            <ProductFilter currentCategoryId={currentCategoryId} />
+            <ProductFilter />
           </Col>
           <Col xs={10}>
             <Row>{productLists}</Row>
