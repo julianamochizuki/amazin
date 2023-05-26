@@ -24,6 +24,10 @@ interface SetCurrentProductSearchAction {
   payload: string;
 }
 
+interface ResetCurrentProductFilterAction {
+  type: 'RESET_CURRENT_PRODUCT_FILTER';
+}
+
 export const setCurrentProductFilter = (
   productFilter: ProductFilterType
 ): SetCurrentProductFilterAction => ({
@@ -36,15 +40,25 @@ export const setCurrentProductSearch = (productSearch: string) => ({
   payload: productSearch,
 });
 
+export const resetCurrentProductFilter =
+  (): ResetCurrentProductFilterAction => ({
+    type: 'RESET_CURRENT_PRODUCT_FILTER',
+  });
+
 export const productFilterReducer = (
   state = initialState,
-  action: SetCurrentProductFilterAction
+  action: SetCurrentProductFilterAction | ResetCurrentProductFilterAction
 ): ProductFilterState => {
   switch (action.type) {
     case 'SET_CURRENT_PRODUCT_FILTER':
       return {
         ...state,
         currentProductFilter: action.payload,
+      };
+    case 'RESET_CURRENT_PRODUCT_FILTER':
+      return {
+        ...state,
+        currentProductFilter: initialState.currentProductFilter,
       };
     default:
       return state;

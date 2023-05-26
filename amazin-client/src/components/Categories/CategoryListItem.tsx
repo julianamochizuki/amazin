@@ -3,7 +3,7 @@ import { Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { CategoryType } from '../../types/types';
 import { useDispatch } from 'react-redux';
-import { setCurrentProductFilter } from '../../app/productFilterReducer';
+import { resetCurrentProductFilter, setCurrentProductFilter } from '../../app/productFilterReducer';
 
 type Props = {
   category: CategoryType;
@@ -17,13 +17,7 @@ export default function CategoryListItem(props: Props) {
 
   const handleClick = () => {
     setMenuOpen(false);
-    dispatch(
-      setCurrentProductFilter({
-        rating: 0,
-        minPrice: 0,
-        maxPrice: 1000000,
-      })
-    );
+    dispatch(resetCurrentProductFilter());
     navigate(`/categories/${category.id}/products`);
   };
 

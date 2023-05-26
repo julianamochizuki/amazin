@@ -8,6 +8,8 @@ import './Drawer.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { resetCurrentProductFilter } from '../../app/productFilterReducer';
+import { useDispatch } from 'react-redux';
 
 export default function Drawer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,6 +18,7 @@ export default function Drawer() {
   const currentDepartment = useSelector(
     (state: RootState) => state.departments.currentDepartment
   );
+  const dispatch = useDispatch();
 
   const handleSelect = () => {
     setIsExpanded(true);
@@ -73,7 +76,9 @@ export default function Drawer() {
                 </Nav.Item>
               ) : (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="fs-5">{currentDepartment!.name}</Nav.Item>
+                  <Nav.Item className="fs-5">
+                    {currentDepartment!.name}
+                  </Nav.Item>
                   <CategoryList
                     currentDepartment={currentDepartment!}
                     setMenuOpen={setMenuOpen}
@@ -95,9 +100,15 @@ export default function Drawer() {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
         <Nav.Link href="#features" className="text-light nav-link">
-          Best Seller
+          Best Sellers
         </Nav.Link>
-        <Nav.Link href="#features" className="text-light nav-link">
+        <Nav.Link
+          className="text-light nav-link"
+          onClick={() => {
+            dispatch(resetCurrentProductFilter());
+            navigate('/deals');
+          }}
+        >
           Deals Store
         </Nav.Link>
         <Nav.Link
