@@ -605,7 +605,7 @@ module.exports = [
   // },
 
   {
-    name: 'Healthy & Beauty',
+    name: 'Health & Beauty',
     categories: [
       {
         name: 'Skincare',
