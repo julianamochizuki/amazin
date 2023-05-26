@@ -1,42 +1,93 @@
-import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Col, Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
+import { ProductType } from '../../../types/types';
 import DealsListItem from './DealsListItem';
+import '../../../styles/home.css';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { useNavigate } from 'react-router-dom';
 
 const DealsList = function () {
-  type Deal = {
-    id: number;
-    title: string;
-    image: string;
-    discount: number;
+  const [deals, setDeals] = useState<ProductType[]>([]);
+  const productFilter = useSelector(
+    (state: RootState) => state.productFilters.currentProductFilter
+  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_SERVER_URL}/api/products/deals?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+      )
+      .then((res) => {
+        setDeals(res.data);
+      })
+      .catch((e) => {
+        console.log('error fetching deals', e);
+      });
+  }, []);
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          arrows: false,
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
-  const deals: Deal[] = [
-    {
-      id: 1,
-      title: 'Kindle E-Readers',
-      image: process.env.PUBLIC_URL + '/images/ShopByCategory1.jpg',
-      discount: 10,
-    },
-    {
-      id: 2,
-      title: 'Lipstick',
-      image: process.env.PUBLIC_URL + '/images/ShopByCategory1.jpg',
-      discount: 20,
-    },
-  ];
-
-  const DealsList = deals.map((d) => {
+  const DealsItems = deals.map((d) => {
     return (
-      <Col key={d.id}>
-        <DealsListItem title={d.title} image={d.image} discount={d.discount} />
+      <Col>
+        <DealsListItem
+        key={d.id}
+        deal={d}
+        />
       </Col>
     );
   });
 
   return (
-    <Container>
-      <h3>Deals</h3>
-      <Row>{DealsList}</Row>
+    <Container className='home-container'>
+      <div className="deals-header">
+        <h3 className="title">Today's deals</h3>
+        <p className="link-to-products" onClick={() => navigate('/deals')}>
+          See all deals
+        </p>
+      </div>
+      <Slider {...settings}>{DealsItems}</Slider>
     </Container>
   );
 };

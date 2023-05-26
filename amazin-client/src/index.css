@@ -1,10 +1,14 @@
-import 
+:root {
+  --bs-body-bg: #E3E6E6;
+}
 
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Ubuntu', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #E3E6E6 !important;
 }
 
 code {

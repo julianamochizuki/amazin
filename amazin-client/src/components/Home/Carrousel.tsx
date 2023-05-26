@@ -3,8 +3,7 @@ import { Carousel, Container } from 'react-bootstrap';
 
 const Carrousel = function () {
   return (
-    <Container>
-      <Carousel style={{ zIndex: -1 }}>
+      <Carousel>
         <Carousel.Item>
           <img
             className="d-block w-100"
@@ -29,7 +28,6 @@ const Carrousel = function () {
           />
         </Carousel.Item>
       </Carousel>
-    </Container>
   );
 };
 

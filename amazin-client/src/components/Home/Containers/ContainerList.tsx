@@ -4,7 +4,6 @@ import { ContainerType } from '../../../types/types';
 import ContainerListItem from './ContainerListItem';
 
 const ContainerList = function () {
-
   const containers: ContainerType[] = [
     {
       title: "Today's Deals",
@@ -41,11 +40,7 @@ const ContainerList = function () {
     );
   });
 
-  return (
-    <Container>
-      <Row>{containerList}</Row>
-    </Container>
-  );
+  return <Row>{containerList}</Row>;
 };
 
 export default ContainerList;

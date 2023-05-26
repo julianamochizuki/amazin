@@ -1,17 +1,24 @@
 import React from 'react';
-import { ArrowLeft, List } from 'react-bootstrap-icons';
+import { ArrowLeft, List, PersonCircle } from 'react-bootstrap-icons';
 import { Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
-import './Drawer.css';
+import '../../styles/drawer.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { resetCurrentProductFilter } from '../../app/productFilterReducer';
 import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import jwt_decode from 'jwt-decode';
 
-export default function Drawer() {
+type Props = {
+  handleSignOut: any;
+};
+
+export default function Drawer(props: Props) {
+  const { handleSignOut } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
@@ -19,9 +26,29 @@ export default function Drawer() {
     (state: RootState) => state.departments.currentDepartment
   );
   const dispatch = useDispatch();
+  const token = Cookies.get('token');
+  const decodedToken: { name?: string } | null = token
+    ? jwt_decode(token)
+    : null;
+  const userName = decodedToken?.name || null;
+  const firstName = userName?.split(' ')[0];
 
   const handleSelect = () => {
     setIsExpanded(true);
+  };
+
+  const handleAccountClick = () => {
+    if (token) {
+      navigate('/profile');
+    } else {
+      navigate('/login');
+    }
+    setMenuOpen(false);
+  };
+
+  const handleSignOutClick = () => {
+    handleSignOut();
+    setMenuOpen(false);
   };
 
   const menu = [
@@ -74,24 +101,30 @@ export default function Drawer() {
         >
           <Offcanvas.Header
             closeButton
+            closeVariant="white"
             onClick={() => {
               setMenuOpen(false);
             }}
-            style={{ backgroundColor: '#222F3E' }}
+            style={{ backgroundColor: '#222F3E', color: 'white' }}
           >
             <Offcanvas.Title
               id={`offcanvasNavbarLabel-false-${false}`}
-              className="text-light"
+              className="text-light pointer-cursor user"
+              onClick={handleAccountClick}
             >
-              Hello, sign in
+              <h5 className="d-flex align-items-center">
+                <PersonCircle />
+                <span>&nbsp;&nbsp;Hello, {token ? firstName : 'sign in'}</span>
+              </h5>
             </Offcanvas.Title>
           </Offcanvas.Header>
-
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
               {!isExpanded ? (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="fs-5">Shop By Department</Nav.Item>
+                  <Nav.Item className="fs-5 subheading">
+                    Shop By Department
+                  </Nav.Item>
                   <DepartmentList
                     isExpanded={isExpanded}
                     setIsExpanded={setIsExpanded}
@@ -105,13 +138,12 @@ export default function Drawer() {
                       setIsExpanded(false);
                     }}
                   >
-                    <span>
-                      <ArrowLeft />
-                      {' '}MAIN MENU
+                    <span className="main-menu">
+                      <ArrowLeft /> &nbsp;MAIN MENU
                     </span>
                   </Nav.Link>
                   <Nav.Item className="drawer-section">
-                    <Nav.Item className="fs-5">
+                    <Nav.Item className="fs-5 subheading">
                       {currentDepartment!.name}
                     </Nav.Item>
                     <CategoryList
@@ -121,16 +153,33 @@ export default function Drawer() {
                   </Nav.Item>
                 </>
               )}
-              <Nav.Item className="drawer-section">
-                <Nav.Item className="fs-5">Settings</Nav.Item>
-                <Nav.Link onClick={handleSelect}>Your Account</Nav.Link>
-                <Nav.Link onClick={handleSelect}>Sign in</Nav.Link>
-              </Nav.Item>
-              <Nav.Item className="drawer-section">
-                <Nav.Item className="fs-5">Meet The Developer</Nav.Item>
-                <Nav.Link onClick={handleSelect}>About Me</Nav.Link>
-                <Nav.Link onClick={handleSelect}>Icons</Nav.Link>
-              </Nav.Item>
+              {!isExpanded && (
+                <Nav.Item className="drawer-section">
+                  <Nav.Item className="fs-5 subheading">Settings</Nav.Item>
+                  <Nav.Link onClick={handleAccountClick}>Your Account</Nav.Link>
+                  <Nav.Link
+                    onClick={
+                      token
+                        ? handleSignOutClick
+                        : () => {
+                            navigate('/login');
+                            setMenuOpen(false);
+                          }
+                    }
+                  >
+                    {token ? 'Sign Out' : 'Sign in'}
+                  </Nav.Link>
+                </Nav.Item>
+              )}
+              {!isExpanded && (
+                <Nav.Item className="drawer-section">
+                  <Nav.Item className="fs-5 subheading">
+                    Meet The Developer
+                  </Nav.Item>
+                  <Nav.Link onClick={handleSelect}>About Me</Nav.Link>
+                  <Nav.Link onClick={handleSelect}>Icons</Nav.Link>
+                </Nav.Item>
+              )}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

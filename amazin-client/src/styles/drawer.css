@@ -1,0 +1,44 @@
+.nav-link {
+  margin-right: 1rem;
+}
+
+.toggle {
+  border: none;
+  margin-right: 1rem;
+}
+
+.drawer-section {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  border-width: "100vw";
+}
+
+.drawer-item {
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+}
+
+.subheading {
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.drawer-item {
+  display: flex;
+  align-items: center;
+}
+
+.department-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.main-menu, .user {
+  font-weight: bold;
+  padding-top: 0.5rem;
+}

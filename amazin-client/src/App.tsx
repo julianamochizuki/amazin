@@ -14,10 +14,9 @@ function App() {
   const total: number = cart.reduce((acc, product) => {
     const price = product.isOnSale
       ? Number(
-          (
-            (product.price_cents / 100) *
-            (100 - (product.discountPercent ?? 0))
-          )/100
+          ((product.price_cents / 100) *
+            (100 - (product.discountPercent ?? 0))) /
+            100
         )
       : product.price_cents / 100;
 
@@ -28,13 +27,10 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container
-        className="App"
-        style={{ marginTop: '110px', marginBottom: '50px' }}
-      >
+      <div className="App">
         <NavBar />
         <Router cart={cart} setCart={setCart} total={roundedTotal} />
-      </Container>
+      </div>
     </ThemeProvider>
   );
 }

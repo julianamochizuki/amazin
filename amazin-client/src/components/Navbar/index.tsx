@@ -23,6 +23,7 @@ const NavBar = function () {
     ? jwt_decode(token)
     : null;
   const userName = decodedToken?.name || null;
+  const firstName = userName?.split(' ')[0];
   const navigate = useNavigate();
 
   const showDropdown = (e: any) => {
@@ -57,17 +58,6 @@ const NavBar = function () {
           </Col>
           <Col md={6} className="d-flex align-items-center">
             <SearchBar />
-            {/* <Form className="d-flex flex-grow-1">
-              <FormControl
-                type="search"
-                placeholder="Search Amazin"
-                className="mr-2"
-                aria-label="Search"
-              />
-              <Button variant="warning">
-                <Search />
-              </Button>
-            </Form> */}
           </Col>
           <Col className="d-flex align-items-center justify-content-center">
             <Image
@@ -80,7 +70,7 @@ const NavBar = function () {
             onClick={() => navigate(token ? '/profile' : '/login')}
           >
             <Row className="text-light">
-              {token ? `Hello, ${userName}` : 'Hello, sign in'}
+              {token ? `Hello, ${firstName}` : 'Hello, sign in'}
             </Row>
             <Row className="text-light">
               <NavDropdown
@@ -123,7 +113,7 @@ const NavBar = function () {
             </Nav.Link>
           </Col>
         </Row>
-        <Drawer />
+        <Drawer handleSignOut={handleSignOut} />
       </div>
     </Navbar>
   );

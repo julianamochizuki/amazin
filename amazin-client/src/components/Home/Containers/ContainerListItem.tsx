@@ -15,18 +15,16 @@ const ContainerListItem = function (props: Props) {
   const navigate = useNavigate();
 
   return (
-    <Card>
-      <Card.Title>{container.title}</Card.Title>
-      <Card.Img src={container.image} />
-      <Card.Text
-        className="pointer-cursor"
-        onClick={() => {
-          dispatch(resetCurrentProductFilter());
-          navigate(container.path);
-        }}
-      >
-        Shop now
-      </Card.Text>
+    <Card
+      className="pointer-cursor home-card home-container"
+      onClick={() => {
+        dispatch(resetCurrentProductFilter());
+        navigate(container.path);
+      }}
+    >
+      <Card.Title className='title'>{container.title}</Card.Title>
+      <Card.Img className="card-image" src={container.image} />
+      <Card.Text className="link-to-products">See more</Card.Text>
     </Card>
   );
 };
