@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import CartReview from './components/Cart';
 import ThankYou from './components/NewReview/ThankYou';
 import Orders from './components/Orders';
@@ -28,26 +28,17 @@ const Router = (props: Props) => {
 
   return (
     <Routes>
+      <Route path="*" element={<Navigate to={'/'} />} />
       <Route path="/" element={<Home />} />
+      <Route path="/products/search/:searchTerm" element={<Products />} />
       <Route
-        path="/products/search/:searchTerm"
+        path="/departments/:departmentId/products"
         element={<Products />}
       />
-      <Route
-        path="/categories/:categoryId/products"
-        element={<Products />}
-      />
-      <Route
-        path="/products/:productId"
-        element={
-          <Product
-          />
-        }
-      />
-      <Route
-        path="/deals"
-        element={<Products />}
-      />
+      <Route path="/categories/:categoryId/products" element={<Products />} />
+      <Route path="/deals" element={<Products />} />
+      <Route path="/bestsellers" element={<Products />} />
+      <Route path="/products/:productId" element={<Product />} />
       <Route
         path="/cart"
         element={<CartReview cart={cart} setCart={setCart} total={total} />}
@@ -58,21 +49,8 @@ const Router = (props: Props) => {
           element={<Checkout cart={cart} setCart={setCart} total={total} />}
         />
       )}
-      {token && (
-        <Route
-          path="/orders"
-          element={
-            <Orders
-            />
-          }
-        />
-      )}
-      {token && (
-        <Route
-          path="/write-a-review"
-          element={<NewReview />}
-        />
-      )}
+      {token && <Route path="/orders" element={<Orders />} />}
+      {token && <Route path="/write-a-review" element={<NewReview />} />}
       {token && <Route path="/add-a-review/thank-you" element={<ThankYou />} />}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -81,7 +59,6 @@ const Router = (props: Props) => {
         <Route path="/seller/dashboard" element={<SellerDashboard />} />
       )}
       {token && <Route path="/profile" element={<Profile />} />}
-      {/* <Route path="*" element={<Navigate to={'/'} />} /> */}
     </Routes>
   );
 };
