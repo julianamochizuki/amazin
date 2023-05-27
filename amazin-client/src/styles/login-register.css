@@ -1,0 +1,59 @@
+.login-form-container, .register-form-container {
+ display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  margin-bottom: 2rem;
+}
+
+.login-card, .register-card {
+  padding: 1.5rem;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 25rem;
+}
+
+.login-title, .register-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.login-form, .register-form {
+  width: 100%;
+}
+
+.login-button, .register-button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.conditions-text {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  word-wrap: break-word;
+}
+
+.new-user, .already-user {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+.button-to-register {
+  margin-top: 1rem;
+  background-color: #fff !important;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  width: 25rem;
+}
+
+.button-to-register:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.from-group {
+  margin-bottom: 1rem;
+}

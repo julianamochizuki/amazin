@@ -4,13 +4,12 @@ import {
   Button,
   Card,
   Col,
-  Container,
   Form,
   Image,
   Row,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/login.css';
+import '../../styles/login-register.css';
 import Cookies from 'js-cookie';
 
 export default function LoginForm() {
@@ -45,64 +44,63 @@ export default function LoginForm() {
   };
 
   return (
-    <Container className="login-container">
-      <Row className="justify-content-center">
-        <Col xs={12} md={6}>
-          <Image
-            src={process.env.PUBLIC_URL + '/logo.png'}
-            height="50"
-            width="110"
-            className="logo"
-          />
-          {error && (
-            <Col>
-              <Row>There was a problem</Row>
-              <Row>{errorMessage}</Row>
-            </Col>
-          )}
-          <Card className="login-card">
-            <Card.Body>
-              <Card.Title className="login-title">Sign in</Card.Title>
-              <Form className="login-form">
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
-                <Button
-                  variant="warning"
-                  type="submit"
-                  className="login-button"
-                  onClick={handleSubmit}
-                >
-                  Sign in
-                </Button>
-              </Form>
-              <Row className="conditions-text">
-                By continuing, you agree to Amazin's Conditions of Use and
-                Privacy Notice.
-              </Row>
-            </Card.Body>
-          </Card>
+    <Row className="justify-content-center">
+      <Col xs={12} md={6} className="login-form-container">
+        <Image
+          src={process.env.PUBLIC_URL + '/logo.png'}
+          width="110"
+          className="logo"
+        />
+        {error && (
+          <Col>
+            <Row>There was a problem</Row>
+            <Row>{errorMessage}</Row>
+          </Col>
+        )}
+        <Card className="login-card">
+          <Card.Body>
+            <Card.Title className="login-title">Sign in</Card.Title>
+            <Form className="login-form">
+              <Form.Group className='from-group'>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className='from-group'>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
+              <Button
+                variant="warning"
+                type="submit"
+                className="login-button"
+                onClick={handleSubmit}
+              >
+                Sign in
+              </Button>
+            </Form>
+            <Row className="conditions-text">
+              By continuing, you agree to Amazin's Conditions of Use and Privacy
+              Notice.
+            </Row>
+          </Card.Body>
+        </Card>
+        <div className="new-user">
           <Row className="justify-content-center">New to Amazin? </Row>
           <Row className="justify-content-center">
-            <Button onClick={() => navigate('/register')}>
+            <Button variant="light" className='button-to-register' onClick={() => navigate('/register')}>
               Create your Amazin account
             </Button>
           </Row>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </Col>
+    </Row>
   );
 }

@@ -67,7 +67,7 @@ export default function OrderListItem(props: Props) {
                 navigate(`/products/${item.product!.id}`);
               }}
             >
-              <Image className="product-image" src={item.product!.image} />
+              <Image className="order-product-image" src={item.product!.image} />
             </Col>
             <Col xs={12} md={5}>
               <Row>{item.product!.name}</Row>

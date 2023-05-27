@@ -11,7 +11,7 @@
   margin-left: 18rem;
 }
 
-.product-image {
+.order-product-image {
   object-fit: cover;
   height: 10rem !important;
   width: 8rem !important;

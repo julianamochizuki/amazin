@@ -35,7 +35,7 @@ const NavBar = function () {
 
   const handleSignOut = () => {
     Cookies.remove('token');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -113,7 +113,7 @@ const NavBar = function () {
             </Nav.Link>
           </Col>
         </Row>
-        <Drawer handleSignOut={handleSignOut} />
+        <Drawer />
       </div>
     </Navbar>
   );

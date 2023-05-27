@@ -13,12 +13,7 @@ import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
 
-type Props = {
-  handleSignOut: any;
-};
-
-export default function Drawer(props: Props) {
-  const { handleSignOut } = props;
+export default function Drawer() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
@@ -47,8 +42,9 @@ export default function Drawer(props: Props) {
   };
 
   const handleSignOutClick = () => {
-    handleSignOut();
+    Cookies.remove('token');
     setMenuOpen(false);
+    navigate('/');
   };
 
   const menu = [
