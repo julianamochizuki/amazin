@@ -42,13 +42,10 @@ export default function UserAccount(props: Props) {
   };
 
   return (
-    <Container
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: '100vh' }}
-    >
+    <Container className="d-flex justify-content-center align-items-center pt-5">
       <Card style={{ width: '30rem', alignSelf: 'center' }}>
         <Card.Body>
-          <h1 className="h4">Login & Security</h1>
+          <h4 className="mb-4">Login & Security</h4>
           <Form>
             <Form.Group as={Row} controlId="formBasicName">
               <Form.Label column sm={4} className="text-end">
@@ -62,8 +59,8 @@ export default function UserAccount(props: Props) {
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
               </Col>
-              <Col sm={12} className="mt-3 text-end">
-                <Button variant="link" onClick={() => setNameDisabled(false)}>
+              <Col sm={12} className="mt-3 mb-3 text-end">
+                <Button variant="light" onClick={() => setNameDisabled(false)}>
                   Edit
                 </Button>
               </Col>
@@ -81,8 +78,8 @@ export default function UserAccount(props: Props) {
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
               </Col>
-              <Col sm={12} className="mt-3 text-end">
-                <Button variant="link" onClick={() => setEmailDisabled(false)}>
+              <Col sm={12} className="mt-3 mb-3 text-end">
+                <Button variant="light" onClick={() => setEmailDisabled(false)}>
                   Edit
                 </Button>
               </Col>
@@ -97,17 +94,18 @@ export default function UserAccount(props: Props) {
               </Col>
               <Col sm={12} className="mt-3 text-end">
                 <Button
-                  variant="link"
+                  variant="light"
                   onClick={() => setView('CHANGE_PASSWORD')}
                 >
                   Edit
                 </Button>
               </Col>
             </Form.Group>
-
-            <Button variant="primary" type="submit" onClick={handleClick}>
-              Save changes
-            </Button>
+            <div className="button-save-changes d-flex justify-content-end mt-3">
+              <Button variant="warning" onClick={handleClick}>
+                Save changes
+              </Button>
+            </div>
           </Form>
         </Card.Body>
       </Card>
