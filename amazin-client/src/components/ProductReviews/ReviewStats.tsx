@@ -2,7 +2,6 @@ import React from 'react';
 import { Col, ProgressBar, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { ProductType } from '../../types/types';
 import StarRating from '../Products/Rating';
 
 type Props = {
@@ -18,15 +17,21 @@ export default function ReviewStats(props: Props) {
 
   return (
     <Col className="review-stats">
-      <Row>Customer Reviews</Row>
+      <h4>Customer Reviews</h4>
       <Row>
         <StarRating key={currentProduct.id} reviews={currentProduct.reviews} />
       </Row>
-      <Row>{averageRating.toFixed(1)} out of 5</Row>
+      <Row>
+        <p>{averageRating.toFixed(1)} out of 5</p>
+      </Row>
       {currentProduct.reviews.length > 1 ? (
-        <Row>{currentProduct.reviews.length} global ratings</Row>
+        <Row>
+          <p>{currentProduct.reviews.length} global ratings</p>
+        </Row>
       ) : (
-        <Row>{currentProduct.reviews.length} global rating</Row>
+        <Row>
+          <p>{currentProduct.reviews.length} global rating</p>
+        </Row>
       )}
       <Col>
         {Object.keys(ratingStats).map((key) => {
@@ -34,7 +39,7 @@ export default function ReviewStats(props: Props) {
           const percentage = ratingStats[rating];
           return (
             <Row key={rating}>
-              <Col>
+              <Col xs={2}>
                 {rating} {rating === 1 ? 'star' : 'stars'}
               </Col>
               <Col>

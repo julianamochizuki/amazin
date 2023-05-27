@@ -14,20 +14,19 @@ export default function ProductDetails() {
     <Col
       xs={12}
       sm={6}
-      md={9}
-      lg={9}
+      md={10}
       key={currentProduct.id}
       className="product-details-container"
       spacing={1}
     >
       <Col>
-        <Row className="product-title">{currentProduct.name}</Row>
+        <h4 className='product-title'>{currentProduct.name}</h4>
         <Row>
           <Col xs={12} sm={6} md={5} lg={5}>
             <Image
               src={currentProduct.image}
               className="product-image"
-              style={{ maxHeight: 200 }}
+              style={{ maxHeight: 400 }}
             />
           </Col>
           <Col xs={12} sm={6} md={6} lg={7} className="product-details">
@@ -54,14 +53,14 @@ export default function ProductDetails() {
                 </Col>
               </Col>
             ) : (
-              <Row className="product-price">
+              <Col className="product-price">
                 ${(currentProduct!.price_cents / 100).toFixed(2)}
-              </Row>
+              </Col>
             )}
-            <Row className="about-item">About this item</Row>
-            <Row className="product-description">
+            <Col className="about-item">About this item</Col>
+            <Col className="product-description">
               {currentProduct.description}
-            </Row>
+            </Col>
           </Col>
         </Row>
       </Col>

@@ -1,12 +1,13 @@
 .product-container {
-  margin-top: 20px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 20px;
-  padding-top: 20px;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
-/* .product-details-container {
-} */
+.product-details {
+  padding-bottom: 20px;
+}
 
 .product-rating {
   text-align: left;
@@ -17,15 +18,13 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
-
-}
-.product-details {
-  justify-self: flex-start;
 }
 
 .add-to-cart-container {
   border: 1px solid #ccc;
+  border-radius: 10px;
   padding: 20px;
+  margin-top: 2rem;;
 }
 
 .product-regular-price {
@@ -46,8 +45,6 @@
 }
 
 .product-title {
-  font-size: 18px;
-  font-weight: bold;
   padding-bottom: 20px;
 }
 
@@ -55,30 +52,62 @@
   font-size: 24px;
   font-weight: medium;
   color: #0f1111;
-  text-align: left;
 }
 
 .about-item {
   font-size: 16px;
   font-weight: bold;
+  margin-top: 2rem;
+  padding-top: 2rem;
   border-top: 1px solid #ccc;
 }
 
 .product-description {
-  font-size: 14px;
-  text-align: left;
-}
-
-.review-stats {
-  display: flex;
-  flex-direction: column;
-  justify-self: start;
-  justify-content: 'flex-start';
-  align-self: flex-start;
-  justify-items: flex-start;
-  justify-items: flex-start;
+  font-size: 16px;
 }
 
 .progress-bar-review {
   border: 1px solid #ccc;
+}
+
+.product-reviews-container {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #ccc;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.verified-purchase {
+  color:#c45500;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.review-container {
+  margin-bottom: 2rem;
+}
+
+.review-date {
+  color: #565959
+}
+
+.dropdown-item {
+  background-color: transparent !important;
+
+}
+
+.add-to-cart-button {
+  background-color: #FFD812 !important;
+  border-color: #FFD812 !important;
+  border-radius: 150px;
+  color: #0F1111 !important;
+  font-size: 14px !important;
+  justify-self: baseline !important;
+  align-content: flex-end !important;
+  align-items: flex-end !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  font-weight: 500;
 }

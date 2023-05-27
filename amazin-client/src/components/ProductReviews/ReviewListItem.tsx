@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import { Star, StarFill } from 'react-bootstrap-icons';
 import { ReviewType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
@@ -27,6 +27,12 @@ export default function ReviewListItem(props: Props) {
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
   );
+  const date = new Date(review!.createdAt);
+  const formattedDate = date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
 
   const solidStars = Array.from({ length: review!.rating }, (_, index) => (
     <StarFill key={`solid-star-${index}`} />
@@ -45,7 +51,9 @@ export default function ReviewListItem(props: Props) {
     } else {
       axios
         .delete(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews/${review!.id}`,
+          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${
+            currentProduct.id
+          }/reviews/${review!.id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -68,7 +76,9 @@ export default function ReviewListItem(props: Props) {
     } else {
       axios
         .patch(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews/${review!.id}`,
+          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${
+            currentProduct.id
+          }/reviews/${review!.id}`,
           {
             description,
             rating,
@@ -96,8 +106,8 @@ export default function ReviewListItem(props: Props) {
   };
 
   return (
-    <Col>
-      <Row>{review?.user?.name}</Row>
+    <Col className="review-container">
+      <Col>{review?.user?.name}</Col>
       {isEditing ? (
         <Col style={{ color: '#FFA41C' }}>
           {[...Array(5)].map((_, index) => {
@@ -119,14 +129,15 @@ export default function ReviewListItem(props: Props) {
           {regularStars}
         </Col>
       )}
-      <Row>Reviewed on {review!.createdAt}</Row>
+      <Col className='review-date'>Reviewed in Canada on {formattedDate}</Col>
+      <Col className="verified-purchase">Verified Purchase</Col>
       {isEditing ? (
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       ) : (
-        <Row>{review!.description}</Row>
+        <Col>{review!.description}</Col>
       )}
       {userId === review?.user?.id && (
         <Button variant="warning" onClick={handleEdit}>

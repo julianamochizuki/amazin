@@ -1,5 +1,5 @@
 :root {
-  --bs-body-bg: #E3E6E6;
+  --bs-body-bg: #e9eaea;
 }
 
 body {
@@ -8,7 +8,7 @@ body {
   font-family: 'Ubuntu', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #E3E6E6 !important;
+  background-color: #f2f2f2 !important;
 }
 
 code {

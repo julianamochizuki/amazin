@@ -6,6 +6,7 @@ import { setCurrentProduct } from '../../app/productReducer';
 import { RootState } from '../../app/store';
 import { ProductType } from '../../types/types';
 import { useDispatch } from 'react-redux';
+import '../../styles/product.css';
 
 type Props = {
   vendor: string;
@@ -60,28 +61,29 @@ export default function AddToCart(props: Props) {
   };
 
   return (
-    <Col xs={12} sm={6} md={3} lg={3} className="add-to-cart-container">
+    <Col xs={12} sm={6} md={2} className="add-to-cart-container">
       {currentProduct.isOnSale ? (
-        <Row>
+        <Col>
           $
           {(
             ((currentProduct!.price_cents / 100) *
               (100 - currentProduct!.discountPercent! ?? 0)) /
             100
           ).toFixed(2)}
-        </Row>
+        </Col>
       ) : (
-        <Row>${(currentProduct!.price_cents / 100).toFixed(2)}</Row>
+        <Col>${(currentProduct!.price_cents / 100).toFixed(2)}</Col>
       )}
-      <Row>${currentProduct.price_cents / 100}</Row>
-      <Row>FREE delivery {formattedDeliveryDate}</Row>
+      <Col>
+        FREE delivery <strong>{formattedDeliveryDate}</strong>
+      </Col>
       <Row>
         {currentProduct.quantity ? <p> In Stock </p> : <p> Out of Stock </p>}
       </Row>
-      <Row>
+      <Col>
         <Dropdown>
-          <Dropdown.Toggle>
-            Qty: {quantitySelected ? quantitySelected : 1}
+          <Dropdown.Toggle className="dropdown-item">
+            Quantity: &nbsp;{quantitySelected ? quantitySelected : 1}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             {Array.from(
@@ -99,11 +101,11 @@ export default function AddToCart(props: Props) {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-        <Button className="call-to-action-button" onClick={handleAddToCart}>
+        <Button className="add-to-cart-button" onClick={handleAddToCart}>
           Add to cart
         </Button>
-      </Row>
-      <Row>Sold by {vendor}</Row>
+      </Col>
+      <Col>Sold by {vendor}</Col>
     </Col>
   );
 }

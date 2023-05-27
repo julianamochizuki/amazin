@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import AddToCart from '../../components/Product/AddToCart';
 import ProductDetails from '../../components/Product/ProductDetails';
 import '../../styles/product.css';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import ProductReviews from '../../components/ProductReviews';
 import { useDispatch } from 'react-redux';
@@ -36,14 +36,16 @@ const Product = () => {
   }, [currentProduct?.reviews.length, reviewsEdited]);
 
   return (
-    <Col>
-      <Row className="product-container">
+    <Col className="product-container">
+      <Row className="product-details">
         <ProductDetails />
         <AddToCart vendor={vendor} />
       </Row>
-      {currentProduct!.reviews?.length > 0 && (
-        <ProductReviews setReviewsEdited={setReviewsEdited} />
-      )}
+      <Row className="product-reviews">
+        {currentProduct!.reviews?.length > 0 && (
+          <ProductReviews setReviewsEdited={setReviewsEdited} />
+        )}
+      </Row>
     </Col>
   );
 };

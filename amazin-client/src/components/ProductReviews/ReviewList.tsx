@@ -27,7 +27,9 @@ export default function ReviewList(props: Props) {
 
   return (
     <Col>
-      <Row>Top reviews from Canada</Row>
+      <Row>
+        <h5>Top reviews from Canada</h5>
+      </Row>
       <Col>{categoryLists} </Col>
     </Col>
   );
