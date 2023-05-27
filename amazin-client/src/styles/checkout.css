@@ -1,3 +1,70 @@
+.checkout-section {
+  background-color: #fff !important;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-around;
+}
+
 .checkout-details-container {
   border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.order-total {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  height: fit-content;
+  text-align: left;
+  padding: 2rem;
+}
+
+.order-confirmation {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.checkout-button {
+  width: 100%;
+  background-color: #FFD814;
+  margin-bottom: 0.5rem;
+}
+
+.terms-and-conditions {
+  font-size: 1rem;
+}
+
+.order-summary {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.order-summary-details {
+  font-size: 0.87rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+}
+
+.order-summary-total {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #B12704!important;
+  padding-top: 1rem;
+}
+
+.price-amount {
+  text-align: right;
+}
+
+.order-list-item {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.order-product-price {
+  font-weight: bold;
 }

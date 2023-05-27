@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import React, { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { CartType } from '../../types/types';
+import '../../styles/checkout.css';
 
 type Props = {
   cart: CartType;
@@ -90,31 +91,36 @@ export default function OrderSummary(props: Props) {
   };
 
   return (
-    <Col xs={12} md={3}>
-      <Button
-        variant="warning"
-        onClick={handleSubmit}
-        // disabled={isProcessing || !stripe || !elements}
-      >
-        Place your order
-      </Button>
-      {message && <div id="payment-message">{message}</div>}
-      <Row>
-        By placing your order, you agree to Amazin's privacy notice and
-        conditions of use.
-      </Row>
-      <Row>Order Summary</Row>
-      <Row>
-        <Col>Items ({cart.length}):</Col>
-        <Col>${total}</Col>
-      </Row>
-      <Row>
-        <Col>Shipping & Handling:</Col>
-        <Col>$0.00</Col>
-      </Row>
-      <Row>
-        <Col>Order Total</Col>
-        <Col>${total}</Col>
+    <Col xs={12} md={3} className="order-total">
+      <div className="order-confirmation">
+        <Button
+          variant="warning"
+          className="checkout-button"
+          onClick={handleSubmit}
+          // disabled={isProcessing || !stripe || !elements}
+        >
+          Place your order
+        </Button>
+        {message && <div id="payment-message">{message}</div>}
+        <Row className="terms-and-conditions">
+          By placing your order, you agree to Amazin's privacy notice and
+          conditions of use.
+        </Row>
+      </div>
+      <h5 className="order-summary">Order Summary</h5>
+      <div className="order-summary-details">
+        <Row>
+          <Col>Items ({cart.length}):</Col>
+          <Col className='price-amount'>${total}</Col>
+        </Row>
+        <Row>
+          <Col>Shipping & Handling:</Col>
+          <Col className='price-amount'>$0.00</Col>
+        </Row>
+      </div>
+      <Row className='order-summary-total'>
+        <Col>Order Total:</Col>
+        <Col className='price-amount'>${total}</Col>
       </Row>
     </Col>
   );

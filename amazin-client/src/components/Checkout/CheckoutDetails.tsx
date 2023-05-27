@@ -24,28 +24,28 @@ export default function CheckoutDetails(props: Props) {
   const userAddress = decodedToken?.address || null;
 
   return (
-    <Col xs={12} md={9} className="checkout-details-section">
+    <Col xs={12} md={8} className="checkout-details-section">
       <Row className="checkout-details-container">
-        <Col md={1}>
-          <h3>1</h3>
+        <Col xs={2} md={1}>
+          <h4>1</h4>
         </Col>
-        <Col md={2}>
-          <h3>Shipping Address</h3>
+        <Col xs={10} md={3}>
+          <h4>Shipping Address</h4>
         </Col>
-        <Col md={9}>
+        <Col xs={12} md={8}>
           <p>{userName}</p>
           <p>{userAddress}</p>
         </Col>
       </Row>
 
       <Row className="checkout-details-container">
-        <Col md={1}>
-          <h3>2</h3>
+        <Col xs={2} md={1}>
+          <h4>2</h4>
         </Col>
-        <Col md={2}>
-          <h3>Payment Method</h3>
+        <Col xs={10} md={3}>
+          <h4>Payment Method</h4>
         </Col>
-        <Col md={9}>
+        <Col xs={12} md={8}>
           <Elements stripe={stripePromise}>
             <CardElement />
           </Elements>
@@ -53,13 +53,13 @@ export default function CheckoutDetails(props: Props) {
       </Row>
 
       <Row className="checkout-details-container">
-        <Col md={1}>
-          <h3>3</h3>
+        <Col xs={2} md={1}>
+          <h4>3</h4>
         </Col>
-        <Col md={2}>
-          <h3>Review items</h3>
+        <Col xs={10} md={10}>
+          <h4>Review items</h4>
         </Col>
-        <Col md={12}>
+        <Col xs={12} md={12}>
           <CheckoutList cart={cart} setCart={setCart} total={total} />
         </Col>
       </Row>

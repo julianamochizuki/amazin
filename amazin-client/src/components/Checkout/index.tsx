@@ -46,7 +46,7 @@ export default function CheckoutReview(props: Props) {
   // }, [total]);
 
   return (
-    <Row>
+    <Row className='checkout-section'>
       <Elements stripe={stripePromise} options={{ clientSecret }}>
         <CheckoutDetails
           cart={cart}
