@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 import { ChevronLeft, Star, StarFill } from 'react-bootstrap-icons';
 import { RootState } from '../../app/store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,75 +32,79 @@ export default function ProductFilter() {
   };
 
   return (
-    <Col>
-      <Row>Customer Review</Row>
-      <Row
-        className="pointer-cursor"
-        onClick={() => {
-          dispatch(
-            setCurrentProductFilter({
-              ...productFilter,
-              rating: 0,
-            })
-          );
-        }}
-      >
-        <span>
-          <ChevronLeft /> Clear
-        </span>
-      </Row>
-      {[4, 3, 2, 1].map((rating) => (
-        <Col
-          key={rating}
+    <>
+      <Container className='product-filter-review'>
+        <h6>Avg. Customer Review</h6>
+        <Row
           className="pointer-cursor"
           onClick={() => {
             dispatch(
               setCurrentProductFilter({
                 ...productFilter,
-                rating,
+                rating: 0,
               })
             );
           }}
         >
-          {starsReview(rating)} & Up
-        </Col>
-      ))}
-      <Row>Price</Row>
-      <Row
-        className="pointer-cursor"
-        onClick={() => {
-          dispatch(
-            setCurrentProductFilter({
-              ...productFilter,
-              minPrice: 0,
-              maxPrice: 10000000,
-            })
-          );
-        }}
-      >
-        <span>
-          <ChevronLeft /> Clear
-        </span>
-      </Row>
-      {priceRanges.map((range) => (
-        <Col
-          key={range.min}
+          <p>
+            <ChevronLeft /> Clear
+          </p>
+        </Row>
+        {[4, 3, 2, 1].map((rating) => (
+          <Col
+            key={rating}
+            className="pointer-cursor"
+            onClick={() => {
+              dispatch(
+                setCurrentProductFilter({
+                  ...productFilter,
+                  rating,
+                })
+              );
+            }}
+          >
+            {starsReview(rating)} & Up
+          </Col>
+        ))}
+      </Container>
+      <Container>
+        <h6>Price</h6>
+        <Row
           className="pointer-cursor"
           onClick={() => {
             dispatch(
               setCurrentProductFilter({
                 ...productFilter,
-                minPrice: range.min! * 100,
-                maxPrice: range.max === 0 ? 10000000 : range.max! * 100,
+                minPrice: 0,
+                maxPrice: 10000000,
               })
             );
           }}
         >
-          {range.min ? `$${range.min}` : 'Under'}
-          {range.min && range.max ? ' to ' : ' '}
-          {range.max ? `$${range.max}` : '& above'}
-        </Col>
-      ))}
-    </Col>
+          <p>
+            <ChevronLeft /> Clear
+          </p>
+        </Row>
+        {priceRanges.map((range) => (
+          <Col
+            key={range.min}
+            className="pointer-cursor"
+            onClick={() => {
+              dispatch(
+                setCurrentProductFilter({
+                  ...productFilter,
+                  minPrice: range.min! * 100,
+                  maxPrice: range.max === 0 ? 10000000 : range.max! * 100,
+                })
+              );
+            }}
+          >
+            {range.min ? `$${range.min}` : 'Under'}
+            {range.min && range.max ? ' to ' : ' '}
+            {range.max ? `$${range.max}` : '& above'}
+          </Col>
+        ))}
+      </Container>
+    </>
   );
 }

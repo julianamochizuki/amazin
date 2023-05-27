@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Col } from 'react-bootstrap';
+import { Badge, Card, Col } from 'react-bootstrap';
 import StarRating from './Rating';
 import '../../styles/products.css';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,8 @@ export default function ProductListItem(props: { product: ProductType }) {
   const { product } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const deliveryDate = new Date();
+  deliveryDate.setDate(deliveryDate.getDate() + 3);
   return (
     <Col
       xs={12}
@@ -21,14 +22,31 @@ export default function ProductListItem(props: { product: ProductType }) {
       key={product?.id}
       style={{ borderRadius: 3 }}
     >
-      <Card className="card-container">
+      <Card
+        className="card-container pointer-cursor"
+        onClick={() => {
+          dispatch(setCurrentProduct(product));
+          navigate(`/products/${product?.id}`);
+        }}
+      >
+        {product.quantitySold !== undefined && product.quantitySold > 60 && (
+          <Badge className="bestseller-badge">Bestseller</Badge>
+        )}
         <Card.Img
           variant="top"
           src={product?.image}
           className="card-image"
-          style={{ height: 200 }}
+          style={{ height: 300 }}
         />
         <Card.Body className="card-body">
+          <Card.Text key={product?.id} className="card-title">
+            {product?.name}
+          </Card.Text>
+          <Card.Text className="card-reviews">
+            {product!.reviews.length > 0 && (
+              <StarRating reviews={product!.reviews} />
+            )}
+          </Card.Text>
           {product.isOnSale ? (
             <Card.Text className="card-price">
               <Col className="card-sale-price">
@@ -39,11 +57,13 @@ export default function ProductListItem(props: { product: ProductType }) {
                   100
                 ).toFixed(2)}
               </Col>
-              <Col className="card-regular-price">
-                ${(product!.price_cents / 100).toFixed(2)}
-              </Col>
-              <Col className="card-sale-discount">
-                {product!.discountPercent}% off
+              <Col>
+                <span className="card-regular-price">
+                  ${(product!.price_cents / 100).toFixed(2)}
+                </span>
+                <span className="card-sale-discount">
+                  {product!.discountPercent}% off
+                </span>
               </Col>
             </Card.Text>
           ) : (
@@ -51,13 +71,18 @@ export default function ProductListItem(props: { product: ProductType }) {
               ${(product!.price_cents / 100).toFixed(2)}
             </Card.Text>
           )}
-          <Card.Text key={product?.id} className="card-title">
-            {product?.name}
+          <Card.Text className="card-delivery-date">
+            FREE delivery{' '}
+            <strong>
+              {deliveryDate.toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </strong>
           </Card.Text>
-          {product!.reviews.length > 0 && (
-            <StarRating reviews={product!.reviews} />
-          )}
-          <Button
+
+          {/* <Button
             className="product-details-button"
             onClick={() => {
               dispatch(setCurrentProduct(product));
@@ -65,7 +90,7 @@ export default function ProductListItem(props: { product: ProductType }) {
             }}
           >
             See product details
-          </Button>
+          </Button> */}
         </Card.Body>
       </Card>
     </Col>

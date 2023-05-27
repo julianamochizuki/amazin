@@ -1,6 +1,15 @@
+.products-section {
+  margin-top: 150px;
+}
+
+.product-filter-section {
+margin-left: 3vw;
+}
+
 .card-container {
   margin-top: 30px;
-  height: 430px;
+  height: 550px;
+  width: 290px;
 }
 
 .card-image {
@@ -26,10 +35,21 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
+  margin-bottom: -1rem,
+}
+
+.card-reviews {
+  margin-top: -1rem;
+
+}
+
+.card-title:hover {
+  color: #E67A00;
 }
 
 .card-price {
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 10px;
   color: #0F1111;
   text-align: left;
@@ -53,13 +73,46 @@
 }
 
 .card-sale-price {
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 15px;
   color: #B12704;
+  margin-bottom: -1rem;
 }
 
 .card-sale-discount {
   font-size: 14px;
   color: #B12704;
+  margin-left: 0.5rem;
 }
 
+.bestseller-badge {
+  position: absolute;
+  border-radius: 0;
+  top: 0;
+  left: 0;
+  background-color: #E67A00!important;
+  color: #fff;
+  font-size: 13px;
+  padding: 5px 10px;
+  height: 25px;
+}
+
+.bestseller-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 0;
+  height: 0;
+  border-top: 25px solid #E67A00;
+  border-right: 10px solid transparent;
+}
+
+.card-delivery-date {
+  font-size: 14px;
+}
+
+.product-filter-review {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}

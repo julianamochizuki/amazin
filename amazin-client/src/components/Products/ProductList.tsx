@@ -10,6 +10,7 @@ import ProductFilter from './ProductFilter';
 import ProductListItem from './ProductListItem';
 import { useSelector } from 'react-redux';
 import NoProductsFound from './NoProductsFound';
+import '../../styles/products.css';
 
 export default function ProductList() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -93,13 +94,14 @@ export default function ProductList() {
   });
 
   return (
-    <Row>
+    <Row className="products-section">
       {products.length ? (
         <>
-          <Col xs={2}>
+          <Col xs={2} className="product-filter-section">
             <ProductFilter />
           </Col>
-          <Col xs={10}>
+          <Col xs={9}>
+            <h3>Results</h3>
             <Row>{productLists}</Row>
           </Col>
         </>
