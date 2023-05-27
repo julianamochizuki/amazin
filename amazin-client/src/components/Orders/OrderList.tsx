@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { OrderType } from '../../types/types';
 import OrderListItem from './OrderListItem';
 import jwt_decode from 'jwt-decode';
+import '../../styles/orders.css';
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -25,13 +26,13 @@ export default function OrderList() {
   }, []);
 
   const orderList = orders.map((o: OrderType) => {
-    return (
-      <OrderListItem
-        key={o.id}
-        order={o}
-      />
-    );
+    return <OrderListItem key={o.id} order={o} />;
   });
 
-  return <> {orderList} </>;
+  return (
+    <>
+      <h4 className='orders-page-heading'>Your Orders</h4>
+      {orderList}
+    </>
+  );
 }

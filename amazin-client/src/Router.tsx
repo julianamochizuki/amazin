@@ -1,14 +1,14 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import CartReview from './components/Cart';
 import ThankYou from './components/NewReview/ThankYou';
-import Orders from './components/Orders';
 import SellerDashboard from './components/Seller/SellerDashboard';
+import Cart from './pages/cart';
 import Checkout from './pages/checkout';
 import Home from './pages/home';
 import Login from './pages/login';
 import NewReview from './pages/new-review';
+import Orders from './pages/orders';
 import Product from './pages/product';
 import Products from './pages/products';
 import Profile from './pages/profile';
@@ -41,7 +41,7 @@ const Router = (props: Props) => {
       <Route path="/products/:productId" element={<Product />} />
       <Route
         path="/cart"
-        element={<CartReview cart={cart} setCart={setCart} total={total} />}
+        element={<Cart cart={cart} setCart={setCart} total={total} />}
       />
       {token && (
         <Route

@@ -1,0 +1,47 @@
+.orders-section {
+  padding: 2rem;
+  margin: 2rem;
+  background-color: #fff !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin-right: 18rem;
+  margin-left: 18rem;
+}
+
+.product-image {
+  object-fit: cover;
+  height: 10rem !important;
+  width: 8rem !important;
+}
+
+.card-order {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  width: 100% !important;
+}
+
+.orders-page-heading {
+  align-self: flex-start;
+  margin-bottom: 2rem;
+}
+
+.button-review {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 0.9rem;
+}
+
+.button-container, .order-number {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.order-product-item {
+  margin: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
