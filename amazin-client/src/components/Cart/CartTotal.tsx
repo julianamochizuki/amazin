@@ -15,13 +15,14 @@ export default function CartTotal(props: Props) {
   const token = Cookies.get('token') || null;
 
   return (
-    <Col xs={12} md={2} className="cart-total">
-      <Row>
+    <Col xs={12} md={3} className="cart-total">
+      <Row className="cart-subtotal subtotal-summary">
         Subtotal ({cart.length} items): ${total}
       </Row>
-      <Row>
+      <Row className="cart-proceed-checkout">
         <Button
           variant="warning"
+          className="cart-proceed-checkout-button"
           onClick={() => navigate(token ? '/checkout' : '/login')}
         >
           Proceed to Checkout

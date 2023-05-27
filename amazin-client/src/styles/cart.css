@@ -1,24 +1,92 @@
 .cart-container {
-  padding-top: 50px;
-  background-color: #EAEDED!important;
+  display: flex;
+  justify-content: space-around;
 }
 
-.product-image {
-  object-fit: cover;
-  height: 20px;
-  width: 20px;
+.cart-list, .cart-total {
+  background-color: #fff !important;
+  padding: 1rem;
 }
 
 .cart-total {
-  padding-left: 20px;
+  height: fit-content;
+  text-align: right;
+  padding: 2rem;
 }
 
-.cart-total, .cart-list {
-  background-color: #FFF;
+.cart-list {
+  margin-right: -2rem;
+}
+
+.subtotal-summary {
+  justify-content: flex-start !important;
+  padding-bottom: 1rem !important;
+}
+
+.cart-product-image {
+  object-fit: cover;
+  height: 200px;
+  width: 150px;
 }
 
 .cart-list-title {
+  border-bottom: 1px solid rgb(175, 161, 161);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+}
+
+.cart-list-item {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid #ccc;
 }
 
+.cart-product-name {
+  font-weight: 400 !important;
+  margin-bottom: 2rem;
+}
 
+.cart-product-image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.cart-product-price, .cart-subtotal {
+  display: flex;
+  justify-content: flex-end;
+  font-size: larger;
+  font-weight: 500 !important;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cart-product-delete {
+  display: flex;
+  align-items: center;
+  color: #007185;
+  font-size: small;
+}
+
+.cart-product-qty  {
+  width: fit-content;
+  background-color: #F0F2F2;
+  color: #0F1111;
+  border-color: #ccc; 
+}
+
+.cart-product-qty:hover, .cart-product-qty:visited, .cart-product-qty:active:focus, .cart-product-qty:active:hover, .cart-product-qty:active:visited, .cart-product-qty:focus, .cart-product-qty:hover, .cart-product-qty:visited, .cart-product-qty:active:focus, .cart-product-qty:active:hover, .cart-product-qty:active:visited, .cart-product-qty:focus {
+  background-color: #ccc;
+    color: #0F1111;
+  border-color: #ccc; 
+}
+
+.cart-proceed-checkout-button {
+  width: 80%;
+  background-color: #FFD814;
+}
+
+.cart-proceed-checkout {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}

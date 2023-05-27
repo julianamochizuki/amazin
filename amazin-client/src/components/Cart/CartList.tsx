@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Dropdown, Image, Row } from 'react-bootstrap';
+import { Col, Dropdown, Image, Row } from 'react-bootstrap';
 import { CartType, ProductType } from '../../types/types';
 
 type Props = {
@@ -12,23 +12,29 @@ export default function CartList(props: Props) {
   const { cart, setCart, total } = props;
 
   return (
-    <Col xs={12} md={10} className="cart-list">
-      <Row className="cart-list-title">Shopping Cart</Row>
+    <Col xs={12} md={8} className="cart-list">
+      <h3 className="cart-list-title">Shopping Cart</h3>
       {cart.map((product: ProductType) => (
-        <Row>
-          <Col xs={12} sm={6} md={3} lg={3}>
+        <Row className="cart-list-item">
+          <Col
+            xs={12}
+            sm={6}
+            md={3}
+            lg={3}
+            className="cart-product-image-container"
+          >
             <Image
-              className="product-image"
+              className="cart-product-image"
               src={product.image}
               alt={product.name}
             />
           </Col>
           <Col>
-            <Row>{product.name}</Row>
+            <h5 className="cart-product-name">{product.name}</h5>
             <Row>
-              <Col>
+              <Col xs={3}>
                 <Dropdown>
-                  <Dropdown.Toggle>
+                  <Dropdown.Toggle className='cart-product-qty'>
                     Qty: {product.quantityInCart}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -50,23 +56,22 @@ export default function CartList(props: Props) {
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
-              <Col>
-                <Button
-                  onClick={() => {
-                    const newCart = cart.filter(
-                      (p: ProductType) => p.id !== product.id
-                    );
-                    localStorage.setItem('cart', JSON.stringify(newCart));
-                    setCart(newCart);
-                  }}
-                >
-                  Delete
-                </Button>
+              <Col
+              className='cart-product-delete pointer-cursor'
+                onClick={() => {
+                  const newCart = cart.filter(
+                    (p: ProductType) => p.id !== product.id
+                  );
+                  localStorage.setItem('cart', JSON.stringify(newCart));
+                  setCart(newCart);
+                }}
+              >
+                Delete
               </Col>
             </Row>
           </Col>
           {product.isOnSale ? (
-            <Col>
+            <Col className="cart-product-price">
               $
               {(
                 ((product!.price_cents / 100) *
@@ -81,8 +86,8 @@ export default function CartList(props: Props) {
           )}
         </Row>
       ))}
-      <Row>
-        Subtotal ({cart.length} items): ${total / 100}
+      <Row className='cart-subtotal'>
+        Subtotal ({cart.length} items): ${total}
       </Row>
     </Col>
   );
