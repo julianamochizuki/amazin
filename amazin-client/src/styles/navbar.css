@@ -7,3 +7,18 @@
 .flag {
   height: 30px;
 }
+
+.nav-logo {
+  margin-left: 1rem;
+}
+
+.nav-text, .dropdown-item {
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: left !important;
+  width: fit-content;
+}
+
+.nav-account-link {
+  font-weight: 700 !important;
+}

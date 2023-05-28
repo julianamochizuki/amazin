@@ -44,19 +44,21 @@ const NavBar = function () {
         <Row>
           <Col className="d-flex align-items-center navbar-brand">
             <Navbar.Brand onClick={() => navigate('/')}>
-              <Image
-                className="pointer-cursor"
-                src={process.env.PUBLIC_URL + '/logo.png'}
-                height="50"
-                width="110"
-              />
+              <div className="nav-logo">
+                <Image
+                  className="pointer-cursor"
+                  src={process.env.PUBLIC_URL + '/logo.png'}
+                  height="50"
+                  width="110"
+                />
+              </div>
             </Navbar.Brand>
           </Col>
-          <Col className="text-light">
+          <Col className="text-light nav-text">
             <Row>Hello</Row>
             <Row>Select your address</Row>
           </Col>
-          <Col md={6} className="d-flex align-items-center">
+          <Col md={5} className="d-flex align-items-center">
             <SearchBar />
           </Col>
           <Col className="d-flex align-items-center justify-content-center">
@@ -66,16 +68,16 @@ const NavBar = function () {
             />
           </Col>
           <Col
-            className="text-light d-flex-column align-self-center"
+            className="text-light d-flex-column align-self-center  nav-text"
             onClick={() => navigate(token ? '/profile' : '/login')}
           >
-            <Row className="text-light">
+            <Row className="text-light  nav-text">
               {token ? `Hello, ${firstName}` : 'Hello, sign in'}
             </Row>
-            <Row className="text-light">
+            <Row className="text-light nav-text">
               <NavDropdown
                 title="Account"
-                className="text-light dropdown"
+                className="text-light dropdown nav-account-link"
                 id="basic-nav-dropdown"
                 show={show}
                 onMouseEnter={showDropdown}
@@ -83,31 +85,37 @@ const NavBar = function () {
               >
                 <Dropdown.Item
                   onClick={() => navigate(token ? '/profile' : '/login')}
+                  className="dropdown-item"
                 >
                   Your Account
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => navigate(token ? '/orders' : '/login')}
+                  className="dropdown-item"
                 >
                   Your Orders
                 </Dropdown.Item>
                 {token && (
-                  <Dropdown.Item onClick={handleSignOut}>
+                  <Dropdown.Item
+                    onClick={handleSignOut}
+                    className="dropdown-item"
+                  >
                     Sign Out
                   </Dropdown.Item>
                 )}
               </NavDropdown>
             </Row>
           </Col>
-          <Col className="d-flex align-items-center">
+          <Col className="d-flex align-items-center  nav-text">
             <Nav.Link
               onClick={() => navigate(token ? '/orders' : '/login')}
               className="text-light"
             >
-              Returns & Orders
+              <Row>Returns</Row>
+              <Row className='nav-account-link'>& Orders</Row>
             </Nav.Link>
           </Col>
-          <Col className="d-flex align-items-center">
+          <Col className="d-flex align-items-center  nav-text">
             <Nav.Link className="text-light" onClick={() => navigate('/cart')}>
               Cart
             </Nav.Link>
