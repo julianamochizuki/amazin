@@ -27,10 +27,10 @@ export default function CheckoutDetails(props: Props) {
     <Col xs={12} md={8} className="checkout-details-section">
       <Row className="checkout-details-container">
         <Col xs={2} md={1}>
-          <h4>1</h4>
+          <h5>1</h5>
         </Col>
         <Col xs={10} md={3}>
-          <h4>Shipping Address</h4>
+          <h5>Shipping Address</h5>
         </Col>
         <Col xs={12} md={8}>
           <p>{userName}</p>
@@ -40,10 +40,10 @@ export default function CheckoutDetails(props: Props) {
 
       <Row className="checkout-details-container">
         <Col xs={2} md={1}>
-          <h4>2</h4>
+          <h5>2</h5>
         </Col>
         <Col xs={10} md={3}>
-          <h4>Payment Method</h4>
+          <h5>Payment Method</h5>
         </Col>
         <Col xs={12} md={8}>
           <Elements stripe={stripePromise}>
@@ -54,10 +54,10 @@ export default function CheckoutDetails(props: Props) {
 
       <Row className="checkout-details-container">
         <Col xs={2} md={1}>
-          <h4>3</h4>
+          <h5>3</h5>
         </Col>
         <Col xs={10} md={10}>
-          <h4>Review items</h4>
+          <h5>Review items</h5>
         </Col>
         <Col xs={12} md={12}>
           <CheckoutList cart={cart} setCart={setCart} total={total} />

@@ -16,33 +16,33 @@ export default function ReviewStats(props: Props) {
   );
 
   return (
-    <Col className="review-stats">
-      <h4>Customer Reviews</h4>
+    <Col xs={12} md={5} className="review-stats mb-3">
+      <h5>Customer Reviews</h5>
       <Row>
         <StarRating key={currentProduct.id} reviews={currentProduct.reviews} />
       </Row>
       <Row>
-        <p>{averageRating.toFixed(1)} out of 5</p>
+        <p className="product-text">{averageRating.toFixed(1)} out of 5</p>
       </Row>
       {currentProduct.reviews.length > 1 ? (
-        <Row>
+        <Row className="product-text">
           <p>{currentProduct.reviews.length} global ratings</p>
         </Row>
       ) : (
-        <Row>
+        <Row className="product-text">
           <p>{currentProduct.reviews.length} global rating</p>
         </Row>
       )}
-      <Col>
+      <Col className="product-text">
         {Object.keys(ratingStats).map((key) => {
           const rating = parseInt(key);
           const percentage = ratingStats[rating];
           return (
             <Row key={rating}>
-              <Col xs={2}>
+              <Col>
                 {rating} {rating === 1 ? 'star' : 'stars'}
               </Col>
-              <Col>
+              <Col xs={6}>
                 <ProgressBar
                   now={percentage}
                   variant="warning"

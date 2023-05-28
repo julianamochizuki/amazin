@@ -3,7 +3,6 @@ import { Alert, Button, Card, Container, Form } from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 
 type Props = {
   setView: (view: string) => void;
@@ -62,16 +61,16 @@ export default function ChangePassword(props: Props) {
   };
 
   return (
-    <Container
-      className="d-flex-column justify-content-center align-items-center"
-      style={{ minHeight: '100vh' }}
-    >
-      <h2 className="text-center">Change Password</h2>
-      <Card className="text-start" style={{ width: '30rem' }}>
+    <Container className="d-flex justify-content-center align-items-center pt-5">
+      <Card className="text-start change-password-card">
+        <h4 className="mb-2 text-start">Change Password</h4>
         <Card.Body>
           <Card.Text>
-            Use the form below to change the password for your Amazin account
             <Form>
+              <p className="change-password-text">
+                Use the form below to change the password for your Amazin
+                account
+              </p>
               <Form.Group className="mb-3">
                 <Form.Label>Current password:</Form.Label>
                 <Form.Control
@@ -102,9 +101,15 @@ export default function ChangePassword(props: Props) {
                   }
                 />
               </Form.Group>
-              <Button className="btn btn-primary" onClick={handleClick}>
-                Save changes
-              </Button>
+              <div className="d-flex justify-content-end mt-3">
+                <Button
+                  variant="warning"
+                  className="save-button"
+                  onClick={handleClick}
+                >
+                  Save changes
+                </Button>
+              </div>
               {error && (
                 <Alert variant="danger" key="danger">
                   {errorMessage}

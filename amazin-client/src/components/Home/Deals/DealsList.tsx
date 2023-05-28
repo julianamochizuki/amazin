@@ -82,7 +82,7 @@ const DealsList = function () {
   return (
     <Container className='home-container'>
       <div className="deals-header">
-        <h3 className="title">Today's deals</h3>
+        <h4 className="home-subheading">Today's deals</h4>
         <p className="link-to-products" onClick={() => navigate('/deals')}>
           See all deals
         </p>

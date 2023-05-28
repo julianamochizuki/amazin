@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { ChevronLeft, Star, StarFill } from 'react-bootstrap-icons';
 import { RootState } from '../../app/store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,10 +32,10 @@ export default function ProductFilter() {
   };
 
   return (
-    <>
-      <Container className='product-filter-review'>
-        <h6>Avg. Customer Review</h6>
-        <Row
+    <Row>
+      <Col xs={6} md={12} className='product-filter-review'>
+        <p className='filter-title'>Avg. Customer Review</p>
+        <Col
           className="pointer-cursor"
           onClick={() => {
             dispatch(
@@ -46,14 +46,14 @@ export default function ProductFilter() {
             );
           }}
         >
-          <p>
+          <p className='filter-text'>
             <ChevronLeft /> Clear
           </p>
-        </Row>
+        </Col>
         {[4, 3, 2, 1].map((rating) => (
           <Col
             key={rating}
-            className="pointer-cursor"
+            className="pointer-cursor filter-text"
             onClick={() => {
               dispatch(
                 setCurrentProductFilter({
@@ -66,11 +66,11 @@ export default function ProductFilter() {
             {starsReview(rating)} & Up
           </Col>
         ))}
-      </Container>
-      <Container>
-        <h6>Price</h6>
+      </Col>
+      <Col   xs={6} md={12}>
+        <p className='filter-title'>Price</p>
         <Row
-          className="pointer-cursor"
+          className="pointer-cursor filter-text"
           onClick={() => {
             dispatch(
               setCurrentProductFilter({
@@ -88,7 +88,7 @@ export default function ProductFilter() {
         {priceRanges.map((range) => (
           <Col
             key={range.min}
-            className="pointer-cursor"
+            className="pointer-cursor filter-text"
             onClick={() => {
               dispatch(
                 setCurrentProductFilter({
@@ -104,7 +104,7 @@ export default function ProductFilter() {
             {range.max ? `$${range.max}` : '& above'}
           </Col>
         ))}
-      </Container>
-    </>
+      </Col>
+    </Row>
   );
 }

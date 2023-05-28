@@ -10,17 +10,26 @@
   align-items: center;
 }
 
-.title {
-  font-size: 24px;
+.home-subheading {
   font-weight: medium;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+
+@media screen and (max-width: 790px) {
+  .container-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+  }
 }
 
 .link-to-products {
-  font-size: 14px;
+  font-size: 0.7rem;
   color: #0066c0;
   cursor: pointer;
-  margin-left: 1.5rem;
   text-align: left;
 }
 
@@ -35,8 +44,10 @@
 
 .home-card {
   padding: 1rem;
-  height: 400px;
-  width: 300px;
+  height: 25rem;
+  width: 16rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .deal-image, .card-image {
@@ -47,30 +58,34 @@
   border-radius: 0;
 }
 
-.card-image {
-  height: 350px;
+.home-card-image {
+  object-fit: cover;
+  height: 18rem;
+  border-radius: 0;
 }
 
 .deal-discount {
-  font-size: 14px;
+  font-size: 0.8rem;
   background-color: #CC0C39;
   border: 1px solid #CC0C39;
   border-radius: 3px;
   color: #fff;
   margin: 0.5rem;
+  text-align: center;
+  font-weight: 500;
 }
 
 .top-deal {
-  font-size: 14px;
+  font-size: 0.8rem;
   color: #CC0C39;
-  font-weight: bold;
+  font-weight: 500;
   text-align: left;
   margin-left: -1.5rem;
   margin-top: 0.5rem;
 }
 
 .deal-name {
-  font-size: 14px;
+  font-size: 0.8rem;
   line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -84,7 +99,7 @@
   color: grey !important;
   font-size: 30px !important;
   font-weight: bold;
-  margin-left: -1rem;
+  margin-right: -0.5rem;
 }
 
 .slick-next:before {
@@ -92,5 +107,5 @@
   color: grey !important;
   font-size: 30px !important;
   font-weight: bold;
-  margin-right: -1rem;
+  margin-left: -0.5rem;
 }

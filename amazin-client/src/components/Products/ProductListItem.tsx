@@ -13,17 +13,19 @@ export default function ProductListItem(props: { product: ProductType }) {
   const navigate = useNavigate();
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 3);
+  
   return (
     <Col
       xs={12}
       sm={6}
-      md={4}
+      md={5}
       lg={3}
       key={product?.id}
       style={{ borderRadius: 3 }}
+      className="d-flex justify-content-center"
     >
       <Card
-        className="card-container pointer-cursor"
+        className="card-container pointer-cursor mt-3"
         onClick={() => {
           dispatch(setCurrentProduct(product));
           navigate(`/products/${product?.id}`);
@@ -36,13 +38,11 @@ export default function ProductListItem(props: { product: ProductType }) {
           variant="top"
           src={product?.image}
           className="card-image"
-          style={{ height: 300 }}
+          style={{ height: 230 }}
         />
         <Card.Body className="card-body">
-          <Card.Text key={product?.id} className="card-title">
-            {product?.name}
-          </Card.Text>
-          <Card.Text className="card-reviews">
+          <Card.Text key={product?.id}>
+            <span className="card-title">{product?.name}</span>
             {product!.reviews.length > 0 && (
               <StarRating reviews={product!.reviews} />
             )}

@@ -1,0 +1,25 @@
+.profile-card {
+  padding: 1rem;
+  width: 30rem; 
+}
+
+.edit-link, .save-button {
+  font-size: 0.8rem !important;
+}
+
+.save-button {
+  background-color: #FFD814 !important;
+}
+  
+.save-button:hover {
+  background-color: #FCD200 !important;
+}
+
+.change-password-card {
+  padding: 1.5rem;
+  width: 25rem; 
+}
+
+.change-password-text {
+  font-size: 0.8rem;
+}

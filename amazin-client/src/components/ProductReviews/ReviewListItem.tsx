@@ -107,7 +107,7 @@ export default function ReviewListItem(props: Props) {
 
   return (
     <Col className="review-container">
-      <Col>{review?.user?.name}</Col>
+      <Col className="product-text">{review?.user?.name}</Col>
       {isEditing ? (
         <Col style={{ color: '#FFA41C' }}>
           {[...Array(5)].map((_, index) => {
@@ -129,23 +129,26 @@ export default function ReviewListItem(props: Props) {
           {regularStars}
         </Col>
       )}
-      <Col className='review-date'>Reviewed in Canada on {formattedDate}</Col>
+      <Col className="review-date product-text">
+        Reviewed in Canada on {formattedDate}
+      </Col>
       <Col className="verified-purchase">Verified Purchase</Col>
       {isEditing ? (
         <textarea
+          className="product-text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       ) : (
-        <Col>{review!.description}</Col>
+        <Col className="product-text">{review!.description}</Col>
       )}
       {userId === review?.user?.id && (
-        <Button variant="warning" onClick={handleEdit}>
+        <Button variant="light" className='edit-review-button' onClick={handleEdit}>
           {isEditing ? 'Save' : 'Edit'}
         </Button>
       )}
       {userId === review?.user?.id && (
-        <Button variant="warning" onClick={handleClick}>
+        <Button variant="light" className='delete-review-button' onClick={handleClick}>
           {isEditing ? 'Cancel' : 'Delete'}
         </Button>
       )}

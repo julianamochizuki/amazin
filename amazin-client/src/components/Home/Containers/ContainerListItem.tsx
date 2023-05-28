@@ -23,7 +23,7 @@ const ContainerListItem = function (props: Props) {
       }}
     >
       <Card.Title className='title'>{container.title}</Card.Title>
-      <Card.Img className="card-image" src={container.image} />
+      <Card.Img className="home-card-image" src={container.image} />
       <Card.Text className="link-to-products">See more</Card.Text>
     </Card>
   );

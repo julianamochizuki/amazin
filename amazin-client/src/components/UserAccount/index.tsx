@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Card, Container, Form, Row, Col } from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
+import '../../styles/profile.css';
 
 type Props = {
   setView: (view: string) => void;
@@ -43,7 +44,7 @@ export default function UserAccount(props: Props) {
 
   return (
     <Container className="d-flex justify-content-center align-items-center pt-5">
-      <Card style={{ width: '30rem', alignSelf: 'center' }}>
+      <Card className="profile-card">
         <Card.Body>
           <h4 className="mb-4">Login & Security</h4>
           <Form>
@@ -60,7 +61,11 @@ export default function UserAccount(props: Props) {
                 />
               </Col>
               <Col sm={12} className="mt-3 mb-3 text-end">
-                <Button variant="light" onClick={() => setNameDisabled(false)}>
+                <Button
+                  className="edit-link"
+                  variant="light"
+                  onClick={() => setNameDisabled(false)}
+                >
                   Edit
                 </Button>
               </Col>
@@ -79,7 +84,11 @@ export default function UserAccount(props: Props) {
                 />
               </Col>
               <Col sm={12} className="mt-3 mb-3 text-end">
-                <Button variant="light" onClick={() => setEmailDisabled(false)}>
+                <Button
+                  variant="light"
+                  className="edit-link"
+                  onClick={() => setEmailDisabled(false)}
+                >
                   Edit
                 </Button>
               </Col>
@@ -95,14 +104,19 @@ export default function UserAccount(props: Props) {
               <Col sm={12} className="mt-3 text-end">
                 <Button
                   variant="light"
+                  className="edit-link"
                   onClick={() => setView('CHANGE_PASSWORD')}
                 >
                   Edit
                 </Button>
               </Col>
             </Form.Group>
-            <div className="button-save-changes d-flex justify-content-end mt-3">
-              <Button variant="warning" onClick={handleClick}>
+            <div className="d-flex justify-content-end mt-3">
+              <Button
+                variant="warning"
+                className="save-button"
+                onClick={handleClick}
+              >
                 Save changes
               </Button>
             </div>

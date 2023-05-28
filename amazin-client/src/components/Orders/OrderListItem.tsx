@@ -42,16 +42,16 @@ export default function OrderListItem(props: Props) {
   return (
     <Card className="card-order">
       <Card.Title>
-        <Row className="card-header">
+        <Row className="card-header order-details">
           <Col xs={12} md={3} className="order-info-column">
             <div>Order Placed</div>
             <div>{formattedCreatedAt}</div>
           </Col>
-          <Col xs={12} md={3} className="order-info-column">
+          <Col xs={12} md={2} className="order-info-column">
             <div>Total</div>
             <div>${order.total / 100}</div>
           </Col>
-          <Col xs={12} md={6} className="order-info-column  order-number">
+          <Col xs={12} md={7} className="order-info-column  order-number">
             <div>Order #{order.id}</div>
           </Col>
         </Row>
@@ -71,8 +71,8 @@ export default function OrderListItem(props: Props) {
             </Col>
             <Col xs={12} md={5}>
               <Row>{item.product!.name}</Row>
-              {today < deliveryDate && <Row>On the way</Row>}
-              <Row>
+              {today < deliveryDate && <Row className='delivery-info'>On the way</Row>}
+              <Row className='delivery-info'>
                 {today > deliveryDate
                   ? `Your package was delivered. It was handed directly to a resident. Delivery date: ${formattedDeliveredDate}.`
                   : `Delivery estimate: 
@@ -81,7 +81,7 @@ export default function OrderListItem(props: Props) {
             </Col>
 
             {/* {today > deliveryDate && ( */}
-            <Col xs={12} md={3} className="button-container">
+            <Col xs={12} md={4} className="button-container">
               <Button
                 variant="light"
                 className="button-review"

@@ -5,6 +5,7 @@ import Carrousel from '../../components/Home/Carrousel';
 import ContainerList from '../../components/Home/Containers/ContainerList';
 import DealsList from '../../components/Home/Deals/DealsList';
 import jwt_decode from 'jwt-decode';
+import '../../styles/home.css'
 
 const Home = () => {
   const handleTokenExpiration = () => {
@@ -25,7 +26,7 @@ const Home = () => {
   handleTokenExpiration();
 
   return (
-    <Container>
+    <Container className='home-section'>
       <Carrousel />
       <ContainerList />
       <DealsList />

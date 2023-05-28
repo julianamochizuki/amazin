@@ -61,9 +61,9 @@ export default function AddToCart(props: Props) {
   };
 
   return (
-    <Col xs={12} sm={6} md={2} className="add-to-cart-container">
+    <Col xs={12} sm={6} md={3} className="add-to-cart-container product-text">
       {currentProduct.isOnSale ? (
-        <Col>
+        <Col className='product-price'>
           $
           {(
             ((currentProduct!.price_cents / 100) *
@@ -81,8 +81,8 @@ export default function AddToCart(props: Props) {
         {currentProduct.quantity ? <p> In Stock </p> : <p> Out of Stock </p>}
       </Row>
       <Col>
-        <Dropdown>
-          <Dropdown.Toggle className="dropdown-item">
+        <Dropdown >
+          <Dropdown.Toggle className="dropdown-item product-text">
             Quantity: &nbsp;{quantitySelected ? quantitySelected : 1}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -101,7 +101,7 @@ export default function AddToCart(props: Props) {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-        <Button className="add-to-cart-button" onClick={handleAddToCart}>
+        <Button variant='warning' className="add-to-cart-button" onClick={handleAddToCart}>
           Add to cart
         </Button>
       </Col>

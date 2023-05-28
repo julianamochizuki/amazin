@@ -64,7 +64,7 @@ export default function OrderSummary(props: Props) {
             },
           },
           paymentId,
-          total: total * 100,
+          total: Number(total * 100),
         },
         {
           headers: {
@@ -107,7 +107,7 @@ export default function OrderSummary(props: Props) {
           conditions of use.
         </Row>
       </div>
-      <h5 className="order-summary">Order Summary</h5>
+      <h6 className="order-summary">Order Summary</h6>
       <div className="order-summary-details">
         <Row>
           <Col>Items ({cart.length}):</Col>

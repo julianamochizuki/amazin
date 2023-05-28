@@ -1,8 +1,5 @@
 .product-container {
   border-bottom: 1px solid #ccc;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  padding: 2rem;
   background-color: #fff;
 }
 
@@ -29,24 +26,20 @@
 }
 
 .product-regular-price {
-  font-size: 14px;
+  font-size: 1rem;
   color: #777;
   text-decoration: line-through;
 }
 
 .product-sale-price {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 15px;
   color: #B12704;
 }
 
 .product-sale-discount {
-  font-size: 14px;
+  font-size: 1rem;
   color: #B12704;
-}
-
-.product-title {
-  padding-bottom: 20px;
 }
 
 .product-price {
@@ -56,15 +49,15 @@
 }
 
 .about-item {
-  font-size: 16px;
+  font-size: 0.9rem;
   font-weight: bold;
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid #ccc;
 }
 
-.product-description {
-  font-size: 16px;
+.product-text {
+  font-size: 0.9rem;
 }
 
 .progress-bar-review {
@@ -72,16 +65,14 @@
 }
 
 .product-reviews-container {
-  margin-top: 2rem;
-  padding-top: 2rem;
   border-top: 1px solid #ccc;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+display: flex;
+justify-content: space-between;
 }
 
 .verified-purchase {
   color:#c45500;
-  font-size: 13px;
+  font-size: 0.7rem;
   font-weight: bold;
 }
 
@@ -95,20 +86,27 @@
 
 .dropdown-item {
   background-color: transparent !important;
-
 }
 
 .add-to-cart-button {
-  background-color: #FFD812 !important;
-  border-color: #FFD812 !important;
+  background-color: #FFD814 !important;
   border-radius: 150px;
   color: #0F1111 !important;
-  font-size: 14px !important;
-  justify-self: baseline !important;
-  align-content: flex-end !important;
-  align-items: flex-end !important;
+  font-size: 0.8rem !important;
   margin-top: 1rem;
   margin-bottom: 1rem;
   width: 100%;
   font-weight: 500;
+}
+
+.add-to-cart-button:hover {
+  background-color: #FCD200 !important;
+}
+
+.edit-review-button, .delete-review-button {
+  border: 1px solid #ccc;
+  color: #0F1111 !important;
+  font-size: 0.8rem !important;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
 }

@@ -13,7 +13,7 @@ export default function CartList(props: Props) {
 
   return (
     <Col xs={12} md={8} className="cart-list">
-      <h3 className="cart-list-title">Shopping Cart</h3>
+      <h4 className="cart-list-title">Shopping Cart</h4>
       {cart.map((product: ProductType) => (
         <Row className="cart-list-item">
           <Col
@@ -30,7 +30,7 @@ export default function CartList(props: Props) {
             />
           </Col>
           <Col>
-            <h5 className="cart-product-name">{product.name}</h5>
+            <h6 className="cart-product-name">{product.name}</h6>
             <Row>
               <Col xs={6} sm={4} md={3}>
                 <Dropdown>

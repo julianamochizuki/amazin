@@ -94,13 +94,13 @@ export default function ProductList() {
   });
 
   return (
-    <Row className="products-section">
+    <Row className="px-5 d-flex justify-content-center">
       {products.length ? (
         <>
-          <Col xs={2} className="product-filter-section">
+          <Col xs={12} md={2} className='mt-5'>
             <ProductFilter />
           </Col>
-          <Col xs={9}>
+          <Col xs={12} md={9}>
             <h3>Results</h3>
             <Row>{productLists}</Row>
           </Col>

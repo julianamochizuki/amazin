@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { ContainerType } from '../../../types/types';
 import ContainerListItem from './ContainerListItem';
 
@@ -34,8 +34,8 @@ const ContainerList = function () {
 
   const containerList = containers.map((c) => {
     return (
-      <Col key={c.title}>
-        <ContainerListItem container={c} />
+      <Col className="container-section">
+        <ContainerListItem key={c.title} container={c} />
       </Col>
     );
   });

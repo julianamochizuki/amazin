@@ -20,7 +20,7 @@ export default function ProductReviews(props: Props) {
   const ratingStats = getRatingStats(currentProduct.reviews);
 
   return (
-    <Row className="product-reviews-container">
+    <Row className="product-reviews-container my-2 mx-1 pt-3">
       <ReviewStats
         ratingStats={ratingStats}
         averageRating={averageRating}

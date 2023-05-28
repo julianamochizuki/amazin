@@ -10,13 +10,13 @@ const DealsListItem = function (props: any) {
     <Card className="deal-card" onClick={() => navigate(`/products/${deal.id}`)}>
       <Card.Img src={deal.image} className="deal-image" />
       <Row>
-        <Col xs={6}>
+        <Col xs={7}>
           <Card.Text className="deal-discount">
             Up to {deal.discountPercent}% off
           </Card.Text>
         </Col>
 
-        <Col xs={6}>
+        <Col xs={4}>
           <Card.Text className="top-deal">
             {deal.discountPercent > 20 ? 'Top deal' : 'Deal'}
           </Card.Text>

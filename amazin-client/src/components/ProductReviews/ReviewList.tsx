@@ -26,7 +26,8 @@ export default function ReviewList(props: Props) {
   });
 
   return (
-    <Col>
+    <Col xs={12} md={7}
+    >
       <Row>
         <h5>Top reviews from Canada</h5>
       </Row>

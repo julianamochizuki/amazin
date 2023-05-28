@@ -7,8 +7,19 @@
   align-items: center;
   justify-content: center;
   text-align: left;
-  margin-right: 18rem;
-  margin-left: 18rem;
+  margin-right: 14rem;
+  margin-left: 14rem;
+}
+
+@media (max-width: 768px) {
+  .orders-section {
+    margin-right: 0;
+    margin-left: 0
+  }
+}
+
+.order-details:hover {
+  color: black
 }
 
 .order-product-image {
@@ -31,12 +42,16 @@
 .button-review {
   border: 1px solid #ccc;
   background-color: #fff;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .button-container, .order-number {
   display: flex;
   justify-content: flex-end;
+}
+
+.delivery-info {
+  font-size: 0.8rem;
 }
 
 .order-product-item {

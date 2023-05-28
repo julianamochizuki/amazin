@@ -29,12 +29,17 @@
 
 .checkout-button {
   width: 100%;
-  background-color: #FFD814;
+  background-color: #FFD814 !important;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
 
+.checkout-button:hover {
+  background-color: #FCD200 !important;
+}
+
 .terms-and-conditions {
-  font-size: 1rem;
+  font-size: 0.7rem;
 }
 
 .order-summary {
@@ -49,7 +54,7 @@
 }
 
 .order-summary-total {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #B12704!important;
   padding-top: 1rem;
