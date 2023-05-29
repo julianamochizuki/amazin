@@ -52,26 +52,44 @@ export default function AddProduct(props: Props) {
 
   return (
     <>
-      <Form style={{ width: '50%', margin: 'auto' }} onSubmit={handleSubmit}>
-        <Form.Group controlId="productName">
+      <Form
+        style={{ width: '50%', margin: 'auto' }}
+        onSubmit={handleSubmit}
+        className="add-product-form mt-3"
+      >
+        <Form.Group controlId="productName" className="add-product-form-group">
           <Form.Label>Name</Form.Label>
           <Form.Control type="text" placeholder="Enter product name" />
         </Form.Group>
-        <Form.Group controlId="productDescription">
+        <Form.Group
+          controlId="productDescription"
+          className="add-product-form-group"
+        >
           <Form.Label>Description</Form.Label>
           <Form.Control type="text" placeholder="Enter product description" />
         </Form.Group>
-        <Form.Group controlId="productPrice">
+        <Form.Group controlId="productPrice" className="add-product-form-group">
           <Form.Label>Price</Form.Label>
-          <Form.Control type="number" placeholder="Enter product price" />
+          <Form.Control
+            type="number"
+            min="0.01"
+            
+            placeholder="Enter product price"
+          />
         </Form.Group>
-        <Form.Group controlId="productImage">
-          <Form.Label>Image</Form.Label>
+        <Form.Group controlId="productImage" className="add-product-form-group">
+          <Form.Label>Image URL</Form.Label>
           <Form.Control type="text" placeholder="Enter product image" />
         </Form.Group>
-        <Form.Group controlId="productCategory">
+        <Form.Group
+          controlId="productCategory"
+          className="add-product-form-group"
+        >
           <Form.Label>Select Category</Form.Label>
-          <Form.Control as="select" placeholder="Enter product category">
+          <Form.Control as="select" placeholder="Select product category">
+            <option value="" disabled selected>
+              Select Category
+            </option>
             {departments.map((department: DepartmentType) => (
               <optgroup label={department.name}>
                 {department.categories.map((category: CategoryType) => (
@@ -81,20 +99,26 @@ export default function AddProduct(props: Props) {
             ))}
           </Form.Control>
         </Form.Group>
-        <Form.Group controlId="productQuantity">
-          <Form.Label>quantity</Form.Label>
+        <Form.Group
+          controlId="productQuantity"
+          className="add-product-form-group"
+        >
+          <Form.Label>Quantity</Form.Label>
           <Form.Control
             type="number"
+            min="1"
+            step="1"
             placeholder="Enter product count in stock"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="warning" type="submit" size="sm">
           Submit
         </Button>
       </Form>
       {inventoryUpdated && (
-        <Alert style={{ width: '30%', margin: 'auto' }}
-         variant="success">Product added to your inventory.</Alert>
+        <Alert style={{ width: '30%', margin: 'auto' }} variant="success">
+          Product added to your inventory.
+        </Alert>
       )}
     </>
   );

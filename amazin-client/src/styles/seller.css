@@ -3,6 +3,13 @@
   background-color: #fff;
 }
 
+.add-product-form {
+ font-size: 0.85rem !important;
+}
+
+.add-product-form-group {
+  margin-bottom: 1rem;
+}
 .inventory-product-image {
   width: 5rem;
   height: 5rem;
