@@ -30,7 +30,20 @@ export default function InventoryListItem(props: Props) {
   const today = new Date().toISOString().slice(0, 10);
 
   const handleOptionSelect = (eventKey: any) => {
-    setSelectedOption(eventKey);
+    if (eventKey === 'Cancel') {
+      setForm({
+        quantity: product.quantity,
+        image: product.image,
+        name: product.name,
+        price_cents: product.price_cents,
+        discountPercent: product.discountPercent,
+        saleStartDate: product.saleStartDate,
+        saleEndDate: product.saleEndDate,
+      });
+      setSelectedOption('Select');
+    } else {
+      setSelectedOption(eventKey);
+    }
   };
 
   useEffect(() => {
@@ -93,29 +106,30 @@ export default function InventoryListItem(props: Props) {
   }, [inventoryUpdated === true]);
 
   return (
-    <tr>
-      <td>
-        <input type="checkbox" />
-      </td>
-      <td>
+    <tr className="inventory-table">
+      <td className="table-row">
         {product.isActive
           ? product.quantity
             ? 'In Stock'
             : 'Out of Stock'
           : 'Inactive'}
       </td>
-      <td>
+      <td className="table-row">
         {selectedOption === 'Edit' ? (
           <textarea
             value={form.image}
             onChange={(e) => setForm({ ...form, image: e.target.value })}
           />
         ) : (
-          <img src={product.image} alt="product" className="product-image" />
+          <img
+            src={product.image}
+            alt="product"
+            className="inventory-product-image"
+          />
         )}
       </td>
-      <td>{product.id}</td>
-      <td>
+      <td className="table-row">{product.id}</td>
+      <td className="table-row-name">
         {selectedOption === 'Edit' ? (
           <textarea
             value={form.name}
@@ -125,8 +139,8 @@ export default function InventoryListItem(props: Props) {
           product.name
         )}
       </td>
-      <td>{product.createdAt.substring(0, 10)}</td>
-      <td>
+      <td className="table-row-date">{product.createdAt.substring(0, 10)}</td>
+      <td className="table-row">
         {selectedOption === 'Edit' ? (
           <input
             type="number"
@@ -139,7 +153,7 @@ export default function InventoryListItem(props: Props) {
           product.quantity
         )}
       </td>
-      <td>
+      <td className="table-row">
         {selectedOption === 'Edit' ? (
           <input
             type="number"
@@ -156,7 +170,7 @@ export default function InventoryListItem(props: Props) {
           product.price_cents / 100
         )}
       </td>
-      <td>
+      <td className="table-row-discount">
         {selectedOption === 'Edit' ? (
           <input
             type="number"
@@ -174,7 +188,7 @@ export default function InventoryListItem(props: Props) {
           0
         )}
       </td>
-      <td>
+      <td className="table-row-date">
         {selectedOption === 'Edit' ? (
           <input
             type="date"
@@ -190,7 +204,7 @@ export default function InventoryListItem(props: Props) {
           'N/A'
         )}
       </td>
-      <td>
+      <td className="table-row-date">
         {selectedOption === 'Edit' ? (
           <input
             type="date"
@@ -204,8 +218,14 @@ export default function InventoryListItem(props: Props) {
           'N/A'
         )}
       </td>
-      <td>
-        <DropdownButton title={selectedOption} onSelect={handleOptionSelect}>
+      <td className="inventory-dropdown-container">
+        <DropdownButton
+          title={selectedOption}
+          size="sm"
+          onSelect={handleOptionSelect}
+          variant="light"
+          className="inventory-dropdown"
+        >
           <Dropdown.Item eventKey="Select">Select</Dropdown.Item>
           <Dropdown.Item eventKey="Edit">Edit</Dropdown.Item>
           <Dropdown.Item
@@ -213,6 +233,9 @@ export default function InventoryListItem(props: Props) {
           >
             {product.isActive ? 'Mark as inactive' : 'Mark as active'}
           </Dropdown.Item>
+          {selectedOption !== 'Select' && (
+            <Dropdown.Item eventKey="Cancel">Cancel</Dropdown.Item>
+          )}
         </DropdownButton>
       </td>
     </tr>

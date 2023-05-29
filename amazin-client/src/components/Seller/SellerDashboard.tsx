@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode';
 import InventoryList from './InventoryList';
 import OrderList from './OrderList';
 import { OrderType } from '../../types/types';
-import { Nav } from 'react-bootstrap';
+import { Col, Nav } from 'react-bootstrap';
 import AddProduct from './AddProduct';
 
 export default function SellerDashboard() {
@@ -50,7 +50,7 @@ export default function SellerDashboard() {
   }, []);
 
   return (
-    <>
+    <Col className='m-3'>
       <Nav variant="tabs" defaultActiveKey="Inventory">
         <Nav.Item>
           <Nav.Link eventKey="Inventory" onClick={() => setMode('Inventory')}>
@@ -68,21 +68,22 @@ export default function SellerDashboard() {
           </Nav.Link>
         </Nav.Item>
       </Nav>
-
-      {mode === 'Inventory' && (
-        <InventoryList
-          inventory={inventory}
-          inventoryUpdated={inventoryUpdated}
-          setInventoryUpdated={setInventoryUpdated}
-        />
-      )}
-      {mode === 'Orders' && <OrderList orders={orders} />}
-      {mode === 'NewProduct' && (
-        <AddProduct
-          inventoryUpdated={inventoryUpdated}
-          setInventoryUpdated={setInventoryUpdated}
-        />
-      )}
-    </>
+      <Col>
+        {mode === 'Inventory' && (
+          <InventoryList
+            inventory={inventory}
+            inventoryUpdated={inventoryUpdated}
+            setInventoryUpdated={setInventoryUpdated}
+          />
+        )}
+        {mode === 'Orders' && <OrderList orders={orders} />}
+        {mode === 'NewProduct' && (
+          <AddProduct
+            inventoryUpdated={inventoryUpdated}
+            setInventoryUpdated={setInventoryUpdated}
+          />
+        )}
+      </Col>
+    </Col>
   );
 }

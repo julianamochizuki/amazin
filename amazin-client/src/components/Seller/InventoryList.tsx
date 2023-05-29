@@ -30,24 +30,21 @@ export default function InventoryList(props: Props) {
   });
 
   return (
-    <Table striped bordered hover>
+    <Table striped bordered hover className='inventory-table'>
       <thead>
-        <tr>
-          <th>
-            <input type="checkbox" />
-          </th>
+        <tr className='inventory-table'>
           <th>Status</th>
           <th>Image</th>
           <th>SKU</th>
           <th>Product Name</th>
           <th>Date Created</th>
           <th>Quantity</th>
-          <th>Price</th>
+          <th>Price ($)</th>
           <th>Sales Discount (%)</th>
           <th>Sales Start Date</th>
           <th>Sales End Date</th>
           <th>
-            <Button variant="warning" onClick={handleSave}>
+            <Button variant="warning" size="sm" onClick={handleSave}>
               Save all
             </Button>
           </th>

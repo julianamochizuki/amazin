@@ -1,0 +1,42 @@
+.inventory-table {
+  font-size: 0.85rem !important;
+}
+
+.inventory-product-image {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+}
+
+.inventory-table {
+  background-color: #fff;
+}
+
+.inventory-dropdown {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #0F1111 !important;
+  font-size: 0.8rem !important;
+  width: fit-content;
+  display: flex;
+  align-self: center;
+}
+
+.table-row-name {
+  word-break: break-word;
+  width: 20%;
+}
+
+.table-row {
+width: 6%
+}
+
+.table-row-date {
+  width: 10%
+}
+
+.table-row-discount {
+  width: 11%
+}
+    
+
