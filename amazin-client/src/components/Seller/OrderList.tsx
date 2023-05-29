@@ -15,7 +15,7 @@ export default function OrderList(props: Props) {
   });
 
   return (
-    <Table striped bordered hover>
+    <Table striped bordered hover className='orders-table'>
       <thead>
         <tr>
           <th>Order ID</th>
@@ -25,9 +25,9 @@ export default function OrderList(props: Props) {
           <th>Payment Method</th>
           <th>Product SKU</th>
           <th>Product Name</th>
-          <th>Product Price</th>
+          <th>Product Price ($)</th>
           <th>Quantity</th>
-          <th>Order Total</th>
+          <th>Order Total ($)</th>
           <th>Order Status</th>
         </tr>
       </thead>

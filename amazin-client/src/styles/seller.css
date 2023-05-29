@@ -1,15 +1,12 @@
-.inventory-table {
+.inventory-table, .orders-table {
   font-size: 0.85rem !important;
+  background-color: #fff;
 }
 
 .inventory-product-image {
   width: 5rem;
   height: 5rem;
   object-fit: cover;
-}
-
-.inventory-table {
-  background-color: #fff;
 }
 
 .inventory-dropdown {

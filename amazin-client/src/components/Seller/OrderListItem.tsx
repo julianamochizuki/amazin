@@ -11,13 +11,15 @@ export default function OrderListItem(props: Props) {
   // considering 3 days for delivery
   const deliveryDate = new Date(order.createdAt);
   deliveryDate.setDate(deliveryDate.getDate() + 3);
+  const orderDate = new Date(order.createdAt);
+  const formattedOrderDate = orderDate.toISOString().slice(0, 10);
 
   return (
     <>
       {order.orderItems.map((item) => (
-        <tr>
+        <tr className='orders-table'>
           <td>{order.id}</td>
-          <td>{order.createdAt}</td>
+          <td className='table-row-date'>{formattedOrderDate}</td>
           <td>{order.user?.name}</td>
           <td>{order.user?.address}</td>
           <td>Card</td>
