@@ -1,0 +1,37 @@
+.new-review-section {
+  padding: 2rem;
+  margin: 2rem;
+  background-color: #fff !important;
+  margin-right: 15rem;
+  margin-left: 15rem;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .new-review-section {
+    margin-right: 0;
+    margin-left: 0
+  }
+}
+
+.overall-rating {
+  margin-bottom: -0.1rem;
+}
+
+.new-review-product, .overall-rating-stars, .review-form {
+  border-bottom: 1px solid #ccc;
+}
+
+.new-review-product-image {
+  margin-right: 1rem;
+}
+
+.submit-review-button {
+  background-color: #FFD814 !important;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.submit-review-button:hover {
+  background-color: #FCD200 !important;
+}

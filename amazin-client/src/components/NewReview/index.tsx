@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-import { Row, Form, Col, Button } from 'react-bootstrap';
+import { Row, Form, Col, Button, Image } from 'react-bootstrap';
 import { StarFill, Star } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
@@ -88,10 +88,21 @@ const WriteReview = () => {
   };
 
   return (
-    <>
-      <Row>Create Review</Row>
-      <Row>Overall rating</Row>
-      <Col style={{ color: '#FFA41C' }}>
+    <Col className="new-review-section">
+      <h4 className="mb-3">Create Review</h4>
+      <Col className="mb-3 pb-3 new-review-product">
+        <Image
+          src={currentProduct.image}
+          className="new-review-product-image"
+          style={{ width: '50px', height: '50px' }}
+        />
+        {currentProduct.name}
+      </Col>
+      <h6 className="overall-rating">Overall rating</h6>
+      <Col
+        style={{ color: '#FFA41C' }}
+        className="mb-3 pb-3 overall-rating-stars"
+      >
         {[...Array(5)].map((_, index) => {
           const starValue = index + 1;
           return (
@@ -106,8 +117,8 @@ const WriteReview = () => {
         })}
       </Col>
       <Form>
-        <Form.Group>
-          <Form.Label>
+        <Form.Group className="mb-3 pb-3 review-form">
+          <Form.Label className="h6">
             {userHasReviewed ? 'Edit review' : 'Add a written review'}
           </Form.Label>
           <Form.Control
@@ -118,11 +129,16 @@ const WriteReview = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </Form.Group>
-        <Button variant="warning" type="submit" onClick={handleSubmit}>
+        <Button
+          variant="warning"
+          type="submit"
+          className="submit-review-button"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
       </Form>
-    </>
+    </Col>
   );
 };
 
