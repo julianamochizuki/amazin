@@ -4,11 +4,16 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { ProductType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
+import { ErrorResponse } from '@remix-run/router';
 
 type Props = {
   product: ProductType;
   inventoryUpdated: boolean;
   setInventoryUpdated: any;
+};
+
+type ErrorType = {
+  [key: string]: boolean;
 };
 
 export default function InventoryListItem(props: Props) {
@@ -22,6 +27,7 @@ export default function InventoryListItem(props: Props) {
     quantity: product.quantity,
     image: product.image,
     name: product.name,
+    description: product.description,
     price_cents: product.price_cents / 100,
     discountPercent: product.discountPercent ? product.discountPercent : '',
     saleStartDate:
@@ -31,12 +37,22 @@ export default function InventoryListItem(props: Props) {
   };
   const [form, setForm] = useState(initialForm);
 
+  const initialErrorState: ErrorType = {
+    image: false,
+    name: false,
+    description: false,
+    discountPercent: false,
+    price_cents: false,
+  };
+  const [error, setError] = useState<ErrorType>(initialErrorState);
+
   const handleOptionSelect = (eventKey: any) => {
     if (eventKey === 'Cancel') {
       setForm({
         quantity: product.quantity,
         image: product.image,
         name: product.name,
+        description: product.description,
         price_cents: product.price_cents / 100,
         discountPercent: product.discountPercent ? product.discountPercent : 0,
         saleStartDate: product.saleStartDate,
@@ -55,6 +71,7 @@ export default function InventoryListItem(props: Props) {
         ...form,
         price_cents: parseFloat(parseFloat(e.target.value).toFixed(2)),
       });
+      setError({ ...error, price_cents: false });
     }
     if (e.target.name === 'discountPercent') {
       const inputValue = e.target.value;
@@ -72,17 +89,41 @@ export default function InventoryListItem(props: Props) {
 
   useEffect(() => {
     if (inventoryUpdated) {
-      const formattedSaleStartDate = new Date(
-        form.saleStartDate!
-      ).toISOString();
-      const formattedSaleEndDate = new Date(form.saleEndDate!).toISOString();
+      setError((prev) => ({
+        ...prev,
+        image: form.image.length < 1 ? true : false,
+        name: form.name.length < 1 ? true : false,
+        description: form.description.length < 1 ? true : false,
+        discountPercent: form.discountPercent! > 99 ? true : false,
+        price_cents: form.price_cents < 0.01 ? true : false,
+      }));
+
+      const isValidForm =
+        form.image.length < 1 ||
+        form.name.length < 1 ||
+        form.description.length < 1 ||
+        form.discountPercent! > 99 ||
+        form.price_cents < 0.01
+          ? false
+          : true;
+
+      const formattedSaleStartDate = form.saleStartDate
+        ? new Date(form.saleStartDate!).toISOString()
+        : null;
+      const formattedSaleEndDate = form.saleEndDate
+        ? new Date(form.saleEndDate!).toISOString()
+        : null;
 
       const isValidSale =
         form.discountPercent! > 0 &&
         form.discountPercent! < 100 &&
         form.saleStartDate! >= today;
 
-      if (selectedOption === 'Edit') {
+      if (selectedOption === 'Edit' && !isValidForm) {
+        return;
+      }
+
+      if (selectedOption === 'Edit' && isValidForm) {
         axios
           .patch(
             `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/inventory/${product.id}`,
@@ -90,6 +131,7 @@ export default function InventoryListItem(props: Props) {
               quantity: form.quantity,
               image: form.image,
               name: form.name,
+              description: form.description,
               price_cents: Math.round(form.price_cents * 100),
               discountPercent: isValidSale ? form.discountPercent : 0,
               saleStartDate: isValidSale ? formattedSaleStartDate : null,
@@ -112,6 +154,7 @@ export default function InventoryListItem(props: Props) {
               quantity: res.data.quantity,
               image: res.data.image,
               name: res.data.name,
+              description: res.data.description,
               price_cents: res.data.price_cents / 100,
               discountPercent: res.data.discountPercent,
               saleStartDate: res.data.saleStartDate,
@@ -121,6 +164,7 @@ export default function InventoryListItem(props: Props) {
           })
           .catch((e) => console.log(`error updating product ${product.id}`, e));
       }
+
       if (
         selectedOption === 'Mark as inactive' ||
         selectedOption === 'Mark as active'
@@ -155,43 +199,94 @@ export default function InventoryListItem(props: Props) {
             : 'Out of Stock'
           : 'Inactive'}
       </td>
+      <td className="table-row-id">{product.id}</td>
+      <td className="table-row-date">{product.createdAt.substring(0, 10)}</td>
       <td className="table-row">
-        <Form.Group controlId="productImage">
-          {selectedOption === 'Edit' ? (
+        {selectedOption === 'Edit' ? (
+          <>
             <Form.Control
+              size="sm"
               required
-              type='text'
+              type="text"
+              minLength={1}
+              maxLength={255}
               value={form.image}
-              onChange={(e) => setForm({ ...form, image: e.target.value })}
-              onInput={(e: any) => {
-                e.target.value = e.target.value.slice(0, 255);
+              onChange={(e) => {
+                setForm({ ...form, image: e.target.value });
+                setError({ ...error, image: false });
               }}
+              isInvalid={error.image}
             />
-          ) : (
-            <img
-              src={product.image}
-              alt="product"
-              className="inventory-product-image"
-            />
-          )}
-        </Form.Group>
+            {error.image && (
+              <Form.Text className="text-danger">
+                Please add a product image URL
+              </Form.Text>
+            )}
+          </>
+        ) : (
+          <img
+            src={product.image}
+            alt="product"
+            className="inventory-product-image"
+          />
+        )}
       </td>
-      <td className="table-row">{product.id}</td>
       <td className="table-row-name">
         {selectedOption === 'Edit' ? (
-          <textarea
-          required
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-          />
+          <>
+            <Form.Control
+              size="sm"
+              required
+              type="text"
+              minLength={1}
+              maxLength={255}
+              value={form.name}
+              onChange={(e) => {
+                setForm({ ...form, name: e.target.value });
+                setError({ ...error, name: false });
+              }}
+              isInvalid={error.name}
+            />
+            {error.name && (
+              <Form.Text className="text-danger">
+                Please add a product name
+              </Form.Text>
+            )}
+          </>
         ) : (
           product.name
         )}
       </td>
-      <td className="table-row-date">{product.createdAt.substring(0, 10)}</td>
-      <td className="table-row">
+      <td className="table-row-description">
         {selectedOption === 'Edit' ? (
-          <input
+          <>
+            <Form.Control
+              size="sm"
+              required
+              type="text"
+              minLength={1}
+              maxLength={255}
+              value={form.description}
+              onChange={(e) => {
+                setForm({ ...form, description: e.target.value });
+                setError({ ...error, description: false });
+              }}
+              isInvalid={error.description}
+            />
+            {error.description && (
+              <Form.Text className="text-danger">
+                Please add a product description
+              </Form.Text>
+            )}
+          </>
+        ) : (
+          product.description
+        )}
+      </td>
+      <td className="table-row-quantity">
+        {selectedOption === 'Edit' ? (
+          <Form.Control
+            size="sm"
             type="number"
             min="0"
             step="1"
@@ -206,30 +301,48 @@ export default function InventoryListItem(props: Props) {
       </td>
       <td className="table-row">
         {selectedOption === 'Edit' ? (
-          <input
-            name="price_cents"
-            type="number"
-            step=".01"
-            min="0"
-            value={form.price_cents}
-            onChange={handleChanges}
-            required
-          />
+          <>
+            <Form.Control
+              size="sm"
+              name="price_cents"
+              type="number"
+              step=".01"
+              min="0.01"
+              value={form.price_cents}
+              onChange={handleChanges}
+              required
+              isInvalid={error.price_cents}
+            />
+            {error.price_cents && (
+              <Form.Text className="text-danger">
+                Please add a price greater than 0
+              </Form.Text>
+            )}
+          </>
         ) : (
           product.price_cents / 100
         )}
       </td>
       <td className="table-row-discount">
         {selectedOption === 'Edit' ? (
-          <input
-            name="discountPercent"
-            type="number"
-            step="1"
-            min="0"
-            max="99"
-            value={form.discountPercent}
-            onChange={handleChanges}
-          />
+          <>
+            <Form.Control
+              size="sm"
+              name="discountPercent"
+              type="number"
+              step="1"
+              min="0"
+              max="99"
+              value={form.discountPercent}
+              onChange={handleChanges}
+              isInvalid={error.discountPercent}
+            />
+            {error.discountPercent && (
+              <Form.Text className="text-danger">
+                Please add a discount between 0 and 99
+              </Form.Text>
+            )}
+          </>
         ) : product.isOnSale ? (
           product.discountPercent
         ) : (
@@ -238,7 +351,8 @@ export default function InventoryListItem(props: Props) {
       </td>
       <td className="table-row-date">
         {selectedOption === 'Edit' ? (
-          <input
+          <Form.Control
+            size="sm"
             type="date"
             value={form.saleStartDate?.substring(0, 10)}
             min={today}
@@ -254,7 +368,8 @@ export default function InventoryListItem(props: Props) {
       </td>
       <td className="table-row-date">
         {selectedOption === 'Edit' ? (
-          <input
+          <Form.Control
+            size="sm"
             type="date"
             min={form.saleStartDate?.substring(0, 10)}
             value={form.saleEndDate?.substring(0, 10)}
@@ -281,9 +396,6 @@ export default function InventoryListItem(props: Props) {
           >
             {product.isActive ? 'Mark as inactive' : 'Mark as active'}
           </Dropdown.Item>
-          {selectedOption !== 'Select' && (
-            <Dropdown.Item eventKey="Cancel">Cancel</Dropdown.Item>
-          )}
         </DropdownButton>
       </td>
     </tr>

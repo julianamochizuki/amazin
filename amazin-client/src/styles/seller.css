@@ -28,19 +28,19 @@
 
 .table-row-name {
   word-break: break-word;
-  width: 20%;
+  width: 10%;
 }
 
-.table-row {
-width: 6%
+.table-row-description {
+  word-break: break-word;
 }
 
 .table-row-date {
-  width: 10%
+  width: 8%
 }
 
-.table-row-discount {
-  width: 11%
+.table-row-discount, .table-row-quantity, .table-row-price, .table-row-id {
+  width: 8%
 }
 
 .product-add-confirmation {

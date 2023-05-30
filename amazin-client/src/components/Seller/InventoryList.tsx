@@ -9,8 +9,7 @@ type Props = {
 };
 
 export default function InventoryList(props: Props) {
-  const { inventory, inventoryUpdated, setInventoryUpdated } =
-    props;
+  const { inventory, inventoryUpdated, setInventoryUpdated } = props;
 
   setInventoryUpdated(false);
 
@@ -30,14 +29,15 @@ export default function InventoryList(props: Props) {
   });
 
   return (
-    <Table striped bordered hover className='inventory-table'>
+    <Table striped bordered hover className="inventory-table">
       <thead>
-        <tr className='inventory-table'>
+        <tr className="inventory-table">
           <th>Status</th>
-          <th>Image</th>
-          <th>SKU</th>
-          <th>Product Name</th>
+          <th>ID</th>
           <th>Date Created</th>
+          <th>Image</th>
+          <th>Product Name</th>
+          <th>Description</th>
           <th>Quantity</th>
           <th>Price ($)</th>
           <th>Sales Discount (%)</th>
