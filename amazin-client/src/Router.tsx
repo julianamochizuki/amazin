@@ -1,7 +1,8 @@
 import Cookies from 'js-cookie';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import ThankYou from './components/NewReview/ThankYou';
+import { RootState } from './app/store';
 import SellerDashboard from './components/Seller/SellerDashboard';
 import Cart from './pages/cart';
 import Checkout from './pages/checkout';
@@ -50,8 +51,12 @@ const Router = (props: Props) => {
         />
       )}
       {token && <Route path="/orders" element={<Orders />} />}
-      {token && <Route path="/write-a-review" element={<NewReview />} />}
-      {token && <Route path="/add-a-review/thank-you" element={<ThankYou />} />}
+      {token && (
+        <Route
+          path="/products/:productId/write-a-review"
+          element={<NewReview />}
+        />
+      )}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/sell" element={<Sell />} />

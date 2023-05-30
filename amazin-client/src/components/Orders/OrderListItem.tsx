@@ -87,7 +87,7 @@ export default function OrderListItem(props: Props) {
                 className="button-review"
                 onClick={() => {
                   dispatch(setCurrentProduct(item.product));
-                  navigate(`/write-a-review`);
+                  navigate(`/products/${item.product.id}/write-a-review`);
                 }}
               >
                 Write a product review

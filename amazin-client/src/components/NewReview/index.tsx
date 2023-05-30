@@ -1,27 +1,54 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-import { Row, Form, Col, Button, Image } from 'react-bootstrap';
-import { StarFill, Star } from 'react-bootstrap-icons';
-import { useNavigate } from 'react-router-dom';
+import { Form, Col, Button, Image, Alert } from 'react-bootstrap';
+import {
+  StarFill,
+  Star,
+  CheckCircleFill,
+  ExclamationCircleFill,
+} from 'react-bootstrap-icons';
+import { useParams } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { useDispatch } from 'react-redux';
+import { setCurrentProduct } from '../../app/productReducer';
+import { ReviewType } from '../../types/types';
+import { Link } from 'react-router-dom';
 
 const WriteReview = () => {
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState('');
-  const navigate = useNavigate();
+  const [descriptionError, setDescriptionError] = useState(false);
+  const [ratingError, setRatingError] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const url = process.env.REACT_APP_API_SERVER_URL;
   const token = Cookies.get('token') || null;
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const userId = decodedToken?.id || null;
+  const dispatch = useDispatch();
+  const { productId } = useParams();
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
   );
 
+  useEffect(() => {
+    axios
+      .get(`${url}/api/products/${productId}`)
+      .then((res) => {
+        dispatch(setCurrentProduct(res.data));
+      })
+      .catch((e) => {
+        console.log('error fetching reviews', e);
+      });
+  }, []);
+
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
+    if (ratingError) {
+      setRatingError(false);
+    }
   };
 
   const userHasReviewed = currentProduct.reviews.find((review) => {
@@ -40,10 +67,23 @@ const WriteReview = () => {
       setDescription(userReview?.description || '');
       setRating(userReview?.rating || 0);
     }
-  }, []);
+  }, [currentProduct]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    let hasError = false;
+    if (rating === 0) {
+      setRatingError(true);
+      hasError = true;
+    }
+    if (description.length < 1) {
+      setDescriptionError(true);
+      hasError = true;
+    }
+    if (hasError) {
+      return;
+    }
 
     if (!userHasReviewed) {
       await axios
@@ -61,6 +101,17 @@ const WriteReview = () => {
             },
           }
         )
+        .then((res) => {
+          setShowAlert(true);
+          dispatch(
+            setCurrentProduct({
+              ...currentProduct,
+              reviews: currentProduct.reviews.map((review: ReviewType) =>
+                review!.id === res.data.id ? res.data : review
+              ),
+            })
+          );
+        })
         .catch((e) => {
           console.log('error creating review', e);
         });
@@ -80,11 +131,21 @@ const WriteReview = () => {
             },
           }
         )
+        .then((res) => {
+          setShowAlert(true);
+          dispatch(
+            setCurrentProduct({
+              ...currentProduct,
+              reviews: currentProduct.reviews.map((review: ReviewType) =>
+                review!.id === res.data.id ? res.data : review
+              ),
+            })
+          );
+        })
         .catch((e) => {
           console.log('error editing review', e);
         });
     }
-    navigate(`/add-a-review/thank-you`);
   };
 
   return (
@@ -115,28 +176,58 @@ const WriteReview = () => {
             </span>
           );
         })}
+        <Col>
+          {rating === 0 && ratingError && (
+            <Form.Text className="text-danger">
+              {' '}
+              <ExclamationCircleFill /> Please select a rating.
+            </Form.Text>
+          )}
+        </Col>
       </Col>
-      <Form>
-        <Form.Group className="mb-3 pb-3 review-form">
+      <Form onSubmit={handleSubmit}>
+        <Form.Group
+          className="mb-3 pb-3 review-form"
+          controlId="reviewDescription"
+        >
           <Form.Label className="h6">
             {userHasReviewed ? 'Edit review' : 'Add a written review'}
           </Form.Label>
           <Form.Control
             as="textarea"
+            minLength={1}
             placeholder="What did you like or dislike? What did you use this product for?"
             value={description}
             rows={3}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              if (descriptionError) {
+                setDescriptionError(false);
+              }
+            }}
           />
+          <Col>
+            {description.length < 1 && descriptionError && (
+              <Form.Text className="text-danger">
+                {' '}
+                <ExclamationCircleFill /> Please add a written review.
+              </Form.Text>
+            )}
+          </Col>
         </Form.Group>
         <Button
           variant="warning"
           type="submit"
           className="submit-review-button"
-          onClick={handleSubmit}
         >
           Submit
         </Button>
+        {showAlert && (
+          <Alert variant="success" className="p-2 mt-1">
+            <CheckCircleFill /> Review submitted - Thank you!{' '}
+            <Link to={`/products/${currentProduct.id}`}>View product</Link>
+          </Alert>
+        )}
       </Form>
     </Col>
   );

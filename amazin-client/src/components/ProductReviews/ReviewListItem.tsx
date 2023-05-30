@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
-import { Button, Col } from 'react-bootstrap';
-import { Star, StarFill } from 'react-bootstrap-icons';
+import { Button, Col, Form } from 'react-bootstrap';
+import { ExclamationCircleFill, Star, StarFill } from 'react-bootstrap-icons';
 import { ReviewType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
@@ -17,6 +17,7 @@ type Props = {
 export default function ReviewListItem(props: Props) {
   const { review, setReviewsEdited } = props;
   const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState(false);
   const [description, setDescription] = useState(review!.description);
   const [rating, setRating] = useState(review!.rating);
   const MAX_RATING = 5;
@@ -46,6 +47,7 @@ export default function ReviewListItem(props: Props) {
   const handleClick = () => {
     if (isEditing) {
       setIsEditing(false);
+      setError(false);
       setDescription(review!.description);
       setRating(review!.rating);
     } else {
@@ -70,10 +72,12 @@ export default function ReviewListItem(props: Props) {
     }
   };
 
-  const handleEdit = () => {
-    if (!isEditing) {
-      setIsEditing(true);
-    } else {
+  const handleSubmit = () => {
+    if (isEditing) {
+      if (description.length < 1) {
+        setError(true);
+        return;
+      }
       axios
         .patch(
           `${process.env.REACT_APP_API_SERVER_URL}/api/products/${
@@ -92,12 +96,15 @@ export default function ReviewListItem(props: Props) {
         .then((res) => {
           review!.description = res.data.description;
           review!.rating = res.data.rating;
-          setIsEditing(false);
           setReviewsEdited((prev: boolean) => !prev);
+          setIsEditing(false);
+          setError(false);
         })
         .catch((e) => {
           console.log('error editing review', e);
         });
+    } else {
+      setIsEditing(true);
     }
   };
 
@@ -134,7 +141,10 @@ export default function ReviewListItem(props: Props) {
       </Col>
       <Col className="verified-purchase">Verified Purchase</Col>
       {isEditing ? (
-        <textarea
+        <Form.Control
+          as="textarea"
+          required
+          minLength={1}
           className="product-text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -142,13 +152,31 @@ export default function ReviewListItem(props: Props) {
       ) : (
         <Col className="product-text">{review!.description}</Col>
       )}
+      {error && (
+        <span
+          className="text-danger d-block mt-2"
+          style={{ fontSize: '0.8rem' }}
+        >
+          <ExclamationCircleFill /> Please add a written review.
+        </span>
+      )}
       {userId === review?.user?.id && (
-        <Button variant="light" className='edit-review-button' onClick={handleEdit}>
+        <Button
+          variant="light"
+          className="edit-review-button"
+          type="button"
+          onClick={handleSubmit}
+        >
           {isEditing ? 'Save' : 'Edit'}
         </Button>
       )}
       {userId === review?.user?.id && (
-        <Button variant="light" className='delete-review-button' onClick={handleClick}>
+        <Button
+          variant="light"
+          className="delete-review-button"
+          type="button"
+          onClick={handleClick}
+        >
           {isEditing ? 'Cancel' : 'Delete'}
         </Button>
       )}
