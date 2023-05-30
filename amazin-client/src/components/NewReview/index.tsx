@@ -2,12 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import { Form, Col, Button, Image, Alert } from 'react-bootstrap';
-import {
-  StarFill,
-  Star,
-  CheckCircleFill,
-  ExclamationCircleFill,
-} from 'react-bootstrap-icons';
+import { StarFill, Star, CheckCircleFill } from 'react-bootstrap-icons';
 import { useParams } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { useSelector } from 'react-redux';
@@ -179,8 +174,7 @@ const WriteReview = () => {
         <Col>
           {rating === 0 && ratingError && (
             <Form.Text className="text-danger">
-              {' '}
-              <ExclamationCircleFill /> Please select a rating.
+              Please select a rating
             </Form.Text>
           )}
         </Col>
@@ -194,6 +188,7 @@ const WriteReview = () => {
             {userHasReviewed ? 'Edit review' : 'Add a written review'}
           </Form.Label>
           <Form.Control
+            isInvalid={descriptionError}
             as="textarea"
             minLength={1}
             placeholder="What did you like or dislike? What did you use this product for?"
@@ -209,8 +204,7 @@ const WriteReview = () => {
           <Col>
             {description.length < 1 && descriptionError && (
               <Form.Text className="text-danger">
-                {' '}
-                <ExclamationCircleFill /> Please add a written review.
+                Please add a written review
               </Form.Text>
             )}
           </Col>

@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
-import { ExclamationCircleFill, Star, StarFill } from 'react-bootstrap-icons';
+import { Star, StarFill } from 'react-bootstrap-icons';
 import { ReviewType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
@@ -142,12 +142,16 @@ export default function ReviewListItem(props: Props) {
       <Col className="verified-purchase">Verified Purchase</Col>
       {isEditing ? (
         <Form.Control
+          isInvalid={error}
           as="textarea"
           required
           minLength={1}
           className="product-text"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            setError(false);
+          }}
         />
       ) : (
         <Col className="product-text">{review!.description}</Col>
@@ -157,7 +161,7 @@ export default function ReviewListItem(props: Props) {
           className="text-danger d-block mt-2"
           style={{ fontSize: '0.8rem' }}
         >
-          <ExclamationCircleFill /> Please add a written review.
+          Please add a written review
         </span>
       )}
       {userId === review?.user?.id && (
