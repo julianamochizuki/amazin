@@ -6,10 +6,15 @@ import { CategoryType, DepartmentType } from '../../types/types';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
+import { ExclamationCircleFill } from 'react-bootstrap-icons';
 
 type Props = {
   inventoryUpdated: boolean;
   setInventoryUpdated: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+type ErrorType = {
+  [key: string]: boolean;
 };
 
 export default function AddProduct(props: Props) {
@@ -28,40 +33,127 @@ export default function AddProduct(props: Props) {
     },
   });
 
+  const initialErrorState: ErrorType = {
+    name: false,
+    description: false,
+    price_cents: false,
+    image: false,
+    category: false,
+    quantity: false,
+  };
+
+  const [error, setError] = useState<ErrorType>(initialErrorState);
+
   const departments = useSelector(
     (state: RootState) => state.departments.departments
   );
   const token = Cookies.get('token') || null;
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const sellerId = decodedToken?.id || null;
+  const formFields = [
+    {
+      name: 'name',
+      label: 'Name',
+      type: 'text',
+      placeholder: 'Enter product name',
+      errorMessage: 'Please add a product name',
+    },
+    {
+      name: 'description',
+      label: 'Description',
+      type: 'text',
+      placeholder: 'Enter product description',
+      errorMessage: 'Please add a product description',
+    },
+    {
+      name: 'image',
+      label: 'Image',
+      type: 'text',
+      placeholder: 'Enter product image URL',
+      errorMessage: 'Please add a product image URL',
+    },
+  ];
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.currentTarget;
+  const handleChanges = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    const value = e.target.value;
+
+    if (field === 'category') {
+      setForm((prevForm) => ({
+        ...prevForm,
+        [field]: {
+          connect: { id: Number(value) },
+        },
+      }));
+    } else {
+      setForm((prevForm) => ({
+        ...prevForm,
+        [field]: value,
+      }));
+    }
+
+    setError((prevError) => ({
+      ...prevError,
+      [field]: false,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setError((prevError) => ({
+      ...prevError,
+      name: !form.name ? true : false,
+      description: !form.description ? true : false,
+      image: !form.image ? true : false,
+      category: !form.category.connect.id ? true : false,
+      quantity: !form.quantity ? true : false,
+      price_cents: !form.price_cents ? true : false,
+    }));
+
+    if (
+      !form.name ||
+      !form.description ||
+      !form.image ||
+      !form.category ||
+      !form.quantity ||
+      !form.price_cents
+    ) {
+      return;
+    }
+
+    const formEvent = e.currentTarget;
     const product = {
-      name: form.productName.value,
-      description: form.productDescription.value,
-      price_cents: Number(form.productPrice.value) * 100,
-      image: form.productImage.value,
+      name: formEvent.productName.value,
+      description: formEvent.productDescription.value,
+      price_cents: Number(formEvent.productPrice.value) * 100,
+      image: formEvent.productImage.value,
       category: {
-        connect: { id: Number(form.productCategory.value) },
+        connect: { id: Number(formEvent.productCategory.value) },
       },
-      quantity: Number(form.productQuantity.value),
+      quantity: Number(formEvent.productQuantity.value),
       User: {
         connect: { id: sellerId },
       },
     };
-    axios.post(
-      `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/inventory`,
-      product,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    setInventoryUpdated(true);
-    form.reset();
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/inventory`,
+        product,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setInventoryUpdated(true);
+        setError(initialErrorState);
+        formEvent.reset();
+      });
   };
 
   return (
@@ -74,40 +166,6 @@ export default function AddProduct(props: Props) {
         <h4>New Product</h4>
         <Row>
           <Form.Group
-            controlId="productName"
-            className="add-product-form-group"
-          >
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter product name"
-              required
-            />
-          </Form.Group>
-          <Form.Group
-            controlId="productDescription"
-            className="add-product-form-group"
-          >
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter product description"
-              required
-            />
-          </Form.Group>
-
-          <Form.Group
-            controlId="productImage"
-            className="add-product-form-group"
-          >
-            <Form.Label>Image URL</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter product image URL"
-              required
-            />
-          </Form.Group>
-          <Form.Group
             controlId="productCategory"
             className="add-product-form-group"
           >
@@ -115,9 +173,11 @@ export default function AddProduct(props: Props) {
             <Form.Control
               as="select"
               placeholder="Select product category"
-              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChanges(e, 'category')
+              }
             >
-              <option value="" disabled selected>
+              <option value="0" disabled selected>
                 Select Category
               </option>
               {departments.map((department: DepartmentType) => (
@@ -128,7 +188,33 @@ export default function AddProduct(props: Props) {
                 </optgroup>
               ))}
             </Form.Control>
+            {error.category && (
+              <Form.Text className="text-danger">
+                <ExclamationCircleFill /> Please select a category
+              </Form.Text>
+            )}
           </Form.Group>
+          {formFields.map((field) => (
+            <Form.Group
+              controlId={`product${field.label}`}
+              className="add-product-form-group"
+            >
+              <Form.Label>{field.label}</Form.Label>
+              <Form.Control
+                type={field.type}
+                placeholder={field.placeholder}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(e, field.name)
+                }
+              />
+              {error[field.name] && (
+                <Form.Text className="text-danger">
+                  <ExclamationCircleFill /> {field.errorMessage}
+                </Form.Text>
+              )}
+            </Form.Group>
+          ))}
+
           <Form.Group
             as={Col}
             controlId="productPrice"
@@ -140,8 +226,15 @@ export default function AddProduct(props: Props) {
               min="0.01"
               step="0.01"
               placeholder="Enter product price"
-              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChanges(e, 'price_cents')
+              }
             />
+            {error.price_cents && (
+              <Form.Text className="text-danger">
+                <ExclamationCircleFill /> Please add a price
+              </Form.Text>
+            )}
           </Form.Group>
           <Form.Group
             as={Col}
@@ -154,13 +247,20 @@ export default function AddProduct(props: Props) {
               min="1"
               step="1"
               placeholder="Enter product quantity"
-              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChanges(e, 'quantity')
+              }
               onInput={(e: any) => {
                 e.target.value = Math.max(0, parseInt(e.target.value))
                   .toString()
                   .slice(0, 3);
               }}
             />
+            {error.quantity && (
+              <Form.Text className="text-danger">
+                <ExclamationCircleFill /> Please add a quantity
+              </Form.Text>
+            )}
           </Form.Group>
         </Row>
         <Button variant="warning" type="submit" size="sm">
