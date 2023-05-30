@@ -31,7 +31,7 @@ export default function SellerDashboard() {
         setInventory(res.data);
       })
       .catch((e) => console.log('error fetching seller products', e));
-  }, [inventoryUpdated === true]);
+  }, [inventoryUpdated === true, sellerId]);
 
   useEffect(() => {
     axios

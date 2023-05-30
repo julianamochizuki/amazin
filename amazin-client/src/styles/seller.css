@@ -42,5 +42,9 @@ width: 6%
 .table-row-discount {
   width: 11%
 }
+
+.product-add-confirmation {
+  font-size: 0.85rem !important;
+}
     
 

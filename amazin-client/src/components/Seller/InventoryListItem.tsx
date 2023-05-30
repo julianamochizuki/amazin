@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { ProductType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
 
@@ -17,17 +17,19 @@ export default function InventoryListItem(props: Props) {
   const token = Cookies.get('token') || null;
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const sellerId = decodedToken?.id || null;
-  const [form, setForm] = useState({
+  const today = new Date().toISOString().slice(0, 10);
+  const initialForm = {
     quantity: product.quantity,
     image: product.image,
     name: product.name,
-    price_cents: product.price_cents,
-    discountPercent: product.discountPercent,
-    saleStartDate: product.saleStartDate,
-    saleEndDate: product.saleEndDate,
-  });
-
-  const today = new Date().toISOString().slice(0, 10);
+    price_cents: product.price_cents / 100,
+    discountPercent: product.discountPercent ? product.discountPercent : '',
+    saleStartDate:
+      product.saleStartDate! >= today ? product.saleStartDate : today,
+    saleEndDate: product.saleEndDate! >= today ? product.saleEndDate : today,
+    isActive: product.isActive,
+  };
+  const [form, setForm] = useState(initialForm);
 
   const handleOptionSelect = (eventKey: any) => {
     if (eventKey === 'Cancel') {
@@ -35,14 +37,36 @@ export default function InventoryListItem(props: Props) {
         quantity: product.quantity,
         image: product.image,
         name: product.name,
-        price_cents: product.price_cents,
-        discountPercent: product.discountPercent,
+        price_cents: product.price_cents / 100,
+        discountPercent: product.discountPercent ? product.discountPercent : 0,
         saleStartDate: product.saleStartDate,
         saleEndDate: product.saleEndDate,
+        isActive: product.isActive,
       });
       setSelectedOption('Select');
     } else {
       setSelectedOption(eventKey);
+    }
+  };
+
+  const handleChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'price_cents') {
+      setForm({
+        ...form,
+        price_cents: parseFloat(parseFloat(e.target.value).toFixed(2)),
+      });
+    }
+    if (e.target.name === 'discountPercent') {
+      const inputValue = e.target.value;
+      const isValidInput = /^[0-9\b]+$/.test(inputValue);
+      if (!isValidInput) {
+        return;
+      } else {
+        setForm({
+          ...form,
+          discountPercent: Math.round(Number(e.target.value)),
+        });
+      }
     }
   };
 
@@ -51,8 +75,12 @@ export default function InventoryListItem(props: Props) {
       const formattedSaleStartDate = new Date(
         form.saleStartDate!
       ).toISOString();
-
       const formattedSaleEndDate = new Date(form.saleEndDate!).toISOString();
+
+      const isValidSale =
+        form.discountPercent! > 0 &&
+        form.discountPercent! < 100 &&
+        form.saleStartDate! >= today;
 
       if (selectedOption === 'Edit') {
         axios
@@ -62,12 +90,15 @@ export default function InventoryListItem(props: Props) {
               quantity: form.quantity,
               image: form.image,
               name: form.name,
-              price_cents: form.price_cents,
-              discountPercent: form.discountPercent,
-              saleStartDate: formattedSaleStartDate,
-              saleEndDate: formattedSaleEndDate,
+              price_cents: Math.round(form.price_cents * 100),
+              discountPercent: isValidSale ? form.discountPercent : 0,
+              saleStartDate: isValidSale ? formattedSaleStartDate : null,
+              saleEndDate: isValidSale ? formattedSaleEndDate : null,
               isOnSale:
-                form.saleStartDate?.split('T')[0] === today ? true : false,
+                form.saleStartDate?.split('T')[0] === today && isValidSale
+                  ? true
+                  : false,
+              isActive: form.quantity > 0 ? true : false,
             },
             {
               headers: {
@@ -75,8 +106,18 @@ export default function InventoryListItem(props: Props) {
               },
             }
           )
-          .then(() => {
+          .then((res) => {
             setInventoryUpdated(true);
+            setForm({
+              quantity: res.data.quantity,
+              image: res.data.image,
+              name: res.data.name,
+              price_cents: res.data.price_cents / 100,
+              discountPercent: res.data.discountPercent,
+              saleStartDate: res.data.saleStartDate,
+              saleEndDate: res.data.saleEndDate,
+              isActive: res.data.isActive,
+            });
           })
           .catch((e) => console.log(`error updating product ${product.id}`, e));
       }
@@ -115,23 +156,31 @@ export default function InventoryListItem(props: Props) {
           : 'Inactive'}
       </td>
       <td className="table-row">
-        {selectedOption === 'Edit' ? (
-          <textarea
-            value={form.image}
-            onChange={(e) => setForm({ ...form, image: e.target.value })}
-          />
-        ) : (
-          <img
-            src={product.image}
-            alt="product"
-            className="inventory-product-image"
-          />
-        )}
+        <Form.Group controlId="productImage">
+          {selectedOption === 'Edit' ? (
+            <Form.Control
+              required
+              type='text'
+              value={form.image}
+              onChange={(e) => setForm({ ...form, image: e.target.value })}
+              onInput={(e: any) => {
+                e.target.value = e.target.value.slice(0, 255);
+              }}
+            />
+          ) : (
+            <img
+              src={product.image}
+              alt="product"
+              className="inventory-product-image"
+            />
+          )}
+        </Form.Group>
       </td>
       <td className="table-row">{product.id}</td>
       <td className="table-row-name">
         {selectedOption === 'Edit' ? (
           <textarea
+          required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
@@ -144,9 +193,11 @@ export default function InventoryListItem(props: Props) {
         {selectedOption === 'Edit' ? (
           <input
             type="number"
+            min="0"
+            step="1"
             value={form.quantity}
             onChange={(e) =>
-              setForm({ ...form, quantity: Number(e.target.value) })
+              setForm({ ...form, quantity: Math.round(Number(e.target.value)) })
             }
           />
         ) : (
@@ -156,15 +207,13 @@ export default function InventoryListItem(props: Props) {
       <td className="table-row">
         {selectedOption === 'Edit' ? (
           <input
+            name="price_cents"
             type="number"
-            step="0.01"
-            value={form.price_cents / 100}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                price_cents: parseFloat(e.target.value) * 100 || 0,
-              })
-            }
+            step=".01"
+            min="0"
+            value={form.price_cents}
+            onChange={handleChanges}
+            required
           />
         ) : (
           product.price_cents / 100
@@ -173,14 +222,13 @@ export default function InventoryListItem(props: Props) {
       <td className="table-row-discount">
         {selectedOption === 'Edit' ? (
           <input
+            name="discountPercent"
             type="number"
+            step="1"
+            min="0"
+            max="99"
             value={form.discountPercent}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                discountPercent: parseFloat(e.target.value) || 0,
-              })
-            }
+            onChange={handleChanges}
           />
         ) : product.isOnSale ? (
           product.discountPercent
