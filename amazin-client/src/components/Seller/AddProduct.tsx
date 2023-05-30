@@ -6,7 +6,6 @@ import { CategoryType, DepartmentType } from '../../types/types';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
-import { ExclamationCircleFill } from 'react-bootstrap-icons';
 
 type Props = {
   inventoryUpdated: boolean;
@@ -171,6 +170,7 @@ export default function AddProduct(props: Props) {
           >
             <Form.Label>Select Category</Form.Label>
             <Form.Control
+              isInvalid={error.category}
               as="select"
               placeholder="Select product category"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -190,7 +190,7 @@ export default function AddProduct(props: Props) {
             </Form.Control>
             {error.category && (
               <Form.Text className="text-danger">
-                <ExclamationCircleFill /> Please select a category
+                Please select a category
               </Form.Text>
             )}
           </Form.Group>
@@ -201,6 +201,7 @@ export default function AddProduct(props: Props) {
             >
               <Form.Label>{field.label}</Form.Label>
               <Form.Control
+                isInvalid={error[field.name]}
                 type={field.type}
                 placeholder={field.placeholder}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -209,7 +210,7 @@ export default function AddProduct(props: Props) {
               />
               {error[field.name] && (
                 <Form.Text className="text-danger">
-                  <ExclamationCircleFill /> {field.errorMessage}
+                  {field.errorMessage}
                 </Form.Text>
               )}
             </Form.Group>
@@ -222,6 +223,7 @@ export default function AddProduct(props: Props) {
           >
             <Form.Label>Price</Form.Label>
             <Form.Control
+              isInvalid={error.price_cents}
               type="number"
               min="0.01"
               step="0.01"
@@ -231,9 +233,7 @@ export default function AddProduct(props: Props) {
               }
             />
             {error.price_cents && (
-              <Form.Text className="text-danger">
-                <ExclamationCircleFill /> Please add a price
-              </Form.Text>
+              <Form.Text className="text-danger">Please add a price</Form.Text>
             )}
           </Form.Group>
           <Form.Group
@@ -243,6 +243,7 @@ export default function AddProduct(props: Props) {
           >
             <Form.Label>Quantity</Form.Label>
             <Form.Control
+              isInvalid={error.quantity}
               type="number"
               min="1"
               step="1"
@@ -258,7 +259,7 @@ export default function AddProduct(props: Props) {
             />
             {error.quantity && (
               <Form.Text className="text-danger">
-                <ExclamationCircleFill /> Please add a quantity
+                Please add a quantity
               </Form.Text>
             )}
           </Form.Group>
