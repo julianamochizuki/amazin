@@ -77,6 +77,7 @@ const Router = (props: Props) => {
       )}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/seller/register" element={<Register />} />
       <Route path="/sell" element={<Sell />} />
       {token && (
         <Route path="/seller/dashboard" element={<SellerDashboard />} />

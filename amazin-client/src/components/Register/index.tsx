@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Card, Col, Form, Image, Row } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/login-register.css';
 import Cookies from 'js-cookie';
 
@@ -17,7 +17,10 @@ export default function RegisterForm() {
     password: false,
   });
   const navigate = useNavigate();
+  const location = useLocation();
   const url = process.env.REACT_APP_API_SERVER_URL;
+
+  const isStore = location.pathname === '/seller/register' ? true : false;
 
   const handleLogin = () => {
     axios
@@ -59,6 +62,7 @@ export default function RegisterForm() {
         name,
         email,
         password,
+        isSeller: isStore ? true : false,
       })
       .then((res) => {
         setError(false);
@@ -102,13 +106,15 @@ export default function RegisterForm() {
             </Card.Title>
             <Form className="register-form">
               <Form.Group className="from-group">
-                <Form.Label>Your name</Form.Label>
+                <Form.Label>
+                  {isStore ? 'Your store name' : 'Your name'}
+                </Form.Label>
                 <Form.Control
                   isInvalid={formError.name}
                   type="name"
                   minLength={2}
                   maxLength={50}
-                  placeholder="First and last name"
+                  placeholder={isStore ? 'Store name' : 'First and last name'}
                   onChange={(e) => {
                     setName(e.target.value);
                     setFormError({ ...formError, name: false });
@@ -116,7 +122,9 @@ export default function RegisterForm() {
                 />
                 {formError.name && (
                   <Form.Text className="text-danger">
-                    Please add your name
+                    {isStore
+                      ? 'Please add your store name'
+                      : 'Please add your name'}
                   </Form.Text>
                 )}
               </Form.Group>

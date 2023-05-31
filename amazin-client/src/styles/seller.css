@@ -47,4 +47,32 @@
   font-size: 0.85rem !important;
 }
     
+.sell-on-amazin {
+  padding: 5rem 0;
+}
+
+.sell-on-amazin-title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem
+}
+
+.sell-on-amazin-description {
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
+}
+
+.sell-on-amazin-button {
+  font-size: 1.5rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  padding: 1rem 2rem;
+  background-color: #f90;
+}
+
+.sell-on-amazin-button:hover {
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+  background-color: #f90;
+}
+
 
