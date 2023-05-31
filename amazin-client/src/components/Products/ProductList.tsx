@@ -9,7 +9,6 @@ import { ProductType } from '../../types/types';
 import ProductFilter from './ProductFilter';
 import ProductListItem from './ProductListItem';
 import { useSelector } from 'react-redux';
-import NoProductsFound from './NoProductsFound';
 import '../../styles/products.css';
 
 export default function ProductList() {
@@ -95,18 +94,19 @@ export default function ProductList() {
 
   return (
     <Row className="px-5 d-flex justify-content-center">
+      <Col xs={12} md={2} className="mt-5">
+        <ProductFilter />
+      </Col>
       {products.length ? (
-        <>
-          <Col xs={12} md={2} className='mt-5'>
-            <ProductFilter />
-          </Col>
-          <Col xs={12} md={9}>
-            <h3>Results</h3>
-            <Row>{productLists}</Row>
-          </Col>
-        </>
+        <Col xs={12} md={9}>
+          <h3>Results</h3>
+          <Row>{productLists}</Row>
+        </Col>
       ) : (
-        <NoProductsFound />
+        <Col xs={12} md={9}>
+          <h3>Results</h3>
+          <h6 className='mt-4'>No products found.</h6>
+        </Col>
       )}
     </Row>
   );

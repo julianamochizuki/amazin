@@ -17,8 +17,8 @@ import jwt_decode from 'jwt-decode';
 import SearchBar from '../SearchBar';
 import { Cart } from 'react-bootstrap-icons';
 import { CartType } from '../../types/types';
-import { setCurrentView } from '../../app/sellerDashboardViewReducer';
 import { useDispatch } from 'react-redux';
+import { setCurrentView } from '../../app/sellerDashboardViewReducer';
 
 type Props = {
   cart: CartType;
