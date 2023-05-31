@@ -12,6 +12,15 @@ const getAllOrdersByUserId = async (req, res) => {
           product: {
             include: {
               reviews: true,
+              OrderItem: {
+                select: {
+                  Order: {
+                    select: {
+                      userId: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },

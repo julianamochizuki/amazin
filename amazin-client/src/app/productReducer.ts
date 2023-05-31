@@ -18,6 +18,7 @@ const initialState: ProductState = {
     createdAt: '',
     updatedAt: '',
     quantityInCart: 0,
+    orderItems: [],
   },
   products: [],
 };

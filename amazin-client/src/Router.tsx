@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { RootState } from './app/store';
 import SellerDashboard from './components/Seller/SellerDashboard';
 import Cart from './pages/cart';
 import Checkout from './pages/checkout';
@@ -14,6 +16,7 @@ import Profile from './pages/profile';
 import Register from './pages/register';
 import Sell from './pages/seller';
 import { CartType } from './types/types';
+import jwt_decode from 'jwt-decode';
 
 type Props = {
   cart: CartType;
@@ -26,6 +29,16 @@ type Props = {
 const Router = (props: Props) => {
   const { cart, setCart, total, tokenChanged, setTokenChanged } = props;
   const [token, setToken] = useState<string | null>(null);
+  const currentProduct = useSelector(
+    (state: RootState) => state.products.currentProduct
+  );
+  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
+  const userId = decodedToken?.id || null;
+
+  const isValidUser =
+    currentProduct.orderItems?.some(
+      (orderItem) => orderItem.Order.userId === userId
+    ) || currentProduct
 
   useEffect(() => {
     const cookieToken = Cookies.get('token') || null;
@@ -56,7 +69,7 @@ const Router = (props: Props) => {
         />
       )}
       {token && <Route path="/orders" element={<Orders />} />}
-      {token && (
+      {token && isValidUser && (
         <Route
           path="/products/:productId/write-a-review"
           element={<NewReview />}

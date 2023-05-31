@@ -282,6 +282,15 @@ const getProductById = async (req, res) => {
           },
         },
       },
+      OrderItem: {
+        select: {
+          Order: {
+            select: {
+              userId: true,
+            }
+          }
+        },
+      },
       User: {
         select: {
           name: true,

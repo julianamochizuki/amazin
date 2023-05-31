@@ -17,7 +17,14 @@ export type ProductType = {
   discountPercent?: number;
   saleStartDate?: string;
   saleEndDate?: string;
+  orderItems?: ProductOrderItemType[];
 };
+
+export type ProductOrderItemType = {
+  Order: {
+    userId: number;
+  }
+}
 
 export type CategoryType = {
   id: number;
