@@ -23,7 +23,10 @@ export default function CartTotal(props: Props) {
         <Button
           variant="warning"
           className="cart-proceed-checkout-button"
-          onClick={() => navigate(token ? '/checkout' : '/login')}
+          disabled={cart.length === 0}
+          onClick={() => {
+            navigate(token ? '/checkout' : '/login');
+          }}
         >
           Proceed to Checkout
         </Button>
