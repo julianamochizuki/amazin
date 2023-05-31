@@ -14,7 +14,7 @@ const getUserById = async (req, res) => {
       name: true,
       email: true,
       address: true,
-      isAdmin: true,
+      isSeller: true,
     },
   });
   if (!user) {
@@ -49,7 +49,7 @@ const authenticateUser = async (req, res) => {
           name: user.name,
           email: user.email,
           address: user.address,
-          isAdmin: user.isAdmin,
+          isSeller: user.isSeller,
           expiresAt: expiresIn,
         },
         secretKey,
@@ -104,7 +104,7 @@ const updateUserById = async (req, res) => {
       name: user.name,
       email: user.email,
       address: user.address,
-      isAdmin: user.isAdmin,
+      isSeller: user.isSeller,
       expiresAt: new Date(),
     },
     secretKey,
