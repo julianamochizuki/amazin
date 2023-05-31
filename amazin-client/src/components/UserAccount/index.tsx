@@ -20,8 +20,19 @@ export default function UserAccount(props: Props) {
   const [form, setForm] = useState({ name, email });
   const [nameDisabled, setNameDisabled] = useState(true);
   const [emailDisabled, setEmailDisabled] = useState(true);
+  const initialErrorState = { name: false, email: false };
+  const [error, setError] = useState(initialErrorState);
 
   const handleClick = () => {
+    setError({
+      name: form.name === '' ? true : false,
+      email: form.email === '' ? true : false,
+    });
+
+    if (form.name === '' || form.email === '') {
+      return;
+    }
+
     axios
       .patch(
         `${process.env.REACT_APP_API_SERVER_URL}/api/users/${id}`,
@@ -39,6 +50,8 @@ export default function UserAccount(props: Props) {
         Cookies.set('token', res.data);
         decodedToken = jwt_decode(res.data);
         setForm({ name: decodedToken?.name, email: decodedToken?.email });
+        setNameDisabled(true);
+        setEmailDisabled(true);
       });
   };
 
@@ -54,11 +67,20 @@ export default function UserAccount(props: Props) {
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
+                  isInvalid={error.name}
                   type="text"
                   value={form.name}
                   disabled={nameDisabled}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e) => {
+                    setForm({ ...form, name: e.target.value });
+                    setError({ ...error, name: false });
+                  }}
                 />
+                {error.name && (
+                  <Form.Text className="text-danger">
+                    Please add a name
+                  </Form.Text>
+                )}
               </Col>
               <Col sm={12} className="mt-3 mb-3 text-end">
                 <Button
@@ -77,11 +99,20 @@ export default function UserAccount(props: Props) {
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
+                  isInvalid={error.email}
                   type="email"
                   value={form.email}
                   disabled={emailDisabled}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  onChange={(e) => {
+                    setForm({ ...form, email: e.target.value });
+                    setError({ ...error, email: false });
+                  }}
                 />
+                {error.email && (
+                  <Form.Text className="text-danger">
+                    Please add an email address
+                  </Form.Text>
+                )}
               </Col>
               <Col sm={12} className="mt-3 mb-3 text-end">
                 <Button

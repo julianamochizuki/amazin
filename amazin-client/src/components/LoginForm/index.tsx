@@ -1,13 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Image,
-  Row,
-} from 'react-bootstrap';
+import { Button, Card, Col, Form, Image, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/login-register.css';
 import Cookies from 'js-cookie';
@@ -19,28 +12,45 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_SERVER_URL;
+  const [formError, setFormError] = useState({
+    email: false,
+    password: false,
+  });
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      const res = await axios.post(`${url}/api/login`, {
+
+    setFormError({
+      email: email === '' ? true : false,
+      password: password === '' ? true : false,
+    });
+
+    if (email === '' || password === '') {
+      return;
+    }
+
+    axios
+      .post(`${url}/api/login`, {
         email,
         password,
-      });
-      if (res.data) {
+      })
+      .then((res) => {
         setError(false);
         setErrorMessage('');
         Cookies.set('token', res.data);
         navigate('/');
-      } else {
-        setError(true);
-        setErrorMessage('There was a problem signing you in.');
-      }
-    } catch (e) {
-      console.log('error authenticating user:', e);
-      setError(true);
-      setErrorMessage("We're sorry, there was a problem signing you in.");
-    }
+      })
+      .catch((e) => {
+        if (e.response.status === 401) {
+          const { error: errorCode, message } = e.response.data;
+          setError(true);
+          setErrorMessage(message);
+        } else {
+          console.log('error authenticating user:', e);
+          setError(true);
+          setErrorMessage("We're sorry, there was a problem signing you in.");
+        }
+      });
   };
 
   return (
@@ -61,21 +71,39 @@ export default function LoginForm() {
           <Card.Body>
             <Card.Title className="login-title">Sign in</Card.Title>
             <Form className="login-form">
-              <Form.Group className='from-group'>
+              <Form.Group className="from-group">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  isInvalid={formError.email}
                   type="email"
                   placeholder="Enter email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setFormError({ ...formError, email: false });
+                  }}
                 />
+                {formError.email && (
+                  <Form.Text className="text-danger">
+                    Please add your email address
+                  </Form.Text>
+                )}
               </Form.Group>
-              <Form.Group className='from-group'>
+              <Form.Group className="from-group">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                  isInvalid={formError.password}
                   type="password"
                   placeholder="Enter password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setFormError({ ...formError, password: false });
+                  }}
                 />
+                {formError.password && (
+                  <Form.Text className="text-danger">
+                    Please add your password
+                  </Form.Text>
+                )}
               </Form.Group>
               <Button
                 variant="warning"
@@ -95,7 +123,11 @@ export default function LoginForm() {
         <div className="new-user">
           <Row className="justify-content-center">New to Amazin? </Row>
           <Row className="justify-content-center">
-            <Button variant="light" className='button-to-register' onClick={() => navigate('/register')}>
+            <Button
+              variant="light"
+              className="button-to-register"
+              onClick={() => navigate('/register')}
+            >
               Create your Amazin account
             </Button>
           </Row>

@@ -11,33 +11,48 @@ export default function RegisterForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [formError, setFormError] = useState({
+    name: false,
+    email: false,
+    password: false,
+  });
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_SERVER_URL;
 
-  const handleLogin = async () => {
-    try {
-      const res = await axios.post(`${url}/api/login`, {
+  const handleLogin = () => {
+    axios
+      .post(`${url}/api/login`, {
         email,
         password,
-      });
-      if (res.data) {
+      })
+      .then((res) => {
         setError(false);
         setErrorMessage('');
         Cookies.set('token', res.data);
         navigate('/');
-      } else {
+      })
+      .catch((e) => {
+        console.log('error authenticating user:', e);
         setError(true);
-        setErrorMessage('There was a problem signing you in.');
-      }
-    } catch (e) {
-      console.log('error authenticating user:', e);
-      setError(true);
-      setErrorMessage("We're sorry, there was a problem signing you in.");
-    }
+        setErrorMessage("We're sorry, there was a problem signing you in.");
+      });
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    const emailRegex = /\S+@\S+\.\S+/;
+    const isValidEmail = emailRegex.test(email);
+
+    setFormError({
+      name: name === '' ? true : false,
+      email: !isValidEmail ? true : false,
+      password: password === '' ? true : false,
+    });
+
+    if (name === '' || !isValidEmail || password === '') {
+      return;
+    }
 
     await axios
       .post(`${url}/api/register`, {
@@ -46,19 +61,22 @@ export default function RegisterForm() {
         password,
       })
       .then((res) => {
-        if (res.data) {
-          setError(false);
-          setErrorMessage('');
-          handleLogin();
-          navigate('/');
-        } else {
-          setError(true);
-          setErrorMessage(res.data.error);
-          return;
-        }
+        setError(false);
+        setErrorMessage('');
+        handleLogin();
+        navigate('/');
       })
       .catch((e) => {
-        console.log('error registering user: ', e);
+        if (e.response.status === 401) {
+          const { error: errorCode, message } = e.response.data;
+          setError(true);
+          setErrorMessage(message);
+          return;
+        } else {
+          console.log('error registering user:', e);
+          setError(true);
+          setErrorMessage("We're sorry, there was a problem signing you in.");
+        }
       });
   };
 
@@ -72,7 +90,7 @@ export default function RegisterForm() {
           className="logo"
         />
         {error && (
-          <Col>
+          <Col className="mb-3">
             <Row>There was a problem</Row>
             <Row>{errorMessage}</Row>
           </Col>
@@ -81,29 +99,60 @@ export default function RegisterForm() {
           <Card.Body>
             <Card.Title className="register-title">Create Account</Card.Title>
             <Form className="register-form">
-              <Form.Group className='from-group'>
+              <Form.Group className="from-group">
                 <Form.Label>Your name</Form.Label>
                 <Form.Control
+                  isInvalid={formError.name}
                   type="name"
+                  minLength={2}
+                  maxLength={50}
                   placeholder="First and last name"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setFormError({ ...formError, name: false });
+                  }}
                 />
+                {formError.name && (
+                  <Form.Text className="text-danger">
+                    Please add your name
+                  </Form.Text>
+                )}
               </Form.Group>
-              <Form.Group className='from-group'>
+              <Form.Group className="from-group">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  isInvalid={formError.email}
+                  minLength={5}
+                  maxLength={50}
                   type="email"
                   placeholder="Enter email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setFormError({ ...formError, email: false });
+                  }}
                 />
+                {formError.email && (
+                  <Form.Text className="text-danger">
+                    Please add a valid email address
+                  </Form.Text>
+                )}
               </Form.Group>
-              <Form.Group className='from-group'>
+              <Form.Group className="from-group">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                  isInvalid={formError.password}
                   type="password"
                   placeholder="Enter password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setFormError({ ...formError, password: false });
+                  }}
                 />
+                {formError.password && (
+                  <Form.Text className="text-danger">
+                    Please add a password
+                  </Form.Text>
+                )}
               </Form.Group>
               <Button
                 variant="warning"

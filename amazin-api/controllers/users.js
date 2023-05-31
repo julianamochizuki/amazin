@@ -31,7 +31,10 @@ const authenticateUser = async (req, res) => {
     },
   });
   if (!user) {
-    res.status(401).json('We cannot find an account with that e-mail address');
+    res.status(401).json({
+      error: 'email_not_found',
+      message: 'We cannot find an account with that e-mail address',
+    });
   } else {
     const passwordMatch = await bcrypt.compare(
       req.body.password,
@@ -54,7 +57,10 @@ const authenticateUser = async (req, res) => {
       );
       res.json(token);
     } else {
-      res.status(401).json('Your password is incorrect');
+      res.status(401).json({
+        error: 'incorrect_password',
+        message: 'Your password is incorrect',
+      });
     }
   }
 };
@@ -67,7 +73,10 @@ const createUser = async (req, res) => {
     },
   });
   if (existingUser) {
-    res.status(401).json('An account with that e-mail address already exists');
+    res.status(401).json({
+      error: 'email_already_exists',
+      message: 'An account with that e-mail address already exists',
+    });
   } else {
     const user = await prisma.user.create({
       data: {

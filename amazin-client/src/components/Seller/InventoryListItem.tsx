@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { ProductType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
-import { ErrorResponse } from '@remix-run/router';
 
 type Props = {
   product: ProductType;
