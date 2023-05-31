@@ -7,7 +7,7 @@ import { CartType } from '../../types/types';
 
 type Props = {
   cart: CartType;
-  setCart: any;
+  setCart: React.Dispatch<React.SetStateAction<CartType>>;
   total: number;
 };
 

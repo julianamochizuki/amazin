@@ -68,7 +68,7 @@ export default function RegisterForm() {
       })
       .catch((e) => {
         if (e.response.status === 401) {
-          const { error: errorCode, message } = e.response.data;
+          const { message } = e.response.data;
           setError(true);
           setErrorMessage(message);
           return;
@@ -97,7 +97,9 @@ export default function RegisterForm() {
         )}
         <Card className="register-card">
           <Card.Body>
-            <Card.Title className="register-title">Create Account</Card.Title>
+            <Card.Title className="register-title mb-3">
+              Create Account
+            </Card.Title>
             <Form className="register-form">
               <Form.Group className="from-group">
                 <Form.Label>Your name</Form.Label>

@@ -7,6 +7,7 @@ import {
   resetCurrentProductFilter,
   setCurrentProductSearch,
 } from '../../app/productFilterReducer';
+import '../../styles/navbar.css';
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -27,11 +28,11 @@ export default function SearchBar() {
       <FormControl
         type="search"
         placeholder="Search Amazin"
-        className="mr-2"
+        className="mr-2 search-input"
         aria-label="Search"
         onChange={(e) => setSearchValue(e.target.value)}
       />
-      <Button variant="warning" type="submit">
+      <Button variant="warning" type="submit" className='search-button'>
         <Search />
       </Button>
     </Form>

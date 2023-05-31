@@ -42,7 +42,7 @@ export default function LoginForm() {
       })
       .catch((e) => {
         if (e.response.status === 401) {
-          const { error: errorCode, message } = e.response.data;
+          const { message } = e.response.data;
           setError(true);
           setErrorMessage(message);
         } else {
@@ -69,7 +69,7 @@ export default function LoginForm() {
         )}
         <Card className="login-card">
           <Card.Body>
-            <Card.Title className="login-title">Sign in</Card.Title>
+            <Card.Title className="login-title mb-3">Sign in</Card.Title>
             <Form className="login-form">
               <Form.Group className="from-group">
                 <Form.Label>Email</Form.Label>

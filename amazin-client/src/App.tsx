@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
 import './App.css';
 import NavBar from './components/Navbar';
 import Router from './Router';
@@ -10,6 +9,14 @@ import { CartType } from './types/types';
 
 function App() {
   const [cart, setCart] = useState<CartType>([]);
+  const [tokenChanged, setTokenChanged] = useState<boolean>(false);
+
+  useEffect(() => {
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+      setCart(JSON.parse(cartData));
+    }
+  }, []);
 
   const total: number = cart.reduce((acc, product) => {
     const price = product.isOnSale
@@ -28,8 +35,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <NavBar />
-        <Router cart={cart} setCart={setCart} total={roundedTotal} />
+        <NavBar cart={cart} setTokenChanged={setTokenChanged} />
+        <Router
+          cart={cart}
+          setCart={setCart}
+          total={roundedTotal}
+          tokenChanged={tokenChanged}
+          setTokenChanged={setTokenChanged}
+        />
       </div>
     </ThemeProvider>
   );
