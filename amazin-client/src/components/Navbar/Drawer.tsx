@@ -77,7 +77,7 @@ export default function Drawer() {
       style={{ backgroundColor: '#222F3E' }}
       className="px-3"
     >
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center nav-text">
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-false-${false}`}
           className="text-light toggle"
@@ -87,7 +87,7 @@ export default function Drawer() {
           }}
         >
           <List />
-          All
+          <span className='nav-text'>All</span>
         </Navbar.Toggle>
         <Navbar.Offcanvas
           id={`offcanvasNavbar-false-${false}`}
@@ -118,7 +118,7 @@ export default function Drawer() {
             <Nav className="justify-content-end flex-grow-1 pe-3">
               {!isExpanded ? (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="fs-5 subheading">
+                  <Nav.Item className="subheading">
                     Shop By Department
                   </Nav.Item>
                   <DepartmentList
@@ -139,7 +139,7 @@ export default function Drawer() {
                     </span>
                   </Nav.Link>
                   <Nav.Item className="drawer-section">
-                    <Nav.Item className="fs-5 subheading">
+                    <Nav.Item className="subheading">
                       {currentDepartment!.name}
                     </Nav.Item>
                     <CategoryList
@@ -151,7 +151,7 @@ export default function Drawer() {
               )}
               {!isExpanded && (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="fs-5 subheading">Settings</Nav.Item>
+                  <Nav.Item className="subheading">Settings</Nav.Item>
                   <Nav.Link onClick={handleAccountClick}>Your Account</Nav.Link>
                   <Nav.Link
                     onClick={
@@ -169,7 +169,7 @@ export default function Drawer() {
               )}
               {!isExpanded && (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="fs-5 subheading">
+                  <Nav.Item className="subheading">
                     Meet The Developer
                   </Nav.Item>
                   <Nav.Link onClick={handleSelect}>About Me</Nav.Link>

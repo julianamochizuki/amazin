@@ -1,8 +1,6 @@
 import Cookies from 'js-cookie';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { RootState } from './app/store';
 import SellerDashboard from './components/Seller/SellerDashboard';
 import Cart from './pages/cart';
 import Checkout from './pages/checkout';
@@ -19,13 +17,20 @@ import { CartType } from './types/types';
 
 type Props = {
   cart: CartType;
-  setCart: any;
+  setCart: React.Dispatch<React.SetStateAction<CartType>>;
   total: number;
+  tokenChanged: boolean;
+  setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Router = (props: Props) => {
-  const { cart, setCart, total } = props;
-  const token = Cookies.get('token') || null;
+  const { cart, setCart, total, tokenChanged, setTokenChanged } = props;
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const cookieToken = Cookies.get('token') || null;
+    setToken(cookieToken);
+  }, [tokenChanged]);
 
   return (
     <Routes>
@@ -63,7 +68,12 @@ const Router = (props: Props) => {
       {token && (
         <Route path="/seller/dashboard" element={<SellerDashboard />} />
       )}
-      {token && <Route path="/profile" element={<Profile />} />}
+      {token && (
+        <Route
+          path="/profile"
+          element={<Profile setTokenChanged={setTokenChanged} />}
+        />
+      )}
     </Routes>
   );
 };

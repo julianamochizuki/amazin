@@ -15,8 +15,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import SearchBar from '../SearchBar';
+import { Cart } from 'react-bootstrap-icons';
+import { CartType } from '../../types/types';
 
-const NavBar = function () {
+type Props = {
+  cart: CartType;
+  setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const NavBar = function (props: Props) {
+  const { cart, setTokenChanged } = props;
   const [show, setShow] = useState(false);
   const token = Cookies.get('token') || null;
   const decodedToken: { name?: string } | null = token
@@ -25,7 +33,6 @@ const NavBar = function () {
   const userName = decodedToken?.name || null;
   const firstName = userName?.split(' ')[0];
   const navigate = useNavigate();
-
   const showDropdown = (e: any) => {
     setShow(!show);
   };
@@ -38,11 +45,17 @@ const NavBar = function () {
     navigate('/');
   };
 
+  const handleDemoUser = () => {
+    Cookies.set('token', process.env.REACT_APP_DEMO_USER_TOKEN!);
+    setTokenChanged((prev) => !prev);
+    navigate('/');
+  };
+
   return (
     <Navbar bg="dark" variant="dark" fixed="top" expand={false}>
-      <div style={{ width: '100vw', marginTop: -7 }}>
-        <Row>
-          <Col className="d-flex align-items-center navbar-brand">
+      <div style={{ width: '100vw', marginTop: -3 }}>
+        <Row className="d-flex align-items-center mx-1">
+          <Col className="d-flex align-self-center justify-content-center  navbar-brand">
             <Navbar.Brand onClick={() => navigate('/')}>
               <div className="nav-logo">
                 <Image
@@ -55,25 +68,28 @@ const NavBar = function () {
             </Navbar.Brand>
           </Col>
           <Col className="text-light nav-text">
-            <Row>Hello</Row>
-            <Row>Select your address</Row>
+            <Row
+              className="demo-user-container nav-account-link pointer-cursor"
+              onClick={handleDemoUser}
+            >
+              Demo User
+            </Row>
           </Col>
           <Col md={5} className="d-flex align-items-center">
             <SearchBar />
           </Col>
-          <Col className="d-flex align-items-center justify-content-center">
+          <Col className="d-flex align-items-center justify-content-center flag-container">
             <Image
               src={process.env.PUBLIC_URL + '/images/canada-flag.png'}
               className="flag"
             />
           </Col>
           <Col
-            className="text-light d-flex-column align-self-center  nav-text"
+            className="text-light d-flex-column align-self-center justify-content-center  nav-text"
             onClick={() => navigate(token ? '/profile' : '/login')}
           >
-            <Row className="text-light  nav-text">
-              {token ? `Hello, ${firstName}` : 'Hello, sign in'}
-            </Row>
+            {token ? `Hello, ${firstName}` : 'Hello, sign in'}
+
             <Row className="text-light nav-text">
               <NavDropdown
                 title="Account"
@@ -106,18 +122,25 @@ const NavBar = function () {
               </NavDropdown>
             </Row>
           </Col>
-          <Col className="d-flex align-items-center  nav-text">
+          <Col className="d-flex align-items-center justify-content-center nav-text">
             <Nav.Link
               onClick={() => navigate(token ? '/orders' : '/login')}
               className="text-light"
             >
               <Row>Returns</Row>
-              <Row className='nav-account-link'>& Orders</Row>
+              <Row className="nav-account-link">& Orders</Row>
             </Nav.Link>
           </Col>
-          <Col className="d-flex align-items-center  nav-text">
-            <Nav.Link className="text-light" onClick={() => navigate('/cart')}>
-              Cart
+          <Col className="d-flex align-items-center justify-content-center  nav-text">
+            <Nav.Link
+              className="text-light nav-account-link nav-cart"
+              onClick={() => navigate('/cart')}
+            >
+              <Col className="cart-wrapper">
+                <span className="cart-count">{cart.length}</span>
+                <Cart className="cart-icon" />
+              </Col>
+              <Col className="cart-text">Cart</Col>
             </Nav.Link>
           </Col>
         </Row>

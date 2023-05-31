@@ -6,11 +6,12 @@ import axios from 'axios';
 import '../../styles/profile.css';
 
 type Props = {
-  setView: (view: string) => void;
+  setView: React.Dispatch<React.SetStateAction<string>>;
+  setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function UserAccount(props: Props) {
-  const { setView } = props;
+  const { setView, setTokenChanged } = props;
   const token = Cookies.get('token') || null;
   let decodedToken: { id?: Number; name?: string; email?: string } | null =
     token ? jwt_decode(token) : null;
@@ -48,6 +49,7 @@ export default function UserAccount(props: Props) {
       )
       .then((res) => {
         Cookies.set('token', res.data);
+        setTokenChanged((prev) => !prev);
         decodedToken = jwt_decode(res.data);
         setForm({ name: decodedToken?.name, email: decodedToken?.email });
         setNameDisabled(true);

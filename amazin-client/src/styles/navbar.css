@@ -3,22 +3,66 @@
   flex-direction: column;
   word-wrap: break-word;
 }
+.flag-container {
+  width: fit-content;
+}
 
 .flag {
   height: 30px;
 }
 
-.nav-logo {
-  margin-left: 1rem;
+.demo-user-container {
+  border: 1px solid #f08804;
+  border-radius: 5px;
+  width: fit-content;
+  padding: 0.5rem;
 }
 
 .nav-text, .dropdown-item {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 500;
   text-align: left !important;
   width: fit-content;
+  justify-self: center;
 }
 
 .nav-account-link {
   font-weight: 700 !important;
+}
+
+.nav-cart {
+  display: flex;
+  align-items: center;
+}
+
+.cart-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #f08804;
+  padding-bottom: 0.1rem;
+}
+
+.cart-icon {
+  font-size: 2rem;
+}
+
+.cart-text {
+  text-align: center;
+}
+
+.search-button {
+  border-radius: 0 0.25rem 0.25rem 0 !important;
+}
+
+.search-input {
+  border-radius: 0.25rem 0 0 0.25rem !important;
 }
