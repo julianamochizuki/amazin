@@ -4,7 +4,7 @@
   word-wrap: break-word;
 }
 .flag-container {
-  width: fit-content;
+ width: fit-content;
 }
 
 .flag {
@@ -16,6 +16,13 @@
   border-radius: 5px;
   width: fit-content;
   padding: 0.5rem;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.demo-user-container:hover {
+  transform: scale(1.05);
+  z-index: 1;
 }
 
 .nav-text, .dropdown-item {

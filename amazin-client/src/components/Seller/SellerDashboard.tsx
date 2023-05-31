@@ -7,15 +7,22 @@ import OrderList from './OrderList';
 import { OrderType } from '../../types/types';
 import { Col, Nav } from 'react-bootstrap';
 import AddProduct from './AddProduct';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { setCurrentView } from '../../app/sellerDashboardViewReducer';
+import { useDispatch } from 'react-redux';
 
 export default function SellerDashboard() {
   const [orders, setOrders] = useState<OrderType[]>([]);
   const [inventory, setInventory] = useState([]);
   const [inventoryUpdated, setInventoryUpdated] = useState(false);
-  const [mode, setMode] = useState('inventory');
   const token = Cookies.get('token') || null;
   const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
   const sellerId = decodedToken?.id || null;
+  const mode = useSelector(
+    (state: RootState) => state.sellerDashboardView.currentView
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -50,20 +57,29 @@ export default function SellerDashboard() {
   }, []);
 
   return (
-    <Col className='m-3'>
+    <Col className="m-3">
       <Nav variant="tabs" defaultActiveKey="Inventory">
         <Nav.Item>
-          <Nav.Link eventKey="Inventory" onClick={() => setMode('Inventory')}>
+          <Nav.Link
+            eventKey="Inventory"
+            onClick={() => dispatch(setCurrentView('Inventory'))}
+          >
             Inventory
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="Orders" onClick={() => setMode('Orders')}>
+          <Nav.Link
+            eventKey="Orders"
+            onClick={() => dispatch(setCurrentView('Orders'))}
+          >
             Orders
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="AddProduct" onClick={() => setMode('NewProduct')}>
+          <Nav.Link
+            eventKey="AddProduct"
+            onClick={() => dispatch(setCurrentView('NewProduct'))}
+          >
             Add Product
           </Nav.Link>
         </Nav.Item>

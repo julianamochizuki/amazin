@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, List, PersonCircle } from 'react-bootstrap-icons';
-import { Nav, Navbar, Offcanvas } from 'react-bootstrap';
+import { Col, Nav, Navbar, Offcanvas, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
@@ -12,6 +12,7 @@ import { resetCurrentProductFilter } from '../../app/productFilterReducer';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
+import '../../styles/navbar.css';
 
 export default function Drawer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,11 +23,12 @@ export default function Drawer() {
   );
   const dispatch = useDispatch();
   const token = Cookies.get('token');
-  const decodedToken: { name?: string } | null = token
+  const decodedToken: { name?: string; isSeller?: boolean } | null = token
     ? jwt_decode(token)
     : null;
   const userName = decodedToken?.name || null;
   const firstName = userName?.split(' ')[0];
+  const isSeller = decodedToken?.isSeller || false;
 
   const handleSelect = () => {
     setIsExpanded(true);
@@ -57,10 +59,6 @@ export default function Drawer() {
       path: '/deals',
     },
     {
-      title: 'Sell',
-      path: '/seller/dashboard',
-    },
-    {
       title: 'Books',
       path: '/departments/1/products',
     },
@@ -87,7 +85,7 @@ export default function Drawer() {
           }}
         >
           <List />
-          <span className='nav-text'>All</span>
+          <span className="nav-text">All</span>
         </Navbar.Toggle>
         <Navbar.Offcanvas
           id={`offcanvasNavbar-false-${false}`}
@@ -118,9 +116,7 @@ export default function Drawer() {
             <Nav className="justify-content-end flex-grow-1 pe-3">
               {!isExpanded ? (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="subheading">
-                    Shop By Department
-                  </Nav.Item>
+                  <Nav.Item className="subheading">Shop By Department</Nav.Item>
                   <DepartmentList
                     isExpanded={isExpanded}
                     setIsExpanded={setIsExpanded}
@@ -169,9 +165,7 @@ export default function Drawer() {
               )}
               {!isExpanded && (
                 <Nav.Item className="drawer-section">
-                  <Nav.Item className="subheading">
-                    Meet The Developer
-                  </Nav.Item>
+                  <Nav.Item className="subheading">Meet The Developer</Nav.Item>
                   <Nav.Link onClick={handleSelect}>About Me</Nav.Link>
                   <Nav.Link onClick={handleSelect}>Icons</Nav.Link>
                 </Nav.Item>
@@ -190,6 +184,17 @@ export default function Drawer() {
             {item.title}
           </Nav.Link>
         ))}
+        {!token && (
+          <Nav.Link
+            className="text-light nav-link"
+            onClick={() => {
+              dispatch(resetCurrentProductFilter());
+              navigate('/sell');
+            }}
+          >
+            Sell
+          </Nav.Link>
+        )}
       </div>
     </Navbar>
   );

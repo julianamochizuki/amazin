@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
-  setView: (view: string) => void;
+  setView: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function ChangePassword(props: Props) {
