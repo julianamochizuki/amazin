@@ -43,18 +43,15 @@ const authenticateUser = async (req, res) => {
     if (passwordMatch) {
       const expiresIn = new Date();
       expiresIn.setDate(expiresIn.getDate() + 1);
-      const token = jwt.sign(
-        {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          address: user.address,
-          isSeller: user.isSeller,
-          expiresAt: expiresIn,
-        },
-        secretKey,
-        { expiresIn: '1d' }
-      );
+      const payload = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        address: user.address,
+        isSeller: user.isSeller,
+        expiresAt: expiresIn,
+      };
+      const token = jwt.sign(payload, secretKey, { expiresIn: '1d' });
       res.json(token);
     } else {
       res.status(401).json({
@@ -98,18 +95,18 @@ const updateUserById = async (req, res) => {
     },
   });
 
-  const updatedToken = jwt.sign(
-    {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      address: user.address,
-      isSeller: user.isSeller,
-      expiresAt: new Date(),
-    },
-    secretKey,
-    { expiresIn: '1d' }
-  );
+  const expiresIn = new Date();
+  expiresIn.setDate(expiresIn.getDate() + 1);
+  const payload = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    address: user.address,
+    isSeller: user.isSeller,
+    expiresAt: new Date(),
+  };
+
+  const updatedToken = jwt.sign(payload, secretKey, { expiresIn: '1d' });
   res.json(updatedToken);
 };
 
