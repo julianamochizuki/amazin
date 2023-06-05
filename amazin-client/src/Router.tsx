@@ -17,6 +17,9 @@ import Register from './pages/register';
 import Sell from './pages/seller';
 import { CartType } from './types/types';
 import jwt_decode from 'jwt-decode';
+import { setCurrentUser } from './app/userReducer';
+import { useDispatch } from 'react-redux';
+import CryptoJS from 'crypto-js';
 
 type Props = {
   cart: CartType;
@@ -28,22 +31,48 @@ type Props = {
 
 const Router = (props: Props) => {
   const { cart, setCart, total, tokenChanged, setTokenChanged } = props;
-  const [token, setToken] = useState<string | null>(null);
+  const cookieToken = Cookies.get('token') || null;
+  const [token, setToken] = useState(cookieToken);
+  const dispatch = useDispatch();
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
   );
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const userId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const userId = currentUser.id
 
   const isValidUser =
     currentProduct.orderItems?.some(
       (orderItem) => orderItem.Order.userId === userId
-    ) || currentProduct
+    ) || currentProduct;
 
   useEffect(() => {
     const cookieToken = Cookies.get('token') || null;
     setToken(cookieToken);
-  }, [tokenChanged]);
+    const decodedToken: {
+      name?: string;
+      address?: string;
+      email?: string;
+      isSeller?: boolean;
+      id?: number;
+    } | null = cookieToken ? jwt_decode(cookieToken) : null;
+    const user = {
+      name: CryptoJS.AES.encrypt(
+        decodedToken?.name!,
+        process.env.REACT_APP_SECRET_KEY!
+      ).toString(),
+      address: CryptoJS.AES.encrypt(
+        decodedToken?.address!,
+        process.env.REACT_APP_SECRET_KEY!
+      ).toString(),
+      email: CryptoJS.AES.encrypt(
+        decodedToken?.email!,
+        process.env.REACT_APP_SECRET_KEY!
+      ).toString(),
+      isSeller: decodedToken?.isSeller,
+      id: decodedToken?.id,
+    };
+    dispatch(setCurrentUser(user));
+  }, [tokenChanged, dispatch]);
 
   return (
     <Routes>
@@ -75,8 +104,8 @@ const Router = (props: Props) => {
           element={<NewReview />}
         />
       )}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      {!token && <Route path="/login" element={<Login />} />}
+      {!token && <Route path="/register" element={<Register />} />}
       <Route path="/seller/register" element={<Register />} />
       <Route path="/sell" element={<Sell />} />
       {token && (
@@ -85,7 +114,11 @@ const Router = (props: Props) => {
       {token && (
         <Route
           path="/profile"
-          element={<Profile setTokenChanged={setTokenChanged} />}
+          element={
+            <Profile
+              setTokenChanged={setTokenChanged}
+            />
+          }
         />
       )}
     </Routes>
