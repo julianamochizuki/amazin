@@ -1,27 +1,69 @@
-import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Col, Row, Form, Button } from 'react-bootstrap';
 import '../../styles/checkout.css';
 import { CartType } from '../../types/types';
 import CheckoutList from './CheckoutList';
 import { CardElement, Elements } from '@stripe/react-stripe-js';
 import Cookies from 'js-cookie';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import CryptoJS from 'crypto-js';
+import { setCurrentUser } from '../../app/userReducer';
+import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 
 type Props = {
   cart: CartType;
-  setCart: any;
+  setCart: React.Dispatch<React.SetStateAction<CartType>>;
   total: number;
   stripePromise: any;
 };
 
 export default function CheckoutDetails(props: Props) {
   const { cart, setCart, total, stripePromise } = props;
+  const [showAddressForm, setShowAddressForm] = useState(false);
   const token = Cookies.get('token') || null;
-  const decodedToken: { name?: string; address?: string } | null = token
-    ? jwt_decode(token)
-    : null;
-  const userName = decodedToken?.name || null;
-  const userAddress = decodedToken?.address || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const userId = currentUser.id;
+  const userName = CryptoJS.AES.decrypt(
+    currentUser.name,
+    process.env.REACT_APP_SECRET_KEY!
+  ).toString(CryptoJS.enc.Utf8);
+  const decryptedAddress = CryptoJS.AES.decrypt(
+    currentUser.address,
+    process.env.REACT_APP_SECRET_KEY!
+  ).toString(CryptoJS.enc.Utf8);
+  const [userAddress, setUserAddress] = useState(decryptedAddress);
+  const dispatch = useDispatch();
+
+  const handleAddressUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_SERVER_URL}/api/users/${userId}`,
+        { address: userAddress },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        setShowAddressForm(false);
+        Cookies.set('token', res.data);
+        const decodedToken: {
+          address?: string;
+        } | null = res.data ? jwt_decode(res.data) : null;
+        setUserAddress(decodedToken?.address!);
+        const userAddress = CryptoJS.AES.encrypt(
+          decodedToken?.address!,
+          process.env.REACT_APP_SECRET_KEY!
+        ).toString();
+
+        dispatch(setCurrentUser({ ...currentUser, address: userAddress }));
+      })
+      .catch((e) => {
+        console.log('error updating user address', e);
+      });
+  };
 
   return (
     <Col xs={12} md={8} className="checkout-details-section">
@@ -34,7 +76,41 @@ export default function CheckoutDetails(props: Props) {
         </Col>
         <Col xs={12} md={8}>
           <p>{userName}</p>
-          <p>{userAddress}</p>
+          {!showAddressForm ? (
+            userAddress
+          ) : (
+            <Form onSubmit={handleAddressUpdate}>
+              <Form.Control
+                type="text"
+                placeholder="Shipping address"
+                value={userAddress}
+                onChange={(e) => {
+                  const newAddress = e.target.value;
+                  setUserAddress(newAddress);
+                }}
+                className="user-address-input mb-3"
+              />
+              <Button variant="light" type="submit">
+                Save
+              </Button>
+              <Button variant="light" onClick={() => setShowAddressForm(false)}>
+                Cancel
+              </Button>
+            </Form>
+          )}
+          {!showAddressForm && (
+            <Col
+              variant="light"
+              className="user-address-update pointer-cursor"
+              onClick={() =>
+                showAddressForm
+                  ? setShowAddressForm(false)
+                  : setShowAddressForm(true)
+              }
+            >
+              {userAddress ? 'Change' : 'Add'}{' '}
+            </Col>
+          )}
         </Col>
       </Row>
 

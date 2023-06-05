@@ -4,6 +4,11 @@ import { Button, Card, Container, Form, Row, Col } from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import '../../styles/profile.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { setCurrentUser } from '../../app/userReducer';
+import CryptoJS from 'crypto-js';
+import { useDispatch } from 'react-redux';
 
 type Props = {
   setView: React.Dispatch<React.SetStateAction<string>>;
@@ -13,11 +18,17 @@ type Props = {
 export default function UserAccount(props: Props) {
   const { setView, setTokenChanged } = props;
   const token = Cookies.get('token') || null;
-  let decodedToken: { id?: Number; name?: string; email?: string } | null =
-    token ? jwt_decode(token) : null;
-  const id = decodedToken?.id;
-  const name = decodedToken?.name;
-  const email = decodedToken?.email;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const id = currentUser.id;
+  const name = CryptoJS.AES.decrypt(
+    currentUser.name,
+    process.env.REACT_APP_SECRET_KEY!
+  ).toString(CryptoJS.enc.Utf8);
+  const email = CryptoJS.AES.decrypt(
+    currentUser.email,
+    process.env.REACT_APP_SECRET_KEY!
+  ).toString(CryptoJS.enc.Utf8);
+  const dispatch = useDispatch();
   const [form, setForm] = useState({ name, email });
   const [nameDisabled, setNameDisabled] = useState(true);
   const [emailDisabled, setEmailDisabled] = useState(true);
@@ -49,11 +60,27 @@ export default function UserAccount(props: Props) {
       )
       .then((res) => {
         Cookies.set('token', res.data);
-        setTokenChanged((prev) => !prev);
-        decodedToken = jwt_decode(res.data);
-        setForm({ name: decodedToken?.name, email: decodedToken?.email });
+        const decodedToken: {
+          name?: string;
+          email?: string;
+        } | null = res.data ? jwt_decode(res.data) : null;
+
+        const name = CryptoJS.AES.encrypt(
+          decodedToken?.name!,
+          process.env.REACT_APP_SECRET_KEY!
+        ).toString();
+        const email = CryptoJS.AES.encrypt(
+          decodedToken?.email!,
+          process.env.REACT_APP_SECRET_KEY!
+        ).toString();
+
+        dispatch(setCurrentUser({ ...currentUser, name, email }));
+        setTokenChanged(true);
         setNameDisabled(true);
         setEmailDisabled(true);
+      })
+      .catch((e) => {
+        console.log('error updating user info:', e);
       });
   };
 
