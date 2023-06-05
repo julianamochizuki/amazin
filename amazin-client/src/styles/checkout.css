@@ -73,3 +73,11 @@
 .order-product-price {
   font-weight: bold;
 }
+
+.user-address-update {
+  display: flex;
+  align-items: center;
+  color: #007185;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
