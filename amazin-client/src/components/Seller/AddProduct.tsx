@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { CategoryType, DepartmentType } from '../../types/types';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import jwt_decode from 'jwt-decode';
 
 type Props = {
   inventoryUpdated: boolean;
@@ -47,8 +46,8 @@ export default function AddProduct(props: Props) {
     (state: RootState) => state.departments.departments
   );
   const token = Cookies.get('token') || null;
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const sellerId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const sellerId = currentUser.id;
   const formFields = [
     {
       name: 'name',

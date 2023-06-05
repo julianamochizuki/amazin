@@ -59,13 +59,13 @@ export type ReviewType = {
 } | null;
 
 export type UserType = {
-  id: number;
+  id?: number;
   email: string;
   name: string;
   address: string;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
+  isSeller?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export interface CartItem {

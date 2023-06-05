@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Alert, Button, Card, Container, Form } from 'react-bootstrap';
-import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 type Props = {
   setView: React.Dispatch<React.SetStateAction<string>>;
@@ -25,9 +26,8 @@ export default function ChangePassword(props: Props) {
   const navigate = useNavigate();
 
   const token = Cookies.get('token') || null;
-  let decodedToken: { id?: Number; name?: string; email?: string } | null =
-    token ? jwt_decode(token) : null;
-  const id = decodedToken?.id;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const id = currentUser.id;
 
   const handleClick = () => {
     setErrorForm({
@@ -64,8 +64,8 @@ export default function ChangePassword(props: Props) {
         )
         .then((res) => {
           if (res.status === 200) {
-            alert('Password changed successfully. Please log in again');
-            navigate('/login');
+            alert('Password changed successfully.');
+            navigate('/');
           }
         })
         .catch((e) => {

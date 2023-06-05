@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { ProductType } from '../../types/types';
 import jwt_decode from 'jwt-decode';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 type Props = {
   product: ProductType;
@@ -19,8 +21,8 @@ export default function InventoryListItem(props: Props) {
   const { product, inventoryUpdated, setInventoryUpdated } = props;
   const [selectedOption, setSelectedOption] = useState('Select');
   const token = Cookies.get('token') || null;
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const sellerId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const sellerId = currentUser.id;
   const today = new Date().toISOString().slice(0, 10);
   const initialForm = {
     quantity: product.quantity,

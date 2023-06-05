@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
-import jwt_decode from 'jwt-decode';
 import InventoryList from './InventoryList';
 import OrderList from './OrderList';
 import { OrderType } from '../../types/types';
@@ -17,8 +16,8 @@ export default function SellerDashboard() {
   const [inventory, setInventory] = useState([]);
   const [inventoryUpdated, setInventoryUpdated] = useState(false);
   const token = Cookies.get('token') || null;
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const sellerId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const sellerId = currentUser.id;
   const mode = useSelector(
     (state: RootState) => state.sellerDashboardView.currentView
   );

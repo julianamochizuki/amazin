@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, List, PersonCircle } from 'react-bootstrap-icons';
-import { Col, Nav, Navbar, Offcanvas, Row } from 'react-bootstrap';
+import { Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
@@ -11,8 +11,8 @@ import { RootState } from '../../app/store';
 import { resetCurrentProductFilter } from '../../app/productFilterReducer';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
-import jwt_decode from 'jwt-decode';
 import '../../styles/navbar.css';
+import CryptoJS from 'crypto-js';
 
 export default function Drawer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,12 +23,12 @@ export default function Drawer() {
   );
   const dispatch = useDispatch();
   const token = Cookies.get('token');
-  const decodedToken: { name?: string; isSeller?: boolean } | null = token
-    ? jwt_decode(token)
-    : null;
-  const userName = decodedToken?.name || null;
-  const firstName = userName?.split(' ')[0];
-  const isSeller = decodedToken?.isSeller || false;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const userName = CryptoJS.AES.decrypt(
+    currentUser.name,
+    process.env.REACT_APP_SECRET_KEY!
+  ).toString(CryptoJS.enc.Utf8);
+  const firstName = userName.split(' ')[0];
 
   const handleSelect = () => {
     setIsExpanded(true);

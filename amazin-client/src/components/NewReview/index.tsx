@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { Form, Col, Button, Image, Alert } from 'react-bootstrap';
 import { StarFill, Star, CheckCircleFill } from 'react-bootstrap-icons';
 import { useParams } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { useDispatch } from 'react-redux';
@@ -18,10 +17,9 @@ const WriteReview = () => {
   const [descriptionError, setDescriptionError] = useState(false);
   const [ratingError, setRatingError] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const url = process.env.REACT_APP_API_SERVER_URL;
   const token = Cookies.get('token') || null;
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const userId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const userId = currentUser.id;
   const dispatch = useDispatch();
   const { productId } = useParams();
   const currentProduct = useSelector(
@@ -30,7 +28,7 @@ const WriteReview = () => {
 
   useEffect(() => {
     axios
-      .get(`${url}/api/products/${productId}`)
+      .get(`${process.env.REACT_APP_API_SERVER_URL}/api/products/${productId}`)
       .then((res) => {
         dispatch(setCurrentProduct(res.data));
       })
@@ -83,7 +81,7 @@ const WriteReview = () => {
     if (!userHasReviewed) {
       await axios
         .post(
-          `${url}/api/products/${currentProduct.id}/reviews`,
+          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews`,
           {
             rating,
             description,

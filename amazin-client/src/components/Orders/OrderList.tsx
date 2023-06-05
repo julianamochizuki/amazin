@@ -3,19 +3,19 @@ import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { OrderType } from '../../types/types';
 import OrderListItem from './OrderListItem';
-import jwt_decode from 'jwt-decode';
 import '../../styles/orders.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
-  const url = process.env.REACT_APP_API_SERVER_URL;
   const token = Cookies.get('token') || null;
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const userId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const userId = currentUser.id;
 
   useEffect(() => {
     axios
-      .get(`${url}/api/users/${userId}/orders`, {
+      .get(`${process.env.REACT_APP_API_SERVER_URL}/api/users/${userId}/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -23,7 +23,7 @@ export default function OrderList() {
       .then((res) => {
         setOrders(res.data);
       });
-  }, []);
+  }, [userId, token]);
 
   const orderList = orders.map((o: OrderType) => {
     return <OrderListItem key={o.id} order={o} />;

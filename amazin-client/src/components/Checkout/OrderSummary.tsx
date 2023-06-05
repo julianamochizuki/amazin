@@ -1,11 +1,12 @@
 // import { useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import jwt_decode from 'jwt-decode';
 import React, { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { CartType } from '../../types/types';
 import '../../styles/checkout.css';
+import { RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
 
 type Props = {
   cart: CartType;
@@ -19,8 +20,8 @@ export default function OrderSummary(props: Props) {
   const [order, setOrder] = useState<any>(null);
   const url = process.env.REACT_APP_API_SERVER_URL;
   const token = Cookies.get('token') || null;
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const userId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const userId = currentUser.id;
   // const stripe = useStripe();
   // const elements = useElements();
 

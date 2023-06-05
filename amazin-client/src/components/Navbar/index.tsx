@@ -13,12 +13,14 @@ import Drawer from './Drawer';
 import '../../styles/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 import SearchBar from '../SearchBar';
 import { Cart } from 'react-bootstrap-icons';
 import { CartType } from '../../types/types';
 import { useDispatch } from 'react-redux';
 import { setCurrentView } from '../../app/sellerDashboardViewReducer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import CryptoJS from 'crypto-js';
 
 type Props = {
   cart: CartType;
@@ -29,12 +31,13 @@ const NavBar = function (props: Props) {
   const { cart, setTokenChanged } = props;
   const [show, setShow] = useState(false);
   const token = Cookies.get('token') || null;
-  const decodedToken: { name?: string; isSeller?: boolean } | null = token
-    ? jwt_decode(token)
-    : null;
-  const userName = decodedToken?.name || null;
-  const firstName = userName?.split(' ')[0];
-  const isSeller = decodedToken?.isSeller;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const isSeller = currentUser.isSeller;
+  const userName = CryptoJS.AES.decrypt(
+    currentUser.name,
+    process.env.REACT_APP_SECRET_KEY!
+  ).toString(CryptoJS.enc.Utf8);
+  const firstName = userName.split(' ')[0];
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

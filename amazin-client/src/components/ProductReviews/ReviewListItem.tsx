@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { Star, StarFill } from 'react-bootstrap-icons';
 import { ReviewType } from '../../types/types';
-import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../app/store';
@@ -22,8 +21,8 @@ export default function ReviewListItem(props: Props) {
   const [rating, setRating] = useState(review!.rating);
   const MAX_RATING = 5;
   const token = Cookies.get('token') || null;
-  const decodedToken: { id?: Number } | null = token ? jwt_decode(token) : null;
-  const userId = decodedToken?.id || null;
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const userId = currentUser.id;
   const navigate = useNavigate();
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
