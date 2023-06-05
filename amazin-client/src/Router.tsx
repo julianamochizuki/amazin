@@ -38,7 +38,7 @@ const Router = (props: Props) => {
     (state: RootState) => state.products.currentProduct
   );
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
-  const userId = currentUser.id
+  const userId = currentUser.id;
 
   const isValidUser =
     currentProduct.orderItems?.some(
@@ -114,11 +114,7 @@ const Router = (props: Props) => {
       {token && (
         <Route
           path="/profile"
-          element={
-            <Profile
-              setTokenChanged={setTokenChanged}
-            />
-          }
+          element={<Profile setTokenChanged={setTokenChanged} />}
         />
       )}
     </Routes>

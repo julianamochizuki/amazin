@@ -21,6 +21,9 @@ import { setCurrentView } from '../../app/sellerDashboardViewReducer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import CryptoJS from 'crypto-js';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import { setCurrentUser } from '../../app/userReducer';
 
 type Props = {
   cart: CartType;
@@ -53,16 +56,45 @@ const NavBar = function (props: Props) {
     navigate('/');
   };
 
-  const handleDemoUser = () => {
-    Cookies.set('token', process.env.REACT_APP_DEMO_USER_TOKEN!);
-    setTokenChanged((prev) => !prev);
-    navigate('/');
-  };
-
-  const handleDemoSeller = () => {
-    Cookies.set('token', process.env.REACT_APP_DEMO_SELLER_TOKEN!);
-    setTokenChanged((prev) => !prev);
-    navigate('/');
+  const handleDemoUser = (isSeller: boolean) => {
+    axios
+      .post(`${process.env.REACT_APP_API_SERVER_URL}/api/login`, {
+        email: isSeller
+          ? process.env.REACT_APP_DEMO_SELLER_EMAIL
+          : process.env.REACT_APP_DEMO_USER_EMAIL,
+        password: isSeller
+          ? process.env.REACT_APP_DEMO_SELLER_PASSWORD
+          : process.env.REACT_APP_DEMO_USER_PASSWORD,
+      })
+      .then((res) => {
+        Cookies.set('token', res.data);
+        const decodedToken: {
+          name?: string;
+          address?: string;
+          email?: string;
+          isSeller?: boolean;
+          id?: number;
+        } | null = res.data ? jwt_decode(res.data) : null;
+        const user = {
+          name: CryptoJS.AES.encrypt(
+            decodedToken?.name!,
+            process.env.REACT_APP_SECRET_KEY!
+          ).toString(),
+          address: CryptoJS.AES.encrypt(
+            decodedToken?.address!,
+            process.env.REACT_APP_SECRET_KEY!
+          ).toString(),
+          email: CryptoJS.AES.encrypt(
+            decodedToken?.email!,
+            process.env.REACT_APP_SECRET_KEY!
+          ).toString(),
+          isSeller: decodedToken?.isSeller,
+          id: decodedToken?.id,
+        };
+        dispatch(setCurrentUser(user));
+        setTokenChanged((prev) => !prev);
+        navigate('/');
+      });
   };
 
   return (
@@ -81,7 +113,7 @@ const NavBar = function (props: Props) {
           <Col className="text-light nav-text">
             <Row
               className="demo-user-container nav-account-link pointer-cursor"
-              onClick={handleDemoUser}
+              onClick={() => handleDemoUser(false)}
             >
               Demo User
             </Row>
@@ -89,7 +121,7 @@ const NavBar = function (props: Props) {
           <Col className="text-light nav-text">
             <Row
               className="demo-user-container nav-account-link pointer-cursor"
-              onClick={handleDemoSeller}
+              onClick={() => handleDemoUser(true)}
             >
               Demo Seller
             </Row>

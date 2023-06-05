@@ -103,7 +103,7 @@ const updateUserById = async (req, res) => {
     email: user.email,
     address: user.address,
     isSeller: user.isSeller,
-    expiresAt: new Date(),
+    expiresAt: expiresIn,
   };
 
   const updatedToken = jwt.sign(payload, secretKey, { expiresIn: '1d' });
