@@ -4,7 +4,14 @@ const prisma = new PrismaClient();
 const getAllDepartments = async (req, res) => {
   const departments = await prisma.department.findMany({
     include: {
-      categories: true,
+      categories: {
+        orderBy: {
+          name: "asc",
+        },
+      }
+    },
+    orderBy: {
+      name: "asc",
     },
   });
   res.json(departments);
@@ -17,6 +24,9 @@ const getDepartmentById = async (req, res) => {
     },
     include: {
       categories: true,
+    },
+    orderBy: {
+      name: "asc",
     },
   });
   if (!department) {

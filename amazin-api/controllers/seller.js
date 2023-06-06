@@ -64,19 +64,27 @@ const getAllSellerOrders = async (req, res) => {
         },
       },
     },
-    include: {
-      orderItems: {
-        select: {
-          quantity: true,
-          createdAt: true,
-          product: true,
-        },
-      },
+    select: {
+      id: true,
+      createdAt: true,
       user: {
         select: {
           id: true,
           name: true,
           address: true,
+        },
+      },
+      orderItems: {
+        select: {
+          id: true,
+          quantity: true,
+          createdAt: true,
+          product: true,
+        },
+        where: {
+          product: {
+            userId: Number(req.params.sellerId),
+          },
         },
       },
     },

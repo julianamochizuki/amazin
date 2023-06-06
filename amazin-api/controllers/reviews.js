@@ -14,6 +14,9 @@ const getAllReviewsByProductId = async (req, res) => {
         },
       },
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
   if (!reviews) {
     res.status(404).json('Reviews not found');

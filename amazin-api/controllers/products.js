@@ -27,10 +27,9 @@ const getAllProductsByDepartment = async (req, res) => {
     },
   });
 
-  let averageRating = 0;
-  let totalReviews = 0;
-  let totalRating = 0;
   products.forEach((product) => {
+    let totalReviews = 0;
+    let totalRating = 0;
     if (!product.reviews.length) {
       product.averageRating = 0;
       return;
@@ -68,7 +67,26 @@ const getAllProductsByCategory = async (req, res) => {
       },
     },
   });
-  res.json(products);
+ 
+  products.forEach((product) => {
+    let totalReviews = 0;
+    let totalRating = 0;
+    if (!product.reviews.length) {
+      product.averageRating = 0;
+      return;
+    }
+    product.reviews.forEach((review) => {
+      totalReviews += 1;
+      totalRating += review.rating;
+    });
+    averageRating = totalRating / totalReviews;
+    product.averageRating = averageRating;
+  });
+
+  const filteredProducts = products.filter((product) => {
+    return product.averageRating >= Number(req.query.rating);
+  });
+  res.json(filteredProducts);
 };
 
 const getAllProductsBySearch = async (req, res) => {
@@ -99,10 +117,9 @@ const getAllProductsBySearch = async (req, res) => {
     },
   });
 
-  let averageRating = 0;
-  let totalReviews = 0;
-  let totalRating = 0;
   products.forEach((product) => {
+    let totalReviews = 0;
+    let totalRating = 0;
     if (!product.reviews.length) {
       product.averageRating = 0;
       return;
@@ -145,10 +162,9 @@ const getAllProductsByFilter = async (req, res) => {
     },
   });
 
-  let averageRating = 0;
-  let totalReviews = 0;
-  let totalRating = 0;
   products.forEach((product) => {
+    let totalReviews = 0;
+    let totalRating = 0;
     if (!product.reviews.length) {
       product.averageRating = 0;
       return;
@@ -192,10 +208,9 @@ const getAllDealsProducts = async (req, res) => {
     },
   });
 
-  let averageRating = 0;
-  let totalReviews = 0;
-  let totalRating = 0;
   products.forEach((product) => {
+    let totalReviews = 0;
+    let totalRating = 0;
     if (!product.reviews.length) {
       product.averageRating = 0;
       return;
@@ -243,10 +258,9 @@ const getBestSellersProducts = async (req, res) => {
 
   products = products.slice(0, 20);
 
-  let averageRating = 0;
-  let totalReviews = 0;
-  let totalRating = 0;
   products.forEach((product) => {
+    let totalReviews = 0;
+    let totalRating = 0;
     if (!product.reviews.length) {
       product.averageRating = 0;
       return;
@@ -287,8 +301,8 @@ const getProductById = async (req, res) => {
           Order: {
             select: {
               userId: true,
-            }
-          }
+            },
+          },
         },
       },
       User: {

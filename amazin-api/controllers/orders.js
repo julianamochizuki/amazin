@@ -26,6 +26,9 @@ const getAllOrdersByUserId = async (req, res) => {
         },
       },
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
   res.json(orders);
 };

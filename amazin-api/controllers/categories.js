@@ -6,6 +6,9 @@ const getAllCategories = async (req, res) => {
     include: {
       products: true,
     },
+    orderBy: {
+      name: "asc",
+    },
   });
   res.json(categories);
 };
