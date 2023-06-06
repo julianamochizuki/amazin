@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, Container } from 'react-bootstrap';
+import { Carousel } from 'react-bootstrap';
 
 const Carrousel = function () {
   return (
@@ -7,7 +7,7 @@ const Carrousel = function () {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src={process.env.PUBLIC_URL + '/images/mothers-day.png'}
+            src={process.env.PUBLIC_URL + '/images/find-perfect-gift.png'}
             alt="First slide"
           />
           <Carousel.Caption></Carousel.Caption>

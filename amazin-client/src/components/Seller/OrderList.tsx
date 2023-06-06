@@ -23,7 +23,7 @@ export default function OrderList(props: Props) {
           <th>Customer</th>
           <th>Shipping Address</th>
           <th>Payment Method</th>
-          <th>Product SKU</th>
+          <th>Product ID</th>
           <th>Product Name</th>
           <th>Product Price ($)</th>
           <th>Quantity</th>

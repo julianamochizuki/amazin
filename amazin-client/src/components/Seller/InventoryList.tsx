@@ -33,7 +33,7 @@ export default function InventoryList(props: Props) {
       <thead>
         <tr className="inventory-table">
           <th>Status</th>
-          <th>ID</th>
+          <th>Product ID</th>
           <th>Date Created</th>
           <th>Image</th>
           <th>Product Name</th>

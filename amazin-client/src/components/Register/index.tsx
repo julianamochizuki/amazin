@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Button, Card, Col, Form, Image, Row } from 'react-bootstrap';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/login-register.css';
 import Cookies from 'js-cookie';
@@ -86,13 +86,7 @@ export default function RegisterForm() {
 
   return (
     <Row className="justify-content-center">
-      <Col xs={12} md={6} className="register-form-container">
-        <Image
-          src={process.env.PUBLIC_URL + '/logo.png'}
-          height="50"
-          width="110"
-          className="logo"
-        />
+      <Col xs={12} md={6} className="register-form-container mt-5">
         {error && (
           <Col className="mb-3">
             <Row>There was a problem</Row>
