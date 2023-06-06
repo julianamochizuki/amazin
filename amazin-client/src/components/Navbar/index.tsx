@@ -98,7 +98,9 @@ const NavBar = function (props: Props) {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" fixed="top" expand={false}>
+    <Navbar bg="dark" variant="dark" fixed="top" expand={false}
+    style={{height: 'fit-content', width: '100vw'}}
+    >
       <div style={{ width: '100vw', marginTop: -3 }}>
         <Row className="d-flex align-items-center mx-1">
           <Col className="d-flex align-self-center justify-content-center  navbar-brand">

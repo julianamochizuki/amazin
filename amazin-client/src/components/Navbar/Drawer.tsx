@@ -60,11 +60,11 @@ export default function Drawer() {
     },
     {
       title: 'Books',
-      path: '/departments/1/products',
+      path: '/departments/5/products',
     },
     {
       title: 'Health & Beauty',
-      path: '/departments/4/products',
+      path: '/departments/1/products',
     },
   ];
 
@@ -72,7 +72,7 @@ export default function Drawer() {
     <Navbar
       variant="dark"
       expand={false}
-      style={{ backgroundColor: '#222F3E' }}
+      style={{ backgroundColor: '#222F3E', marginBottom: -10  }}
       className="px-3"
     >
       <div className="d-flex align-items-center nav-text">
