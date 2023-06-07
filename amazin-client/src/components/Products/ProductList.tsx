@@ -23,7 +23,7 @@ export default function ProductList() {
     if (location.pathname.includes('/categories')) {
       axios
         .get(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/categories/${categoryId}/products/filter?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+          `/api/categories/${categoryId}/products/filter?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
         )
         .then((res) => {
           setProducts(res.data);
@@ -36,7 +36,7 @@ export default function ProductList() {
     if (location.pathname.includes('/search')) {
       axios
         .get(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/search?s=${searchTerm}&rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+          `/api/products/search?s=${searchTerm}&rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
         )
         .then((res) => {
           setProducts(res.data);
@@ -49,7 +49,7 @@ export default function ProductList() {
     if (location.pathname.includes('/departments')) {
       axios
         .get(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/departments/${departmentId}/products?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+          `/api/departments/${departmentId}/products?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
         )
         .then((res) => {
           setProducts(res.data);
@@ -64,7 +64,7 @@ export default function ProductList() {
     if (location.pathname === '/deals') {
       axios
         .get(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/deals?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+          `/api/products/deals?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
         )
         .then((res) => {
           setProducts(res.data);
@@ -77,7 +77,7 @@ export default function ProductList() {
     if (location.pathname === '/bestsellers') {
       axios
         .get(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/bestsellers?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+          `/api/products/bestsellers?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
         )
         .then((res) => {
           setProducts(res.data);
@@ -105,7 +105,7 @@ export default function ProductList() {
       ) : (
         <Col xs={12} md={9}>
           <h3>Results</h3>
-          <h6 className='mt-4'>No products found.</h6>
+          <h6 className="mt-4">No products found.</h6>
         </Col>
       )}
     </Row>

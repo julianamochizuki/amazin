@@ -51,7 +51,7 @@ export default function ChangePassword(props: Props) {
     } else {
       axios
         .patch(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/users/${id}/password`,
+          `/api/users/${id}/password`,
           {
             oldPassword: form.oldPassword,
             newPassword: form.newPassword,

@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { ProductType } from '../../types/types';
-import jwt_decode from 'jwt-decode';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 
@@ -127,7 +126,7 @@ export default function InventoryListItem(props: Props) {
       if (selectedOption === 'Edit' && isValidForm) {
         axios
           .patch(
-            `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/inventory/${product.id}`,
+            `/api/seller/${sellerId}/inventory/${product.id}`,
             {
               quantity: form.quantity,
               image: form.image,
@@ -172,7 +171,7 @@ export default function InventoryListItem(props: Props) {
       ) {
         axios
           .patch(
-            `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/inventory/${product.id}`,
+            `/api/seller/${sellerId}/inventory/${product.id}`,
             {
               isActive: selectedOption === 'Mark as inactive' ? false : true,
             },

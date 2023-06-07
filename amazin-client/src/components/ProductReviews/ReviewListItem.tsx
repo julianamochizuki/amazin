@@ -51,16 +51,11 @@ export default function ReviewListItem(props: Props) {
       setRating(review!.rating);
     } else {
       axios
-        .delete(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${
-            currentProduct.id
-          }/reviews/${review!.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+        .delete(`/api/products/${currentProduct.id}/reviews/${review!.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then(() => {
           setReviewsEdited((prev: boolean) => !prev);
           navigate(`/products/${currentProduct.id}`);
@@ -79,9 +74,7 @@ export default function ReviewListItem(props: Props) {
       }
       axios
         .patch(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${
-            currentProduct.id
-          }/reviews/${review!.id}`,
+          `/api/products/${currentProduct.id}/reviews/${review!.id}`,
           {
             description,
             rating,

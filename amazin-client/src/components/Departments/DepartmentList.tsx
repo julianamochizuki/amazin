@@ -20,7 +20,7 @@ export default function DepartmentList(props: Props) {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_SERVER_URL}/api/departments`)
+      .get(`/api/departments`)
       .then((res) => {
         dispatch(setDepartments(res.data));
       });

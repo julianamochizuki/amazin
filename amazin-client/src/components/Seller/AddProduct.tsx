@@ -139,7 +139,7 @@ export default function AddProduct(props: Props) {
 
     axios
       .post(
-        `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/inventory`,
+        `/api/seller/${sellerId}/inventory`,
         product,
         {
           headers: {

@@ -15,7 +15,6 @@ export default function LoginForm() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const url = process.env.REACT_APP_API_SERVER_URL;
   const [formError, setFormError] = useState({
     email: false,
     password: false,
@@ -35,7 +34,7 @@ export default function LoginForm() {
     }
 
     axios
-      .post(`${url}/api/login`, {
+      .post(`/api/login`, {
         email,
         password,
       })

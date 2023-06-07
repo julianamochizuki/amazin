@@ -15,7 +15,7 @@ export default function OrderList() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_SERVER_URL}/api/users/${userId}/orders`, {
+      .get(`/api/users/${userId}/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -31,7 +31,7 @@ export default function OrderList() {
 
   return (
     <>
-      <h4 className='orders-page-heading'>Your Orders</h4>
+      <h4 className="orders-page-heading">Your Orders</h4>
       {orderList}
     </>
   );

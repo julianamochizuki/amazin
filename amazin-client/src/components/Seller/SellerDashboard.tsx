@@ -25,14 +25,11 @@ export default function SellerDashboard() {
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/inventory`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .get(`/api/seller/${sellerId}/inventory`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setInventory(res.data);
       })
@@ -41,14 +38,11 @@ export default function SellerDashboard() {
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.REACT_APP_API_SERVER_URL}/api/seller/${sellerId}/orders`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .get(`/api/seller/${sellerId}/orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setOrders(res.data);
       })

@@ -18,13 +18,12 @@ export default function RegisterForm() {
   });
   const navigate = useNavigate();
   const location = useLocation();
-  const url = process.env.REACT_APP_API_SERVER_URL;
 
   const isStore = location.pathname === '/seller/register' ? true : false;
 
   const handleLogin = () => {
     axios
-      .post(`${url}/api/login`, {
+      .post(`/api/login`, {
         email,
         password,
       })
@@ -58,7 +57,7 @@ export default function RegisterForm() {
     }
 
     await axios
-      .post(`${url}/api/register`, {
+      .post(`/api/register`, {
         name,
         email,
         password,

@@ -21,7 +21,7 @@ const DealsList = function () {
   useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_API_SERVER_URL}/api/products/deals?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
+        `/api/products/deals?rating=${productFilter.rating}&min=${productFilter.minPrice}&max=${productFilter.maxPrice}`
       )
       .then((res) => {
         setDeals(res.data);

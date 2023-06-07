@@ -58,7 +58,7 @@ const NavBar = function (props: Props) {
 
   const handleDemoUser = (isSeller: boolean) => {
     axios
-      .post(`${process.env.REACT_APP_API_SERVER_URL}/api/login`, {
+      .post(`/api/login`, {
         email: isSeller
           ? process.env.REACT_APP_DEMO_SELLER_EMAIL
           : process.env.REACT_APP_DEMO_USER_EMAIL,

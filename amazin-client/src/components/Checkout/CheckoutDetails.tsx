@@ -42,7 +42,7 @@ export default function CheckoutDetails(props: Props) {
 
     axios
       .patch(
-        `${process.env.REACT_APP_API_SERVER_URL}/api/users/${userId}`,
+        `/api/users/${userId}`,
         { address: userAddress },
         { headers: { Authorization: `Bearer ${token}` } }
       )

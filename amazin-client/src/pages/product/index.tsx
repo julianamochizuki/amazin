@@ -20,12 +20,11 @@ const Product = () => {
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
   );
-  const url = process.env.REACT_APP_API_SERVER_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${url}/api/products/${productId}`);
+        const res = await axios.get(`/api/products/${productId}`);
         dispatch(setCurrentProduct(res.data));
         setVendor(res.data.User.name);
       } catch (e) {

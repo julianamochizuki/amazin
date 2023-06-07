@@ -28,7 +28,7 @@ const WriteReview = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_SERVER_URL}/api/products/${productId}`)
+      .get(`/api/products/${productId}`)
       .then((res) => {
         dispatch(setCurrentProduct(res.data));
       })
@@ -81,7 +81,7 @@ const WriteReview = () => {
     if (!userHasReviewed) {
       await axios
         .post(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${currentProduct.id}/reviews`,
+          `/api/products/${currentProduct.id}/reviews`,
           {
             rating,
             description,
@@ -111,9 +111,7 @@ const WriteReview = () => {
     } else {
       axios
         .patch(
-          `${process.env.REACT_APP_API_SERVER_URL}/api/products/${
-            currentProduct.id
-          }/reviews/${userReview!.id}`,
+          `/api/products/${currentProduct.id}/reviews/${userReview!.id}`,
           {
             description,
             rating,

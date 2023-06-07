@@ -15,7 +15,6 @@ type Props = {
 export default function CheckoutReview(props: Props) {
   const { cart, setCart, total } = props;
   const [clientSecret, setClientSecret] = useState('');
-  const [stripePromise, setStripePromise] = useState<any>(null);
 
   // useEffect(() => {
   //   fetch('http://localhost:8080/config').then(async (r) => {
@@ -45,9 +44,12 @@ export default function CheckoutReview(props: Props) {
   //   });
   // }, [total]);
 
+  const options = {};
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
+
   return (
     <Row className='checkout-section'>
-      <Elements stripe={stripePromise} options={{ clientSecret }}>
+      <Elements stripe={stripePromise} options={options}>
         <CheckoutDetails
           cart={cart}
           setCart={setCart}

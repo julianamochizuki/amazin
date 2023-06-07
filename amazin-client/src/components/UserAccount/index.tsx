@@ -47,7 +47,7 @@ export default function UserAccount(props: Props) {
 
     axios
       .patch(
-        `${process.env.REACT_APP_API_SERVER_URL}/api/users/${id}`,
+        `/api/users/${id}`,
         {
           name: form.name,
           email: form.email,
