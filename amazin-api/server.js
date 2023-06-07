@@ -55,6 +55,7 @@ const orders = require('./routes/orders');
 const reviews = require('./routes/reviews');
 const users = require('./routes/users');
 const seller = require('./routes/seller');
+const payments = require('./routes/payments')
 
 app.use('/api', departments);
 app.use('/api', categories);
@@ -63,6 +64,7 @@ app.use('/api', orders);
 app.use('/api', reviews);
 app.use('/api', users);
 app.use('/api', seller);
+app.use('/api', payments);
 
 app.listen(PORT, () => {
   console.log(
