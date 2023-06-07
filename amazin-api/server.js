@@ -11,7 +11,7 @@ const morgan = require('morgan');
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://amazin-api.herokuapp.com'],
+    origin: ['http://localhost:3000', 'https://amazin-app.netlify.app/'],
   })
 );
 app.use(helmet());
@@ -45,7 +45,7 @@ app.use(express.static('public'));
 //       },
 //     });
 //   }
-  
+
 // });
 
 const departments = require('./routes/departments');
@@ -55,7 +55,7 @@ const orders = require('./routes/orders');
 const reviews = require('./routes/reviews');
 const users = require('./routes/users');
 const seller = require('./routes/seller');
-const payments = require('./routes/payments')
+const payments = require('./routes/payments');
 
 app.use('/api', departments);
 app.use('/api', categories);
