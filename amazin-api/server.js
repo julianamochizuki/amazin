@@ -11,7 +11,7 @@ const morgan = require('morgan');
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://amazin-app.netlify.app/'],
+    origin: ['http://localhost:3000', 'https://main--amazin-app.netlify.app/'],
   })
 );
 app.use(helmet());
