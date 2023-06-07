@@ -12,7 +12,7 @@
   command = "CI= npm run build"
 
 [build.environment]
-REACT_APP_API_BASE_URL = "$REACT_APP_API_BASE_URL"
+REACT_APP_API_BASE_URL = "https://amazin-api.up.railway.app/"
 
 [[redirects]]
   from = "/*"
