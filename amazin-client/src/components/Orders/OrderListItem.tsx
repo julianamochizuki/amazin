@@ -67,12 +67,17 @@ export default function OrderListItem(props: Props) {
                 navigate(`/products/${item.product!.id}`);
               }}
             >
-              <Image className="order-product-image" src={item.product!.image} />
+              <Image
+                className="order-product-image"
+                src={item.product!.image}
+              />
             </Col>
             <Col xs={12} md={5}>
               <Row>{item.product!.name}</Row>
-              {today < deliveryDate && <Row className='delivery-info'>On the way</Row>}
-              <Row className='delivery-info'>
+              {today < deliveryDate && (
+                <Row className="delivery-info">On the way</Row>
+              )}
+              <Row className="delivery-info">
                 {today > deliveryDate
                   ? `Your package was delivered. It was handed directly to a resident. Delivery date: ${formattedDeliveredDate}.`
                   : `Delivery estimate: 
@@ -80,20 +85,20 @@ export default function OrderListItem(props: Props) {
               </Row>
             </Col>
 
-            {/* {today > deliveryDate && ( */}
-            <Col xs={12} md={4} className="button-container">
-              <Button
-                variant="light"
-                className="button-review"
-                onClick={() => {
-                  dispatch(setCurrentProduct(item.product));
-                  navigate(`/products/${item.product.id}/write-a-review`);
-                }}
-              >
-                Write a product review
-              </Button>
-            </Col>
-            {/* )} */}
+            {today > deliveryDate && (
+              <Col xs={12} md={4} className="button-container">
+                <Button
+                  variant="light"
+                  className="button-review"
+                  onClick={() => {
+                    dispatch(setCurrentProduct(item.product));
+                    navigate(`/products/${item.product.id}/write-a-review`);
+                  }}
+                >
+                  Write a product review
+                </Button>
+              </Col>
+            )}
           </Row>
         ))}
       </Card.Text>
