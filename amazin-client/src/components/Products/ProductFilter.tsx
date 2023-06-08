@@ -33,8 +33,8 @@ export default function ProductFilter() {
 
   return (
     <Row>
-      <Col xs={6} md={12} className='product-filter-review'>
-        <p className='filter-title'>Avg. Customer Review</p>
+      <Col xs={7} md={12} className="product-filter-review">
+        <p className="filter-title">Avg. Customer Review</p>
         <Col
           className="pointer-cursor"
           onClick={() => {
@@ -46,7 +46,7 @@ export default function ProductFilter() {
             );
           }}
         >
-          <p className='filter-text'>
+          <p className="filter-text">
             <ChevronLeft /> Clear
           </p>
         </Col>
@@ -67,8 +67,8 @@ export default function ProductFilter() {
           </Col>
         ))}
       </Col>
-      <Col   xs={6} md={12}>
-        <p className='filter-title'>Price</p>
+      <Col xs={5} md={12} className="product-filter-review">
+        <p className="filter-title">Price</p>
         <Row
           className="pointer-cursor filter-text"
           onClick={() => {

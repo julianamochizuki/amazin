@@ -44,6 +44,8 @@ const NavBar = function (props: Props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const isSmallScreen = window.innerWidth < 768;
+
   const showDropdown = (e: any) => {
     setShow(!show);
   };
@@ -98,8 +100,12 @@ const NavBar = function (props: Props) {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" fixed="top" expand={false}
-    style={{height: 'fit-content', width: '100vw'}}
+    <Navbar
+      bg="dark"
+      variant="dark"
+      fixed="top"
+      expand={false}
+      style={{ height: 'fit-content', width: '100vw' }}
     >
       <div style={{ width: '100vw', marginTop: -3 }}>
         <Row className="d-flex align-items-center mx-1">
@@ -131,12 +137,14 @@ const NavBar = function (props: Props) {
           <Col md={5} className="d-flex align-items-center">
             <SearchBar />
           </Col>
-          <Col className="d-flex align-self-center justify-content-center">
-            <Image
-              src={process.env.PUBLIC_URL + '/images/canada-flag.png'}
-              className="d-flex align-items-center justify-content-center flag-container flag"
-            />
-          </Col>
+          {isSmallScreen && (
+            <Col className="d-flex align-self-center justify-content-center flag-container">
+              <Image
+                src={process.env.PUBLIC_URL + '/images/canada-flag.png'}
+                className="d-flex align-items-center justify-content-center flag"
+              />
+            </Col>
+          )}
           <Col className="text-light d-flex-column align-self-center justify-content-center  nav-text">
             <Row
               onClick={() => navigate(token ? '/profile' : '/login')}
