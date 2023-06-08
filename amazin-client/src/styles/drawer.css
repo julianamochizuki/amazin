@@ -42,3 +42,22 @@ align-items: center;
   font-weight: bold;
   padding-top: 0.5rem;
 }
+
+.developer-image {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.developer-contact {
+  margin: 0.2rem;
+}
+
+.developer-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+}

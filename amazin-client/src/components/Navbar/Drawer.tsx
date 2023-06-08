@@ -1,6 +1,13 @@
 import React from 'react';
-import { ArrowLeft, List, PersonCircle } from 'react-bootstrap-icons';
-import { Nav, Navbar, Offcanvas } from 'react-bootstrap';
+import {
+  ArrowLeft,
+  Github,
+  Globe2,
+  Linkedin,
+  List,
+  PersonCircle,
+} from 'react-bootstrap-icons';
+import { Col, Image, Nav, Navbar, Offcanvas, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import DepartmentList from '../Departments/DepartmentList';
 import CategoryList from '../Categories/CategoryList';
@@ -72,7 +79,7 @@ export default function Drawer() {
     <Navbar
       variant="dark"
       expand={false}
-      style={{ backgroundColor: '#222F3E', marginBottom: -10  }}
+      style={{ backgroundColor: '#222F3E', marginBottom: -10 }}
       className="px-3"
     >
       <div className="d-flex align-items-center nav-text">
@@ -166,8 +173,56 @@ export default function Drawer() {
               {!isExpanded && (
                 <Nav.Item className="drawer-section">
                   <Nav.Item className="subheading">Meet The Developer</Nav.Item>
-                  <Nav.Link onClick={handleSelect}>About Me</Nav.Link>
-                  <Nav.Link onClick={handleSelect}>Icons</Nav.Link>
+                  <Nav.Link>
+                    <Row>
+                      <Col xs={2}>
+                        <Image
+                          src="https://media.licdn.com/dms/image/C5603AQHq3PqasQyTHQ/profile-displayphoto-shrink_400_400/0/1636783614052?e=1691625600&v=beta&t=eIGuQ8Ug1uN4nfZJTlC4uAFvMEGAVr18sSrtHBYFlNk"
+                          className="developer-image"
+                          onClick={() =>
+                            window.open(
+                              'https://www.linkedin.com/in/jmochizuki/',
+                              '_blank'
+                            )
+                          }
+                        />
+                      </Col>
+                      <Col xs={6}>
+                        <span className="developer-details">
+                          Juliana Mochizuki
+                          <span>
+                            <Linkedin
+                              className="developer-contact"
+                              onClick={() =>
+                                window.open(
+                                  'https://www.linkedin.com/in/jmochizuki/',
+                                  '_blank'
+                                )
+                              }
+                            />
+                            <Github
+                              className="developer-contact"
+                              onClick={() =>
+                                window.open(
+                                  'https://www.github.com/julianamochizuki/',
+                                  '_blank'
+                                )
+                              }
+                            />
+                            <Globe2
+                              className="developer-contact"
+                              onClick={() =>
+                                window.open(
+                                  'https://julianamochizuki.netlify.app//',
+                                  '_blank'
+                                )
+                              }
+                            />
+                          </span>
+                        </span>
+                      </Col>
+                    </Row>
+                  </Nav.Link>
                 </Nav.Item>
               )}
             </Nav>
