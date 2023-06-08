@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Form, Button } from 'react-bootstrap';
 import '../../styles/checkout.css';
 import { CartType } from '../../types/types';
 import CheckoutList from './CheckoutList';
-import { CardElement, Elements } from '@stripe/react-stripe-js';
+import { CardElement, useElements } from '@stripe/react-stripe-js';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -17,11 +17,11 @@ type Props = {
   cart: CartType;
   setCart: React.Dispatch<React.SetStateAction<CartType>>;
   total: number;
-  stripePromise: any;
+  setCard: React.Dispatch<React.SetStateAction<any>>;
 };
 
 export default function CheckoutDetails(props: Props) {
-  const { cart, setCart, total, stripePromise } = props;
+  const { cart, setCart, total, setCard } = props;
   const [showAddressForm, setShowAddressForm] = useState(false);
   const token = Cookies.get('token') || null;
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -36,6 +36,14 @@ export default function CheckoutDetails(props: Props) {
   ).toString(CryptoJS.enc.Utf8);
   const [userAddress, setUserAddress] = useState(decryptedAddress);
   const dispatch = useDispatch();
+  const elements = useElements();
+
+  useEffect(() => {
+    if (elements) {
+      setCard(elements.getElement(CardElement));
+    }
+    
+  }, [elements]);
 
   const handleAddressUpdate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -122,9 +130,9 @@ export default function CheckoutDetails(props: Props) {
           <h5>Payment Method</h5>
         </Col>
         <Col xs={12} md={8}>
-          <Elements stripe={stripePromise}>
+          {/* <Elements stripe={stripePromise}> */}
             <CardElement />
-          </Elements>
+          {/* </Elements> */}
         </Col>
       </Row>
 

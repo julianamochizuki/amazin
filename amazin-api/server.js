@@ -9,11 +9,7 @@ const morgan = require('morgan');
 //   apiVersion: '2022-11-15',
 // });
 
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://main--amazin-app.netlify.app/'],
-  })
-);
+app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 

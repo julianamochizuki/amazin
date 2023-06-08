@@ -1,4 +1,4 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
@@ -11,10 +11,11 @@ import { useSelector } from 'react-redux';
 type Props = {
   cart: CartType;
   total: number;
+  card: any;
 };
 
 export default function OrderSummary(props: Props) {
-  const { cart, total } = props;
+  const { cart, total, card } = props;
   const [message, setMessage] = useState<string | undefined>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [order, setOrder] = useState<any>(null);
@@ -23,9 +24,7 @@ export default function OrderSummary(props: Props) {
   const userId = currentUser.id;
   const stripe = useStripe();
   const elements = useElements();
-
-  //TODO: get paymentId from stripe
-  const paymentId = 1;
+  let paymentId = 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,13 +34,12 @@ export default function OrderSummary(props: Props) {
     }
     setIsProcessing(true);
 
-    const card = elements.getElement(CardElement);
-
     if (!card) {
+      setIsProcessing(false);
       return;
     }
 
-    const amount = total / 100;
+    const amount = total * 100;
     const currency = 'CAD';
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -52,15 +50,23 @@ export default function OrderSummary(props: Props) {
     if (error) {
       setMessage(error.message);
     } else {
-      const paymentMethodId = paymentMethod.id;
+      paymentId = Number(paymentMethod.id);
     }
 
     await axios
-      .post(`/api/payments`, {
-        amount,
-        currency,
-        paymentMethod
-      })
+      .post(
+        `/api/payments`,
+        {
+          amount,
+          currency,
+          paymentMethod,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         stripe.confirmCardPayment(res.data, {
           payment_method: {
@@ -68,27 +74,12 @@ export default function OrderSummary(props: Props) {
           },
         });
       })
-      .then((res) => {
-        // const { error } = await stripe.confirmPayment({
-        //   elements,
-        //   confirmParams: {
-        //     return_url: `${window.location.origin}/orders`,
-        //   },
-        // });
-
-        // if (error?.type === 'card_error' || error?.type === 'validation_error') {
-        //   setMessage(error.message);
-        // } else {
-        //   setMessage('An unexpected error occured.');
-        // }
-
-        // if (!error) {
+      .then(() => {
         Promise.all([
           /* add new order */
           axios.post(
             `/api/users/${userId}/orders`,
             {
-              userId,
               orderItems: {
                 createMany: {
                   data: cart.map((item) => ({
@@ -97,8 +88,13 @@ export default function OrderSummary(props: Props) {
                   })),
                 },
               },
-              paymentId,
+              paymentId: 1,
               total: Number((total * 100).toFixed(0)),
+              user: {
+                connect: {
+                  id: userId,
+                },
+              },
             },
             {
               headers: {
@@ -121,8 +117,8 @@ export default function OrderSummary(props: Props) {
           window.location.href = '/orders';
         });
         // }
-        setIsProcessing(false);
       });
+    setIsProcessing(false);
   };
 
   return (
@@ -132,7 +128,7 @@ export default function OrderSummary(props: Props) {
           variant="warning"
           className="checkout-button"
           onClick={handleSubmit}
-          // disabled={isProcessing || !stripe || !elements}
+          disabled={isProcessing}
         >
           Place your order
         </Button>
