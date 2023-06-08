@@ -37,9 +37,7 @@ export default function Drawer() {
   ).toString(CryptoJS.enc.Utf8);
   const firstName = userName.split(' ')[0];
 
-  const handleSelect = () => {
-    setIsExpanded(true);
-  };
+  const isSmallScreen = window.innerWidth < 768;
 
   const handleAccountClick = () => {
     if (token) {
@@ -56,33 +54,44 @@ export default function Drawer() {
     navigate('/');
   };
 
-  const menu = [
-    {
-      title: 'Best Sellers',
-      path: '/bestsellers',
-    },
-    {
-      title: 'Deals Store',
-      path: '/deals',
-    },
-    {
-      title: 'Books',
-      path: '/departments/5/products',
-    },
-    {
-      title: 'Health & Beauty',
-      path: '/departments/1/products',
-    },
-  ];
+  const menu = isSmallScreen
+    ? [
+        {
+          title: 'Best Sellers',
+          path: '/bestsellers',
+        },
+        {
+          title: 'Deals Store',
+          path: '/deals',
+        }
+      ]
+    : [
+        {
+          title: 'Best Sellers',
+          path: '/bestsellers',
+        },
+        {
+          title: 'Deals Store',
+          path: '/deals',
+        },
+        {
+          title: 'Books',
+          path: '/departments/5/products',
+        },
+        {
+          title: 'Health & Beauty',
+          path: '/departments/1/products',
+        },
+      ];
 
   return (
     <Navbar
       variant="dark"
       expand={false}
       style={{ backgroundColor: '#222F3E', marginBottom: -10 }}
-      className="px-3"
+      className="px-3 navbar-2"
     >
-      <div className="d-flex align-items-center nav-text">
+      <div className="d-flex align-items-center nav-text-2">
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-false-${false}`}
           className="text-light toggle"
@@ -92,7 +101,7 @@ export default function Drawer() {
           }}
         >
           <List />
-          <span className="nav-text">All</span>
+          <span className="nav-text-2">All</span>
         </Navbar.Toggle>
         <Navbar.Offcanvas
           id={`offcanvasNavbar-false-${false}`}

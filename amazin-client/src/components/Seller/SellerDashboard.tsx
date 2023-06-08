@@ -56,6 +56,7 @@ export default function SellerDashboard() {
           <Nav.Link
             eventKey="Inventory"
             onClick={() => dispatch(setCurrentView('Inventory'))}
+            className='tab-link'
           >
             Inventory
           </Nav.Link>
@@ -64,6 +65,7 @@ export default function SellerDashboard() {
           <Nav.Link
             eventKey="Orders"
             onClick={() => dispatch(setCurrentView('Orders'))}
+            className='tab-link'
           >
             Orders
           </Nav.Link>
@@ -72,6 +74,7 @@ export default function SellerDashboard() {
           <Nav.Link
             eventKey="AddProduct"
             onClick={() => dispatch(setCurrentView('NewProduct'))}
+            className='tab-link'
           >
             Add Product
           </Nav.Link>

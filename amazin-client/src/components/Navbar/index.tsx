@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Col,
   Dropdown,
@@ -33,6 +33,7 @@ type Props = {
 const NavBar = function (props: Props) {
   const { cart, setTokenChanged } = props;
   const [show, setShow] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const token = Cookies.get('token') || null;
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const isSeller = currentUser.isSeller;
@@ -44,7 +45,17 @@ const NavBar = function (props: Props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isSmallScreen = window.innerWidth < 768;
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const showDropdown = (e: any) => {
     setShow(!show);
@@ -137,7 +148,7 @@ const NavBar = function (props: Props) {
           <Col md={5} className="d-flex align-items-center">
             <SearchBar />
           </Col>
-          {isSmallScreen && (
+          {!isSmallScreen && (
             <Col className="d-flex align-self-center justify-content-center flag-container">
               <Image
                 src={process.env.PUBLIC_URL + '/images/canada-flag.png'}
@@ -145,49 +156,51 @@ const NavBar = function (props: Props) {
               />
             </Col>
           )}
-          <Col className="text-light d-flex-column align-self-center justify-content-center  nav-text">
-            <Row
-              onClick={() => navigate(token ? '/profile' : '/login')}
-              className="pointer-cursor"
-            >
-              {token ? `Hello, ${firstName}` : 'Hello, sign in'}
-            </Row>
-            <Row className="text-light">
-              <NavDropdown
-                title="Account"
-                className="text-light dropdown nav-account-link px-0"
-                id="basic-nav-dropdown"
-                show={show}
-                onMouseEnter={showDropdown}
-                onMouseLeave={hideDropdown}
+          <Col className="text-light d-flex-column align-self-center justify-content-center nav-text">
+            <Nav.Link className="text-light">
+              <Row
+                onClick={() => navigate(token ? '/profile' : '/login')}
+                className="pointer-cursor"
               >
-                <Dropdown.Item
-                  onClick={() => navigate(token ? '/profile' : '/login')}
-                  className="dropdown-item"
+                {token ? `Hello, ${firstName}` : 'Hello, sign in'}
+              </Row>
+              <Row className="text-light">
+                <NavDropdown
+                  title="Account"
+                  className="text-light dropdown nav-account-link px-0"
+                  id="basic-nav-dropdown"
+                  show={show}
+                  onMouseEnter={showDropdown}
+                  onMouseLeave={hideDropdown}
                 >
-                  Your Account
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    dispatch(setCurrentView('Inventory'));
-                    isSeller
-                      ? navigate(token ? '/seller/dashboard' : '/login')
-                      : navigate(token ? '/orders' : '/login');
-                  }}
-                  className="dropdown-item"
-                >
-                  {isSeller ? 'Seller Dashboard' : 'Your Orders'}
-                </Dropdown.Item>
-                {token && (
                   <Dropdown.Item
-                    onClick={handleSignOut}
+                    onClick={() => navigate(token ? '/profile' : '/login')}
                     className="dropdown-item"
                   >
-                    Sign Out
+                    Your Account
                   </Dropdown.Item>
-                )}
-              </NavDropdown>
-            </Row>
+                  <Dropdown.Item
+                    onClick={() => {
+                      dispatch(setCurrentView('Inventory'));
+                      isSeller
+                        ? navigate(token ? '/seller/dashboard' : '/login')
+                        : navigate(token ? '/orders' : '/login');
+                    }}
+                    className="dropdown-item"
+                  >
+                    {isSeller ? 'Seller Dashboard' : 'Your Orders'}
+                  </Dropdown.Item>
+                  {token && (
+                    <Dropdown.Item
+                      onClick={handleSignOut}
+                      className="dropdown-item"
+                    >
+                      Sign Out
+                    </Dropdown.Item>
+                  )}
+                </NavDropdown>
+              </Row>
+            </Nav.Link>
           </Col>
           <Col className="d-flex align-items-center justify-content-center nav-text">
             <Nav.Link
@@ -209,7 +222,11 @@ const NavBar = function (props: Props) {
           {isSeller ? (
             <Col className="d-flex align-items-center justify-content-center nav-text">
               <Nav.Link
-                className="text-light nav-cart"
+                className={
+                  isSmallScreen
+                    ? 'd-flex flex-column align-items-start justify-content-center text-light nav-cart'
+                    : 'd-flex flex-column align-items-start text-light nav-cart nav-account-link'
+                }
                 onClick={() => {
                   dispatch(setCurrentView('NewProduct'));
                   navigate('/seller/dashboard');
@@ -222,7 +239,7 @@ const NavBar = function (props: Props) {
           ) : (
             <Col className="d-flex align-items-center justify-content-center  nav-text">
               <Nav.Link
-                className="text-light nav-account-link nav-cart"
+                className="d-flex flex-row text-light nav-account-link nav-cart"
                 onClick={() => navigate('/cart')}
               >
                 <Col className="cart-wrapper">

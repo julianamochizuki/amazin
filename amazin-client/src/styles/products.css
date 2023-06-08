@@ -3,13 +3,6 @@
   width: 13rem;
 }
 
-@media screen and (max-width: 768px) {
-  .card-container {
-    height: 28rem;
-    width: 20rem;
-  }
-}
-
 .card-image {
   object-fit: cover;
   height: 55%;
@@ -115,6 +108,18 @@
   font-size: 0.9rem;
   font-weight: 500;
 }
+
 .filter-text {
   font-size: 0.9rem;
+}
+
+@media screen and (max-width: 768px) {
+  .card-container {
+    height: 28rem;
+    width: 20rem;
+  }
+
+  .product-filter-container {
+    margin-top: 0;
+  }
 }

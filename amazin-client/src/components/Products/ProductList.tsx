@@ -94,7 +94,7 @@ export default function ProductList() {
 
   return (
     <Row className="px-5 d-flex justify-content-center">
-      <Col xs={12} md={2} className="mt-5">
+      <Col xs={12} md={2} className="product-filter-container">
         <ProductFilter />
       </Col>
       {products.length ? (

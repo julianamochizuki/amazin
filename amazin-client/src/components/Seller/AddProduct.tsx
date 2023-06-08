@@ -157,7 +157,6 @@ export default function AddProduct(props: Props) {
   return (
     <>
       <Form
-        style={{ width: '30%', margin: 'auto' }}
         onSubmit={handleSubmit}
         className="add-product-form mt-3"
       >

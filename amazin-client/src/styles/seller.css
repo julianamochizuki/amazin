@@ -5,11 +5,14 @@
 
 .add-product-form {
  font-size: 0.85rem !important;
+ width: 30%;
+ margin: auto;
 }
 
 .add-product-form-group {
   margin-bottom: 1rem;
 }
+
 .inventory-product-image {
   width: 5rem;
   height: 5rem;
@@ -75,4 +78,16 @@
   background-color: #f90;
 }
 
+.tab-link {
+  color: #0F1111;
+}
 
+@media screen and (max-width: 768px) {
+  .tab-link {
+    font-size: small;
+  }
+
+  .add-product-form {
+    width: fit-content;
+  }
+}
