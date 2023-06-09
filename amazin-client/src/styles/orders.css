@@ -11,6 +11,13 @@
   margin-left: 1rem;
 }
 
+.no-orders {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-self: flex-start;
+}
+
 @media (max-width: 768px) {
   .orders-section {
     margin-right: 0;
