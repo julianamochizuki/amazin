@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Form, Button } from 'react-bootstrap';
+import { Col, Row, Form, Button, Alert } from 'react-bootstrap';
 import '../../styles/checkout.css';
 import { CartType } from '../../types/types';
 import CheckoutList from './CheckoutList';
@@ -39,10 +39,13 @@ export default function CheckoutDetails(props: Props) {
   const elements = useElements();
 
   useEffect(() => {
+    setUserAddress(decryptedAddress);
+  }, [currentUser]);
+
+  useEffect(() => {
     if (elements) {
       setCard(elements.getElement(CardElement));
     }
-    
   }, [elements]);
 
   const handleAddressUpdate = (e: React.FormEvent<HTMLFormElement>) => {
@@ -131,8 +134,21 @@ export default function CheckoutDetails(props: Props) {
         </Col>
         <Col xs={12} md={8}>
           {/* <Elements stripe={stripePromise}> */}
-            <CardElement />
+          <CardElement />
           {/* </Elements> */}
+          <Col className="test-card-info">
+            <Alert variant="warning">
+              <span className="test-card-label">
+                To simulate a successful payment, use the Stripe test card
+                below:
+              </span>
+              <br />
+              <span className="test-card-details">
+                Card number: 4242 4242 4242 4242 | Date: any future date | CVC:
+                any 3 digits | ZIP: any 5 digits
+              </span>
+            </Alert>
+          </Col>
         </Col>
       </Row>
 
