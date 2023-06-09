@@ -78,7 +78,7 @@ export default function Drawer() {
         },
         {
           title: 'Books',
-          path: '/departments/5/products',
+          path: '/departments/3/products',
         },
         {
           title: 'Health & Beauty',
