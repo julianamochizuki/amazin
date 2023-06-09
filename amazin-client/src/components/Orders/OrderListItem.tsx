@@ -51,7 +51,7 @@ export default function OrderListItem(props: Props) {
             <div>Total</div>
             <div>${order.total / 100}</div>
           </Col>
-          <Col xs={12} md={7} className="order-info-column  order-number">
+          <Col xs={12} md={7} className="order-info-column order-number">
             <div>Order #{order.id}</div>
           </Col>
         </Row>
@@ -62,7 +62,7 @@ export default function OrderListItem(props: Props) {
             <Col
               xs={12}
               md={2}
-              className="pointer-cursor"
+              className="pointer-cursor order-product-image-container"
               onClick={() => {
                 navigate(`/products/${item.product!.id}`);
               }}

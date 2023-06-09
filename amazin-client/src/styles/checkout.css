@@ -72,6 +72,7 @@
 
 .order-product-price {
   font-weight: bold;
+  text-align: right;
 }
 
 .user-address-update {
@@ -80,4 +81,31 @@
   color: #007185;
   font-size: 0.8rem;
   margin-top: 1rem;
+}
+
+.test-card-info {
+  font-size: small;
+  margin-top: 1rem;
+  color: #555;
+}
+
+.test-card-label {
+  font-weight: bold;
+}
+
+.payment-message {
+  color: #B12704;
+  font-size: small;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .cart-product-image {
+    margin-bottom: 1rem;
+  }
+
+  .product-image-container {
+    display: flex;
+    justify-content: center;
+  }
 }

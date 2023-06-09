@@ -90,4 +90,25 @@
   .add-product-form {
     width: fit-content;
   }
+
+  .sell-on-amazin-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem
+  }
+
+  .sell-on-amazin-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .sell-on-amazin-button {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+  }
+
+  .sell-on-amazin {
+    padding: 2rem;
+  }
 }

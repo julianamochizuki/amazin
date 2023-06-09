@@ -36,7 +36,7 @@ export default function CartList(props: Props) {
               <Col>
                 <h6 className="cart-product-name">{product.name}</h6>
                 <Row>
-                  <Col xs={6} sm={4} md={3}>
+                  <Col xs={4} md={3}>
                     <Dropdown>
                       <Dropdown.Toggle className="cart-product-qty">
                         Qty: {product.quantityInCart}
@@ -64,9 +64,7 @@ export default function CartList(props: Props) {
                     </Dropdown>
                   </Col>
                   <Col
-                    xs={6}
-                    sm={4}
-                    md={3}
+                    xs={3}
                     className="cart-product-delete pointer-cursor"
                     onClick={() => {
                       const newCart = cart.filter(
@@ -90,7 +88,7 @@ export default function CartList(props: Props) {
                   ).toFixed(2)}
                 </Col>
               ) : (
-                <Col xs={6} sm={4} md={3} lg={2}>
+                <Col className="cart-product-price">
                   ${(product!.price_cents / 100).toFixed(2)}
                 </Col>
               )}
