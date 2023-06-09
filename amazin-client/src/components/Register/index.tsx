@@ -4,6 +4,9 @@ import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/login-register.css';
 import Cookies from 'js-cookie';
+import { setCurrentUser } from '../../app/userReducer';
+import { useDispatch } from 'react-redux';
+import jwt_decode from 'jwt-decode';
 
 export default function RegisterForm() {
   const [name, setName] = useState('');
@@ -18,6 +21,7 @@ export default function RegisterForm() {
   });
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const isStore = location.pathname === '/seller/register' ? true : false;
 
@@ -31,6 +35,30 @@ export default function RegisterForm() {
         setError(false);
         setErrorMessage('');
         Cookies.set('token', res.data);
+        const decodedToken: {
+          name?: string;
+          address?: string;
+          email?: string;
+          isSeller?: boolean;
+          id?: number;
+        } | null = res.data ? jwt_decode(res.data) : null;
+        const user = {
+          name: CryptoJS.AES.encrypt(
+            decodedToken?.name!,
+            process.env.REACT_APP_SECRET_KEY!
+          ).toString(),
+          address: CryptoJS.AES.encrypt(
+            decodedToken?.address!,
+            process.env.REACT_APP_SECRET_KEY!
+          ).toString(),
+          email: CryptoJS.AES.encrypt(
+            decodedToken?.email!,
+            process.env.REACT_APP_SECRET_KEY!
+          ).toString(),
+          isSeller: decodedToken?.isSeller,
+          id: decodedToken?.id,
+        };
+        dispatch(setCurrentUser(user));
         navigate('/');
       })
       .catch((e) => {
