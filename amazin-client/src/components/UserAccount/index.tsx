@@ -190,8 +190,7 @@ export default function UserAccount(props: Props) {
               </Col>
             </Form.Group>
             <Alert variant="warning" className="edition-note">
-              Edit option is disabled for demo user and demo seller. To simulate
-              the editing feature, please create an account.
+              Edit buttons are disabled for demo user and demo seller. To simulate the editing feature, please create an account.
             </Alert>
             <div className="d-flex justify-content-end mt-3">
               <Button
