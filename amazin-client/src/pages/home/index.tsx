@@ -6,9 +6,12 @@ import ContainerList from '../../components/Home/Containers/ContainerList';
 import DealsList from '../../components/Home/Deals/DealsList';
 import jwt_decode from 'jwt-decode';
 import '../../styles/home.css';
+import { resetCurrentUser } from '../../app/userReducer';
+import { useDispatch } from 'react-redux';
 
 const Home = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,6 +36,7 @@ const Home = () => {
       const expirationDate = new Date(expiration);
       if (expirationDate <= new Date()) {
         Cookies.remove('token');
+        dispatch(resetCurrentUser());
       }
     }
   };

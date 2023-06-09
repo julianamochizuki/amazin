@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import '../../styles/navbar.css';
 import CryptoJS from 'crypto-js';
+import { resetCurrentUser } from '../../app/userReducer';
 
 export default function Drawer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -50,6 +51,7 @@ export default function Drawer() {
 
   const handleSignOutClick = () => {
     Cookies.remove('token');
+    dispatch(resetCurrentUser());
     setMenuOpen(false);
     navigate('/');
   };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/login-register.css';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
@@ -20,6 +20,7 @@ export default function LoginForm() {
     password: false,
   });
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -149,7 +150,13 @@ export default function LoginForm() {
             <Button
               variant="light"
               className="button-to-register"
-              onClick={() => navigate('/register')}
+              onClick={() =>
+                navigate(
+                  location.pathname === '/seller/login'
+                    ? '/seller/register'
+                    : '/register'
+                )
+              }
             >
               Create your Amazin account
             </Button>

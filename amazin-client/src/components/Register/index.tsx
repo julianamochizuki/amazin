@@ -174,7 +174,8 @@ export default function RegisterForm() {
         </Card>
         <Row className="already-user">
           <span>
-            Already have an account? <Link to="/login">Sign in</Link>
+            Already have an account?{' '}
+            <Link to={isStore ? '/seller/login' : '/login'}>Sign in</Link>
           </span>
         </Row>
       </Col>

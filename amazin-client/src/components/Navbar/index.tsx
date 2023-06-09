@@ -23,7 +23,7 @@ import { RootState } from '../../app/store';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { setCurrentUser } from '../../app/userReducer';
+import { resetCurrentUser, setCurrentUser } from '../../app/userReducer';
 
 type Props = {
   cart: CartType;
@@ -66,6 +66,7 @@ const NavBar = function (props: Props) {
 
   const handleSignOut = () => {
     Cookies.remove('token');
+    dispatch(resetCurrentUser());
     navigate('/');
   };
 
