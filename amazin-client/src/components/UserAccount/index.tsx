@@ -1,6 +1,14 @@
 import Cookies from 'js-cookie';
-import React, { useState } from 'react';
-import { Button, Card, Container, Form, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  Row,
+  Col,
+  Alert,
+} from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import '../../styles/profile.css';
@@ -34,6 +42,13 @@ export default function UserAccount(props: Props) {
   const [emailDisabled, setEmailDisabled] = useState(true);
   const initialErrorState = { name: false, email: false };
   const [error, setError] = useState(initialErrorState);
+
+  useEffect(() => {
+    setForm({
+      name,
+      email,
+    });
+  }, [currentUser]);
 
   const handleClick = () => {
     setError({
@@ -116,6 +131,7 @@ export default function UserAccount(props: Props) {
                   className="edit-link"
                   variant="light"
                   onClick={() => setNameDisabled(false)}
+                  disabled={id === 2 || id === 3}
                 >
                   Edit
                 </Button>
@@ -148,6 +164,7 @@ export default function UserAccount(props: Props) {
                   variant="light"
                   className="edit-link"
                   onClick={() => setEmailDisabled(false)}
+                  disabled={id === 2 || id === 3}
                 >
                   Edit
                 </Button>
@@ -166,11 +183,16 @@ export default function UserAccount(props: Props) {
                   variant="light"
                   className="edit-link"
                   onClick={() => setView('CHANGE_PASSWORD')}
+                  disabled={id === 2 || id === 3}
                 >
                   Edit
                 </Button>
               </Col>
             </Form.Group>
+            <Alert variant="warning" className="edition-note">
+              Edit option is disabled for demo user and demo seller. To simulate
+              the editing feature, please create an account.
+            </Alert>
             <div className="d-flex justify-content-end mt-3">
               <Button
                 variant="warning"

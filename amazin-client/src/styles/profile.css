@@ -23,3 +23,8 @@
 .change-password-text {
   font-size: 0.8rem;
 }
+
+.edition-note {
+  font-size: small;
+  margin-top: 1rem;
+}
