@@ -17,7 +17,7 @@ import Register from './pages/register';
 import Sell from './pages/seller';
 import { CartType } from './types/types';
 import jwt_decode from 'jwt-decode';
-import { setCurrentUser } from './app/userReducer';
+import { resetCurrentUser, setCurrentUser } from './app/userReducer';
 import { useDispatch } from 'react-redux';
 import CryptoJS from 'crypto-js';
 
@@ -47,31 +47,35 @@ const Router = (props: Props) => {
 
   useEffect(() => {
     const cookieToken = Cookies.get('token') || null;
-    setToken(cookieToken);
-    const decodedToken: {
-      name?: string;
-      address?: string;
-      email?: string;
-      isSeller?: boolean;
-      id?: number;
-    } | null = cookieToken ? jwt_decode(cookieToken) : null;
-    const user = {
-      name: CryptoJS.AES.encrypt(
-        decodedToken?.name!,
-        process.env.REACT_APP_SECRET_KEY!
-      ).toString(),
-      address: CryptoJS.AES.encrypt(
-        decodedToken?.address!,
-        process.env.REACT_APP_SECRET_KEY!
-      ).toString(),
-      email: CryptoJS.AES.encrypt(
-        decodedToken?.email!,
-        process.env.REACT_APP_SECRET_KEY!
-      ).toString(),
-      isSeller: decodedToken?.isSeller,
-      id: decodedToken?.id,
-    };
-    dispatch(setCurrentUser(user));
+    if (cookieToken) {
+      setToken(cookieToken);
+      const decodedToken: {
+        name?: string;
+        address?: string;
+        email?: string;
+        isSeller?: boolean;
+        id?: number;
+      } | null = cookieToken ? jwt_decode(cookieToken) : null;
+      const user = {
+        name: CryptoJS.AES.encrypt(
+          decodedToken?.name!,
+          process.env.REACT_APP_SECRET_KEY!
+        ).toString(),
+        address: CryptoJS.AES.encrypt(
+          decodedToken?.address!,
+          process.env.REACT_APP_SECRET_KEY!
+        ).toString(),
+        email: CryptoJS.AES.encrypt(
+          decodedToken?.email!,
+          process.env.REACT_APP_SECRET_KEY!
+        ).toString(),
+        isSeller: decodedToken?.isSeller,
+        id: decodedToken?.id,
+      };
+      dispatch(setCurrentUser(user));
+    } else {
+      dispatch(resetCurrentUser());
+    }
   }, [tokenChanged, dispatch]);
 
   return (
@@ -104,8 +108,13 @@ const Router = (props: Props) => {
           element={<NewReview />}
         />
       )}
-      {!token && <Route path="/login" element={<Login />} />}
-      <Route path="/seller/login" element={<Login />} />
+      {!token && (
+        <Route
+          path="/login"
+          element={<Login setTokenChanged={setTokenChanged} />}
+        />
+      )}
+      <Route path="/seller/login" element={<Login setTokenChanged={setTokenChanged}/>} />
       {!token && <Route path="/register" element={<Register />} />}
       <Route path="/seller/register" element={<Register />} />
       <Route path="/sell" element={<Sell />} />

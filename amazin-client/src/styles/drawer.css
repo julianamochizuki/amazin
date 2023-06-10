@@ -61,3 +61,7 @@ align-items: center;
   align-items: center;
   left: 0;
 }
+
+.developer-info {
+  margin-left: -1rem;
+}

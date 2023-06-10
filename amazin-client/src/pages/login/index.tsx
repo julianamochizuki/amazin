@@ -1,6 +1,12 @@
 import React from 'react';
 import LoginForm from '../../components/LoginForm';
 
-export default function Login() {
-  return <LoginForm />;
+type Props = {
+  setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function Login(props: Props) {
+  const { setTokenChanged } = props;
+
+  return <LoginForm setTokenChanged={setTokenChanged} />;
 }

@@ -64,10 +64,16 @@ const NavBar = function (props: Props) {
     setShow(false);
   };
 
-  const handleSignOut = () => {
-    Cookies.remove('token');
-    dispatch(resetCurrentUser());
+  const handleSignOut = async () => {
+    setShow(false);
     navigate('/');
+    try {
+      await Cookies.remove('token');
+      dispatch(resetCurrentUser());
+      setTokenChanged((prev) => !prev);
+    } catch (e) {
+      console.log('error signing out', e);
+    }
   };
 
   const handleDemoUser = (isSeller: boolean) => {
@@ -175,22 +181,35 @@ const NavBar = function (props: Props) {
                   onMouseLeave={hideDropdown}
                 >
                   <Dropdown.Item
-                    onClick={() => navigate(token ? '/profile' : '/login')}
+                    onClick={() => {
+                      navigate(token ? '/profile' : '/login');
+                      setShow(false);
+                    }}
                     className="dropdown-item"
                   >
                     Your Account
                   </Dropdown.Item>
                   <Dropdown.Item
                     onClick={() => {
-                      dispatch(setCurrentView('Inventory'));
-                      isSeller
-                        ? navigate(token ? '/seller/dashboard' : '/login')
-                        : navigate(token ? '/orders' : '/login');
+                      navigate(token ? '/orders' : '/login');
+                      setShow(false);
                     }}
                     className="dropdown-item"
                   >
-                    {isSeller ? 'Seller Dashboard' : 'Your Orders'}
+                    Your Orders
                   </Dropdown.Item>
+                  {isSeller && (
+                    <Dropdown.Item
+                      onClick={() => {
+                        setShow(false);
+                        dispatch(setCurrentView('Inventory'));
+                        navigate(token ? '/seller/dashboard' : '/login');
+                      }}
+                      className="dropdown-item"
+                    >
+                      Seller Dashboard
+                    </Dropdown.Item>
+                  )}
                   {token && (
                     <Dropdown.Item
                       onClick={handleSignOut}
@@ -220,7 +239,7 @@ const NavBar = function (props: Props) {
             </Nav.Link>
           </Col>
 
-          {isSeller ? (
+          {/* {isSeller ? (
             <Col className="d-flex align-items-center justify-content-center nav-text">
               <Nav.Link
                 className={
@@ -237,22 +256,22 @@ const NavBar = function (props: Props) {
                 <Row className="nav-account-link">Product</Row>
               </Nav.Link>
             </Col>
-          ) : (
-            <Col className="d-flex align-items-center justify-content-center  nav-text">
-              <Nav.Link
-                className="d-flex flex-row text-light nav-account-link nav-cart"
-                onClick={() => navigate('/cart')}
-              >
-                <Col className="cart-wrapper">
-                  <span className="cart-count">{cart.length}</span>
-                  <Cart className="cart-icon" />
-                </Col>
-                <Col className="cart-text">Cart</Col>
-              </Nav.Link>
-            </Col>
-          )}
+          ) : ( */}
+          <Col className="d-flex align-items-center justify-content-center  nav-text">
+            <Nav.Link
+              className="d-flex flex-row text-light nav-account-link nav-cart"
+              onClick={() => navigate('/cart')}
+            >
+              <Col className="cart-wrapper">
+                <span className="cart-count">{cart.length}</span>
+                <Cart className="cart-icon" />
+              </Col>
+              <Col className="cart-text">Cart</Col>
+            </Nav.Link>
+          </Col>
+          {/* )} */}
         </Row>
-        <Drawer />
+        <Drawer setTokenChanged={setTokenChanged} />
       </div>
     </Navbar>
   );

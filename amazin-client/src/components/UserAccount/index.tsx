@@ -189,9 +189,12 @@ export default function UserAccount(props: Props) {
                 </Button>
               </Col>
             </Form.Group>
-            <Alert variant="warning" className="edition-note">
-              Edit buttons are disabled for demo user and demo seller. To simulate the editing feature, please create an account.
-            </Alert>
+            {(id === 2 || id === 3) && (
+              <Alert variant="warning" className="edition-note">
+                Edit buttons are disabled for demo user and demo seller. To
+                simulate the editing feature, please create an account.
+              </Alert>
+            )}
             <div className="d-flex justify-content-end mt-3">
               <Button
                 variant="warning"

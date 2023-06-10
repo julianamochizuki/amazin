@@ -9,7 +9,12 @@ import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../../app/userReducer';
 import CryptoJS from 'crypto-js';
 
-export default function LoginForm() {
+type Props = {
+  setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function LoginForm(props: Props) {
+  const { setTokenChanged } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -67,6 +72,7 @@ export default function LoginForm() {
           id: decodedToken?.id,
         };
         dispatch(setCurrentUser(user));
+        setTokenChanged((prev) => !prev);
         navigate('/');
       })
       .catch((e) => {

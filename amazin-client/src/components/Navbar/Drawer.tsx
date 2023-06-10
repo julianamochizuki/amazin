@@ -22,7 +22,12 @@ import '../../styles/navbar.css';
 import CryptoJS from 'crypto-js';
 import { resetCurrentUser } from '../../app/userReducer';
 
-export default function Drawer() {
+type Props = {
+  setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function Drawer(props: Props) {
+  const { setTokenChanged } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
@@ -49,11 +54,23 @@ export default function Drawer() {
     setMenuOpen(false);
   };
 
-  const handleSignOutClick = () => {
-    Cookies.remove('token');
-    dispatch(resetCurrentUser());
-    setMenuOpen(false);
+  // const handleSignOutClick = () => {
+  //   Cookies.remove('token');
+  //   dispatch(resetCurrentUser());
+  //   setMenuOpen(false);
+  //   navigate('/');
+  // };
+
+  const handleSignOutClick = async () => {
     navigate('/');
+    try {
+      await Cookies.remove('token');
+      dispatch(resetCurrentUser());
+      setTokenChanged((prev) => !prev);
+      setMenuOpen(false);
+    } catch (e) {
+      console.log('error signing out', e);
+    }
   };
 
   const menu = isSmallScreen
@@ -65,7 +82,7 @@ export default function Drawer() {
         {
           title: 'Deals Store',
           path: '/deals',
-        }
+        },
       ]
     : [
         {
@@ -198,7 +215,7 @@ export default function Drawer() {
                           }
                         />
                       </Col>
-                      <Col xs={6}>
+                      <Col xs={6} className="developer-info">
                         <span className="developer-details">
                           Juliana Mochizuki
                           <span>
