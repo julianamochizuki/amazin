@@ -1,5 +1,13 @@
 import React from 'react';
-import { Button, Card, Col, Image, Row } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  Col,
+  Image,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { OrderType } from '../../types/types';
 import '../../App.css';
@@ -37,6 +45,12 @@ export default function OrderListItem(props: Props) {
       month: 'long',
       day: 'numeric',
     }
+  );
+
+  const tooltip = (
+    <Tooltip id="tooltip">
+      Product reviews can be added only after the product has been delivered.
+    </Tooltip>
   );
 
   return (
@@ -85,8 +99,24 @@ export default function OrderListItem(props: Props) {
               </Row>
             </Col>
 
-            {today > deliveryDate && (
-              <Col xs={12} md={4} className="button-container">
+            <Col xs={12} md={4} className="button-container">
+              {today < deliveryDate ? (
+                <OverlayTrigger placement="top" overlay={tooltip}>
+                  <div>
+                    <Button
+                      variant="light"
+                      className="button-review"
+                      onClick={() => {
+                        dispatch(setCurrentProduct(item.product));
+                        navigate(`/products/${item.product.id}/write-a-review`);
+                      }}
+                      disabled={today < deliveryDate}
+                    >
+                      Write a product review
+                    </Button>
+                  </div>
+                </OverlayTrigger>
+              ) : (
                 <Button
                   variant="light"
                   className="button-review"
@@ -94,11 +124,12 @@ export default function OrderListItem(props: Props) {
                     dispatch(setCurrentProduct(item.product));
                     navigate(`/products/${item.product.id}/write-a-review`);
                   }}
+                  disabled={today < deliveryDate}
                 >
                   Write a product review
                 </Button>
-              </Col>
-            )}
+              )}
+            </Col>
           </Row>
         ))}
       </Card.Text>
