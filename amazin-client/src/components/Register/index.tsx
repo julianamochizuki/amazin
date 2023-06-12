@@ -7,8 +7,14 @@ import Cookies from 'js-cookie';
 import { setCurrentUser } from '../../app/userReducer';
 import { useDispatch } from 'react-redux';
 import jwt_decode from 'jwt-decode';
+import CryptoJS from 'crypto-js';
 
-export default function RegisterForm() {
+type Props = {
+  setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function RegisterForm(props: Props) {
+  const { setTokenChanged } = props;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -59,6 +65,7 @@ export default function RegisterForm() {
           id: decodedToken?.id,
         };
         dispatch(setCurrentUser(user));
+        setTokenChanged((prev) => !prev);
         navigate('/');
       })
       .catch((e) => {
@@ -95,7 +102,6 @@ export default function RegisterForm() {
         setError(false);
         setErrorMessage('');
         handleLogin();
-        navigate('/');
       })
       .catch((e) => {
         if (e.response.status === 401) {

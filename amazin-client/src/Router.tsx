@@ -118,8 +118,16 @@ const Router = (props: Props) => {
         path="/seller/login"
         element={<Login setTokenChanged={setTokenChanged} />}
       />
-      {!token && <Route path="/register" element={<Register />} />}
-      <Route path="/seller/register" element={<Register />} />
+      {!token && (
+        <Route
+          path="/register"
+          element={<Register setTokenChanged={setTokenChanged} />}
+        />
+      )}
+      <Route
+        path="/seller/register"
+        element={<Register setTokenChanged={setTokenChanged} />}
+      />
       <Route path="/sell" element={<Sell />} />
       {token && (
         <Route path="/seller/dashboard" element={<SellerDashboard />} />
