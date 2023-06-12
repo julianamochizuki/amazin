@@ -15,10 +15,11 @@ type Props = {
   cart: CartType;
   total: number;
   card: any;
+  setCart: any;
 };
 
 export default function OrderSummary(props: Props) {
-  const { cart, total, card } = props;
+  const { cart, setCart, total, card } = props;
   const [message, setMessage] = useState<string | undefined>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [order, setOrder] = useState<any>(null);
@@ -138,10 +139,14 @@ export default function OrderSummary(props: Props) {
                 { headers: { Authorization: `Bearer ${token}` } }
               )
             ),
-            /* clear cart */
-            localStorage.setItem('cart', JSON.stringify([])),
           ])
             .then((all) => {
+              /* clear cart */
+              localStorage.setItem('cart', JSON.stringify([]));
+              const cartData = localStorage.getItem('cart');
+              if (cartData) {
+                setCart(JSON.parse(cartData));
+              }
               setOrder(all[0].data);
               navigate('/orders');
               setIsProcessing(false);

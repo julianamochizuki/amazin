@@ -19,7 +19,7 @@ export default function CheckoutReview(props: Props) {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
 
   return (
-    <Row className='checkout-section'>
+    <Row className="checkout-section">
       <Elements stripe={stripePromise} options={options}>
         <CheckoutDetails
           cart={cart}
@@ -27,7 +27,7 @@ export default function CheckoutReview(props: Props) {
           total={total}
           setCard={setCard}
         />
-        <OrderSummary cart={cart} total={total} card={card} />
+        <OrderSummary cart={cart} setCart={setCart} total={total} card={card} />
       </Elements>
     </Row>
   );

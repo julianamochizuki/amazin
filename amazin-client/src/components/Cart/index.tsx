@@ -19,7 +19,7 @@ export default function CartReview(props: Props) {
     if (cartData) {
       setCart(JSON.parse(cartData));
     }
-  }, [cart.length]);
+  }, []);
 
   return (
     <Row className="cart-container">
