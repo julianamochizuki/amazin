@@ -110,7 +110,7 @@ export default function OrderListItem(props: Props) {
                         dispatch(setCurrentProduct(item.product));
                         navigate(`/products/${item.product.id}/write-a-review`);
                       }}
-                      disabled={today < deliveryDate}
+                      disabled
                     >
                       Write a product review
                     </Button>
@@ -124,7 +124,6 @@ export default function OrderListItem(props: Props) {
                     dispatch(setCurrentProduct(item.product));
                     navigate(`/products/${item.product.id}/write-a-review`);
                   }}
-                  disabled={today < deliveryDate}
                 >
                   Write a product review
                 </Button>

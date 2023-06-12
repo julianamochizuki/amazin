@@ -9,6 +9,7 @@ import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
 import { ExclamationCircle } from 'react-bootstrap-icons';
 import CryptoJS from 'crypto-js';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   cart: CartType;
@@ -31,6 +32,7 @@ export default function OrderSummary(props: Props) {
   const userId = currentUser.id;
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
   let paymentId = 0;
 
   useEffect(() => {
@@ -141,7 +143,7 @@ export default function OrderSummary(props: Props) {
           ])
             .then((all) => {
               setOrder(all[0].data);
-              window.location.href = '/orders';
+              navigate('/orders');
               setIsProcessing(false);
             })
             .catch((e) => {

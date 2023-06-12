@@ -16,7 +16,7 @@ export default function OrderList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userId === 0) {
+    if (!userId) {
       navigate('/login');
     } else {
       axios
