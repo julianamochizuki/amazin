@@ -47,8 +47,8 @@ const Router = (props: Props) => {
 
   useEffect(() => {
     const cookieToken = Cookies.get('token') || null;
+    setToken(cookieToken);
     if (cookieToken) {
-      setToken(cookieToken);
       const decodedToken: {
         name?: string;
         address?: string;
@@ -114,7 +114,10 @@ const Router = (props: Props) => {
           element={<Login setTokenChanged={setTokenChanged} />}
         />
       )}
-      <Route path="/seller/login" element={<Login setTokenChanged={setTokenChanged}/>} />
+      <Route
+        path="/seller/login"
+        element={<Login setTokenChanged={setTokenChanged} />}
+      />
       {!token && <Route path="/register" element={<Register />} />}
       <Route path="/seller/register" element={<Register />} />
       <Route path="/sell" element={<Sell />} />

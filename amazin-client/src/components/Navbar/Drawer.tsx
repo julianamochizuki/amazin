@@ -62,7 +62,6 @@ export default function Drawer(props: Props) {
   // };
 
   const handleSignOutClick = async () => {
-    navigate('/');
     try {
       await Cookies.remove('token');
       dispatch(resetCurrentUser());
@@ -71,6 +70,7 @@ export default function Drawer(props: Props) {
     } catch (e) {
       console.log('error signing out', e);
     }
+    navigate('/login');
   };
 
   const menu = isSmallScreen

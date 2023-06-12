@@ -35,7 +35,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <NavBar cart={cart} setTokenChanged={setTokenChanged} />
+        <NavBar
+          cart={cart}
+          tokenChanged={tokenChanged}
+          setTokenChanged={setTokenChanged}
+        />
         <Router
           cart={cart}
           setCart={setCart}

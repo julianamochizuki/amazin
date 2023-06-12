@@ -6,24 +6,29 @@ import OrderListItem from './OrderListItem';
 import '../../styles/orders.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
   const token = Cookies.get('token') || null;
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const userId = currentUser.id;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`/api/users/${userId}/orders`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setOrders(res.data);
-      });
+    if (userId === 0) {
+      navigate('/login');
+    } else {
+      axios
+        .get(`/api/users/${userId}/orders`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setOrders(res.data);
+        });
+    }
   }, [userId, token]);
 
   const orderList = orders.map((o: OrderType) => {

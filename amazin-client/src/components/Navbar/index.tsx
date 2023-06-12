@@ -27,14 +27,16 @@ import { resetCurrentUser, setCurrentUser } from '../../app/userReducer';
 
 type Props = {
   cart: CartType;
+  tokenChanged: boolean;
   setTokenChanged: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const NavBar = function (props: Props) {
-  const { cart, setTokenChanged } = props;
+  const { cart, tokenChanged, setTokenChanged } = props;
   const [show, setShow] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const token = Cookies.get('token') || null;
+  const cookieToken = Cookies.get('token') || null;
+  const [token, setToken] = useState(cookieToken);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const isSeller = currentUser.isSeller;
   const userName = CryptoJS.AES.decrypt(
@@ -44,6 +46,11 @@ const NavBar = function (props: Props) {
   const firstName = userName.split(' ')[0];
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const cookieToken = Cookies.get('token') || null;
+    setToken(cookieToken!);
+  }, [tokenChanged]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -66,7 +73,6 @@ const NavBar = function (props: Props) {
 
   const handleSignOut = async () => {
     setShow(false);
-    navigate('/');
     try {
       await Cookies.remove('token');
       dispatch(resetCurrentUser());
@@ -74,6 +80,7 @@ const NavBar = function (props: Props) {
     } catch (e) {
       console.log('error signing out', e);
     }
+    navigate('/login');
   };
 
   const handleDemoUser = (isSeller: boolean) => {
