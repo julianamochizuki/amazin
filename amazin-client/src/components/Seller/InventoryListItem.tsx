@@ -5,6 +5,7 @@ import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { ProductType } from '../../types/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   product: ProductType;
@@ -36,6 +37,7 @@ export default function InventoryListItem(props: Props) {
     isActive: product.isActive,
   };
   const [form, setForm] = useState(initialForm);
+  const navigate = useNavigate();
 
   const initialErrorState: ErrorType = {
     image: false,
@@ -227,7 +229,8 @@ export default function InventoryListItem(props: Props) {
           <img
             src={product.image}
             alt="product"
-            className="inventory-product-image"
+            className="inventory-product-image pointer-cursor"
+            onClick={() => navigate(`/products/${product.id}`)}
           />
         )}
       </td>
