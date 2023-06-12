@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import { Form, Col, Button, Image, Alert } from 'react-bootstrap';
 import { StarFill, Star, CheckCircleFill } from 'react-bootstrap-icons';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { useDispatch } from 'react-redux';
@@ -25,6 +25,7 @@ const WriteReview = () => {
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
   );
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -145,8 +146,9 @@ const WriteReview = () => {
       <Col className="mb-3 pb-3 new-review-product">
         <Image
           src={currentProduct.image}
-          className="new-review-product-image"
+          className="new-review-product-image pointer-cursor"
           style={{ width: '50px', height: '50px' }}
+          onClick={() => navigate(`/products/${currentProduct.id}`)}
         />
         {currentProduct.name}
       </Col>

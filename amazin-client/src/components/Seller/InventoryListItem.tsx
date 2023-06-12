@@ -6,6 +6,8 @@ import { ProductType } from '../../types/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentProduct } from '../../app/productReducer';
+import { useDispatch } from 'react-redux';
 
 type Props = {
   product: ProductType;
@@ -38,6 +40,7 @@ export default function InventoryListItem(props: Props) {
   };
   const [form, setForm] = useState(initialForm);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialErrorState: ErrorType = {
     image: false,
@@ -229,8 +232,17 @@ export default function InventoryListItem(props: Props) {
           <img
             src={product.image}
             alt="product"
-            className="inventory-product-image pointer-cursor"
-            onClick={() => navigate(`/products/${product.id}`)}
+            className={
+              product.isActive
+                ? 'inventory-product-image pointer-cursor'
+                : 'inventory-product-image'
+            }
+            onClick={() =>
+              product.isActive
+                ? (dispatch(setCurrentProduct(product)),
+                  navigate(`/products/${product.id}`))
+                : ''
+            }
           />
         )}
       </td>
