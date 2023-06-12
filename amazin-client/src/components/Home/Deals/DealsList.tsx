@@ -70,17 +70,14 @@ const DealsList = function () {
 
   const DealsItems = deals.map((d) => {
     return (
-      <Col>
-        <DealsListItem
-        key={d.id}
-        deal={d}
-        />
+      <Col key={d.id}>
+        <DealsListItem deal={d} />
       </Col>
     );
   });
 
   return (
-    <Container className='home-container'>
+    <Container className="home-container">
       <div className="deals-header">
         <h4 className="home-subheading">Today's deals</h4>
         <p className="link-to-products" onClick={() => navigate('/deals')}>

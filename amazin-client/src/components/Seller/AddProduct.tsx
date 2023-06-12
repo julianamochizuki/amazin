@@ -138,15 +138,11 @@ export default function AddProduct(props: Props) {
     };
 
     axios
-      .post(
-        `/api/seller/${sellerId}/inventory`,
-        product,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(`/api/seller/${sellerId}/inventory`, product, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setInventoryUpdated(true);
         setError(initialErrorState);
@@ -156,10 +152,7 @@ export default function AddProduct(props: Props) {
 
   return (
     <>
-      <Form
-        onSubmit={handleSubmit}
-        className="add-product-form mt-3"
-      >
+      <Form onSubmit={handleSubmit} className="add-product-form mt-3">
         <h4>New Product</h4>
         <Row>
           <Form.Group
@@ -174,14 +167,17 @@ export default function AddProduct(props: Props) {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 handleChanges(e, 'category')
               }
+              defaultValue={0}
             >
-              <option value="0" disabled selected>
+              <option value="0" disabled>
                 Select Category
               </option>
               {departments.map((department: DepartmentType) => (
-                <optgroup label={department.name}>
+                <optgroup label={department.name} key={department.name}>
                   {department.categories.map((category: CategoryType) => (
-                    <option value={category.id}>{category.name}</option>
+                    <option value={category.id} key={category.id}>
+                      {category.name}
+                    </option>
                   ))}
                 </optgroup>
               ))}
@@ -194,6 +190,7 @@ export default function AddProduct(props: Props) {
           </Form.Group>
           {formFields.map((field) => (
             <Form.Group
+              key={field.name}
               controlId={`product${field.label}`}
               className="add-product-form-group"
             >

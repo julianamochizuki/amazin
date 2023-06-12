@@ -46,7 +46,7 @@ export default function OrderSummary(props: Props) {
       }
     }
   }, [elements]);
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -66,7 +66,7 @@ export default function OrderSummary(props: Props) {
       return;
     }
 
-    const amount = total * 100;
+    const amount = Math.round(total * 100);
     const currency = 'CAD';
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({

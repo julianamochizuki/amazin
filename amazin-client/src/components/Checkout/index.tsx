@@ -27,7 +27,7 @@ export default function CheckoutReview(props: Props) {
           total={total}
           setCard={setCard}
         />
-        <OrderSummary cart={cart} setCart={setCart} total={total} card={card} />
+        <OrderSummary cart={cart} setCart={setCart} total={total} card={card}  />
       </Elements>
     </Row>
   );

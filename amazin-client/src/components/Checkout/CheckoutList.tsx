@@ -16,7 +16,7 @@ export default function CheckoutList(props: Props) {
   return (
     <Col xs={12} className="cart-list">
       {cart.map((product: ProductType) => (
-        <Row className="order-list-item">
+        <Row className="order-list-item" key={product.id}>
           <Col xs={12} sm={4} md={3} lg={3} className="product-image-container">
             <Image
               className="cart-product-image"

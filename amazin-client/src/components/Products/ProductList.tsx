@@ -53,8 +53,6 @@ export default function ProductList() {
         )
         .then((res) => {
           setProducts(res.data);
-
-          console.log('products', res.data);
         })
         .catch((e) => {
           console.log('error fetching products based on department', e);

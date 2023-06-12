@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import InventoryListItem from './InventoryListItem';
 
@@ -11,7 +11,9 @@ type Props = {
 export default function InventoryList(props: Props) {
   const { inventory, inventoryUpdated, setInventoryUpdated } = props;
 
-  setInventoryUpdated(false);
+  useEffect(() => {
+    setInventoryUpdated(false);
+  }, [inventoryUpdated, setInventoryUpdated]);
 
   const handleSave = () => {
     setInventoryUpdated(true);

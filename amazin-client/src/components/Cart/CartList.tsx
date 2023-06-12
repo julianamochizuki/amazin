@@ -19,7 +19,7 @@ export default function CartList(props: Props) {
       ) : (
         <>
           {cart.map((product: ProductType) => (
-            <Row className="cart-list-item">
+            <Row className="cart-list-item" key={product.id}>
               <Col
                 xs={12}
                 sm={6}

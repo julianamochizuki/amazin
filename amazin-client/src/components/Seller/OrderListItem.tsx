@@ -17,9 +17,9 @@ export default function OrderListItem(props: Props) {
   return (
     <>
       {order.orderItems.map((item) => (
-        <tr className='orders-table'>
+        <tr className="orders-table" key={order.id}>
           <td>{order.id}</td>
-          <td className='table-row-date'>{formattedOrderDate}</td>
+          <td className="table-row-date">{formattedOrderDate}</td>
           <td>{order.user?.name}</td>
           <td>{order.user?.address}</td>
           <td>Card</td>

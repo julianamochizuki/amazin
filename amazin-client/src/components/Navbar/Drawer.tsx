@@ -258,6 +258,7 @@ export default function Drawer(props: Props) {
         </Navbar.Offcanvas>
         {menu.map((item) => (
           <Nav.Link
+            key={item.title}
             className="text-light nav-link"
             onClick={() => {
               dispatch(resetCurrentProductFilter());
