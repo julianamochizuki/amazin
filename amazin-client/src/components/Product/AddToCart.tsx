@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Dropdown, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { setCurrentProduct } from '../../app/productReducer';
 import { RootState } from '../../app/store';
 import { ProductType } from '../../types/types';
@@ -63,7 +63,7 @@ export default function AddToCart(props: Props) {
   return (
     <Col xs={12} sm={6} md={3} className="add-to-cart-container product-text">
       {currentProduct.isOnSale ? (
-        <Col className='product-price'>
+        <Col className="product-price">
           $
           {(
             ((currentProduct!.price_cents / 100) *
@@ -78,10 +78,18 @@ export default function AddToCart(props: Props) {
         FREE delivery <strong>{formattedDeliveryDate}</strong>
       </Col>
       <Row>
-        {currentProduct.quantity ? <p> In Stock </p> : <p> Out of Stock </p>}
+        {currentProduct.isActive ? (
+          currentProduct.quantity ? (
+            <p> In Stock </p>
+          ) : (
+            <p> Out of Stock </p>
+          )
+        ) : (
+          <p> Inactive </p>
+        )}
       </Row>
       <Col>
-        <Dropdown >
+        <Dropdown>
           <Dropdown.Toggle className="dropdown-item product-text">
             Quantity: &nbsp;{quantitySelected ? quantitySelected : 1}
           </Dropdown.Toggle>
@@ -101,7 +109,12 @@ export default function AddToCart(props: Props) {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-        <Button variant='warning' className="add-to-cart-button" onClick={handleAddToCart}>
+        <Button
+          variant="warning"
+          className="add-to-cart-button"
+          onClick={handleAddToCart}
+          disabled={!currentProduct.isActive}
+        >
           Add to cart
         </Button>
       </Col>

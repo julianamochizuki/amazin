@@ -90,7 +90,7 @@ const Router = (props: Props) => {
       <Route path="/categories/:categoryId/products" element={<Products />} />
       <Route path="/deals" element={<Products />} />
       <Route path="/bestsellers" element={<Products />} />
-      {currentProduct.isActive && <Route path="/products/:productId" element={<Product />} />}
+      <Route path="/products/:productId" element={<Product />} />
       <Route
         path="/cart"
         element={<Cart cart={cart} setCart={setCart} total={total} />}

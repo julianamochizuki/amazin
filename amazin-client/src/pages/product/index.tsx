@@ -5,7 +5,7 @@ import AddToCart from '../../components/Product/AddToCart';
 import ProductDetails from '../../components/Product/ProductDetails';
 import '../../styles/product.css';
 import { Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import ProductReviews from '../../components/ProductReviews';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -20,15 +20,25 @@ const Product = () => {
   const currentProduct = useSelector(
     (state: RootState) => state.products.currentProduct
   );
+  const navigate = useNavigate();
+  const MAX_INT = 2147483647;
 
   useEffect(() => {
     const fetchData = async () => {
+      if (Number(productId) > MAX_INT) {
+        navigate('/');
+        return;
+      }
       try {
         const res = await axios.get(`/api/products/${productId}`);
         dispatch(setCurrentProduct(res.data));
         setVendor(res.data.User.name);
+        if (!res.data.isActive) {
+          navigate('/');
+        }
       } catch (e) {
         console.error('Error fetching product details', e);
+        navigate('/');
       }
     };
     fetchData();
