@@ -241,7 +241,7 @@ export default function Drawer(props: Props) {
                               className="developer-contact"
                               onClick={() =>
                                 window.open(
-                                  'https://julianamochizuki.netlify.app//',
+                                  'https://julianamochizuki.netlify.app/',
                                   '_blank'
                                 )
                               }
