@@ -64,21 +64,23 @@ It offers a wide range of features and components commonly found in an e-commerc
 
 ## 🚀 Getting Started
 
-1. Clone the repo:<br> `https://github.com/julianamochizuki/amazin`
+1. Clone this repo:<br> `https://github.com/julianamochizuki/amazin`
+   
+2. Sign up for a Stripe account
 
-2. Install dependencies for both the frontend and backend:<br>
+3. Install dependencies for both frontend and backend:<br>
 
-   - Front-end: `cd amazin-client` then `npm install`
-   - Back-end: `cd amazin-api` then `npm install`
+   - Frontend: `cd amazin-client` then `npm install`
+   - Backend: `cd amazin-api` then `npm install`
 
-3. Set up the necessary environment variables. Refer to the provided `.env.example` file for the required variables.
+4. Set up the necessary environment variables. Refer to the provided `.env.example` file for the required variables.
 
-4. Run the application:<br>
+5. Run the application:<br>
 
    - Frontend: `cd amazin-client` then `npm start`
    - Backend: `cd amazin-api` then `npm start`
 
-5. Access the Amazin app in your browser at<br> `http://localhost:3000`.
+6. Access the Amazin app in your browser at<br> `http://localhost:3000`.
 
 ---
 
