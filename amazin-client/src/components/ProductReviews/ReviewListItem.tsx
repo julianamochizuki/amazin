@@ -7,6 +7,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setCurrentProduct } from '../../app/productReducer';
 
 type Props = {
   review: ReviewType;
@@ -33,6 +35,7 @@ export default function ReviewListItem(props: Props) {
     day: 'numeric',
     year: 'numeric',
   });
+  const dispatch = useDispatch();
 
   const solidStars = Array.from({ length: review!.rating }, (_, index) => (
     <StarFill key={`solid-star-${index}`} />
@@ -91,6 +94,14 @@ export default function ReviewListItem(props: Props) {
           setReviewsEdited((prev: boolean) => !prev);
           setIsEditing(false);
           setError(false);
+          dispatch(
+            setCurrentProduct({
+              ...currentProduct,
+              reviews: currentProduct.reviews.map((r) =>
+                r?.id === review?.id ? review : r
+              ),
+            })
+          );
         })
         .catch((e) => {
           console.log('error editing review', e);
