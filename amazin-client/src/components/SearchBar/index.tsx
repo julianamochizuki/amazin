@@ -16,10 +16,11 @@ export default function SearchBar() {
 
   const handleClick = () => {
     if (searchValue.trim() !== '') {
+      const encodedSearchValue = encodeURIComponent(searchValue);
       dispatch(resetCurrentProductFilter());
-      dispatch(setCurrentProductSearch(searchValue));
+      dispatch(setCurrentProductSearch(encodedSearchValue));
       setSearchValue('');
-      navigate(`/products/search/${searchValue}`);
+      navigate(`/products/search/${encodedSearchValue}`);
     }
   };
 
@@ -32,7 +33,7 @@ export default function SearchBar() {
         aria-label="Search"
         onChange={(e) => setSearchValue(e.target.value)}
       />
-      <Button variant="warning" type="submit" className='search-button'>
+      <Button variant="warning" type="submit" className="search-button">
         <Search />
       </Button>
     </Form>
