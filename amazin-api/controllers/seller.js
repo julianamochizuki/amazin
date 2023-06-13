@@ -47,7 +47,7 @@ const getAllSellerProducts = async (req, res) => {
       },
     },
     orderBy: {
-      createdAt: 'desc',
+      updatedAt: 'desc',
     },
   });
   res.json(products);
