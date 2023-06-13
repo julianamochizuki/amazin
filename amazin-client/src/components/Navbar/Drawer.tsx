@@ -54,13 +54,6 @@ export default function Drawer(props: Props) {
     setMenuOpen(false);
   };
 
-  // const handleSignOutClick = () => {
-  //   Cookies.remove('token');
-  //   dispatch(resetCurrentUser());
-  //   setMenuOpen(false);
-  //   navigate('/');
-  // };
-
   const handleSignOutClick = async () => {
     try {
       await Cookies.remove('token');
@@ -207,12 +200,13 @@ export default function Drawer(props: Props) {
                         <Image
                           src="https://media.licdn.com/dms/image/C5603AQHq3PqasQyTHQ/profile-displayphoto-shrink_400_400/0/1636783614052?e=1691625600&v=beta&t=eIGuQ8Ug1uN4nfZJTlC4uAFvMEGAVr18sSrtHBYFlNk"
                           className="developer-image"
-                          onClick={() =>
+                          onClick={() => {
                             window.open(
                               'https://www.linkedin.com/in/jmochizuki/',
                               '_blank'
-                            )
-                          }
+                            );
+                            setMenuOpen(false);
+                          }}
                         />
                       </Col>
                       <Col xs={6} className="developer-info">
@@ -221,30 +215,33 @@ export default function Drawer(props: Props) {
                           <span>
                             <Linkedin
                               className="developer-contact"
-                              onClick={() =>
+                              onClick={() => {
                                 window.open(
                                   'https://www.linkedin.com/in/jmochizuki/',
                                   '_blank'
-                                )
-                              }
+                                );
+                                setMenuOpen(false);
+                              }}
                             />
                             <Github
                               className="developer-contact"
-                              onClick={() =>
+                              onClick={() => {
                                 window.open(
                                   'https://www.github.com/julianamochizuki/',
                                   '_blank'
-                                )
-                              }
+                                );
+                                setMenuOpen(false);
+                              }}
                             />
                             <Globe2
                               className="developer-contact"
-                              onClick={() =>
+                              onClick={() => {
                                 window.open(
                                   'https://julianamochizuki.netlify.app/',
                                   '_blank'
-                                )
-                              }
+                                );
+                                setMenuOpen(false);
+                              }}
                             />
                           </span>
                         </span>

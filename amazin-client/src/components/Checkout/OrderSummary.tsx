@@ -16,11 +16,12 @@ type Props = {
   total: number;
   card: any;
   setCart: any;
+  message: string;
+  setMessage: any;
 };
 
 export default function OrderSummary(props: Props) {
-  const { cart, setCart, total, card } = props;
-  const [message, setMessage] = useState<string | undefined>('');
+  const { cart, setCart, total, card, message, setMessage } = props;
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [order, setOrder] = useState<any>(null);
   const [cardComplete, setCardComplete] = useState<boolean>(false);

@@ -15,6 +15,7 @@ type Props = {
 export default function CheckoutReview(props: Props) {
   const { cart, setCart, total } = props;
   const [card, setCard] = useState(null);
+  const [message, setMessage] = useState<string>('');
   const options = {};
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
 
@@ -26,8 +27,16 @@ export default function CheckoutReview(props: Props) {
           setCart={setCart}
           total={total}
           setCard={setCard}
+          setMessage={setMessage}
         />
-        <OrderSummary cart={cart} setCart={setCart} total={total} card={card}  />
+        <OrderSummary
+          cart={cart}
+          setCart={setCart}
+          total={total}
+          card={card}
+          message={message}
+          setMessage={setMessage}
+        />
       </Elements>
     </Row>
   );

@@ -86,20 +86,13 @@ const createUser = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      email: req.body.email,
-    },
-  });
-  if (existingUser && existingUser.id !== Number(req.params.userId)) {
-    res.status(401).json({
-      error: 'email_already_exists',
-      message: 'An account with that e-mail address already exists',
-    });
-  } else {
+  const { userId } = req.params;
+  const { email } = req.body;
+
+  const updateUser = async () => {
     const user = await prisma.user.update({
       where: {
-        id: Number(req.params.userId),
+        id: Number(userId),
       },
       data: {
         ...req.body,
@@ -119,6 +112,25 @@ const updateUserById = async (req, res) => {
 
     const updatedToken = jwt.sign(payload, secretKey, { expiresIn: '1d' });
     res.json(updatedToken);
+  };
+
+  if (email) {
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (existingUser && existingUser.id !== Number(userId)) {
+      res.status(401).json({
+        error: 'email_already_exists',
+        message: 'An account with that e-mail address already exists',
+      });
+    } else {
+      await updateUser();
+    }
+  } else {
+    await updateUser();
   }
 };
 

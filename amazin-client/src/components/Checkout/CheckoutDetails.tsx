@@ -18,10 +18,12 @@ type Props = {
   setCart: React.Dispatch<React.SetStateAction<CartType>>;
   total: number;
   setCard: React.Dispatch<React.SetStateAction<any>>;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function CheckoutDetails(props: Props) {
-  const { cart, setCart, total, setCard } = props;
+  const { cart, setCart, total, setCard, setMessage } = props;
+  const [error, setError] = useState(false);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const token = Cookies.get('token') || null;
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -50,6 +52,15 @@ export default function CheckoutDetails(props: Props) {
 
   const handleAddressUpdate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const addressRegex = /^[a-zA-Z0-9\s\.,#-]+$/;
+    const isValidAddress = addressRegex.test(userAddress);
+
+    if (!isValidAddress) {
+      setError(true);
+      setMessage('Your shipping address is incomplete.');
+      return;
+    }
 
     axios
       .patch(
@@ -92,21 +103,29 @@ export default function CheckoutDetails(props: Props) {
           ) : (
             <Form onSubmit={handleAddressUpdate}>
               <Form.Control
+                isInvalid={error}
                 type="text"
                 placeholder="Shipping address"
                 value={userAddress}
                 onChange={(e) => {
                   const newAddress = e.target.value;
                   setUserAddress(newAddress);
+                  setError(false);
                 }}
                 className="user-address-input mb-3"
               />
+
               <Button variant="light" type="submit">
                 Save
-              </Button>
+              </Button>&nbsp;
               <Button variant="light" onClick={() => setShowAddressForm(false)}>
                 Cancel
-              </Button>
+              </Button>&nbsp;
+              {error && (
+                <Form.Text className="text-danger">
+                  Please add a valid shipping address
+                </Form.Text>
+              )}
             </Form>
           )}
           {!showAddressForm && (
