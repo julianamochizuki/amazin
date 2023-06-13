@@ -41,7 +41,9 @@ export default function UserAccount(props: Props) {
   const [nameDisabled, setNameDisabled] = useState(true);
   const [emailDisabled, setEmailDisabled] = useState(true);
   const initialErrorState = { name: false, email: false };
-  const [error, setError] = useState(initialErrorState);
+  const [formError, setFormError] = useState(initialErrorState);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setForm({
@@ -50,13 +52,20 @@ export default function UserAccount(props: Props) {
     });
   }, [currentUser]);
 
-  const handleClick = () => {
-    setError({
-      name: form.name === '' ? true : false,
-      email: form.email === '' ? true : false,
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    const emailRegex = /\S+@\S+\.\S+/;
+    const nameRegex = /^[a-zA-Z ]{2,30}$/;
+    const isValidName = nameRegex.test(form.name);
+    const isValidEmail = emailRegex.test(form.email);
+
+    setFormError({
+      name: !isValidName ? true : false,
+      email: !isValidEmail ? true : false,
     });
 
-    if (form.name === '' || form.email === '') {
+    if (!isValidName || !isValidEmail) {
       return;
     }
 
@@ -74,6 +83,9 @@ export default function UserAccount(props: Props) {
         }
       )
       .then((res) => {
+        setFormError(initialErrorState);
+        setError(false);
+        setErrorMessage('');
         Cookies.set('token', res.data);
         const decodedToken: {
           name?: string;
@@ -88,19 +100,35 @@ export default function UserAccount(props: Props) {
           decodedToken?.email!,
           process.env.REACT_APP_SECRET_KEY!
         ).toString();
-
         dispatch(setCurrentUser({ ...currentUser, name, email }));
         setTokenChanged(true);
         setNameDisabled(true);
         setEmailDisabled(true);
       })
       .catch((e) => {
-        console.log('error updating user info:', e);
+        if (e.response.status === 401) {
+          const { message } = e.response.data;
+          setError(true);
+          setErrorMessage(message);
+          return;
+        } else {
+          console.log('error updating user info:', e);
+          setError(true);
+          setErrorMessage(
+            "We're sorry, there was a problem updating your account."
+          );
+        }
       });
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center pt-5">
+    <Container className="d-flex flex-column justify-content-center align-items-center pt-5">
+      {error && (
+        <Col className="mb-3">
+          <Row>There was a problem</Row>
+          <Row>{errorMessage}</Row>
+        </Col>
+      )}
       <Card className="profile-card">
         <Card.Body>
           <h4 className="mb-4">Login & Security</h4>
@@ -111,16 +139,16 @@ export default function UserAccount(props: Props) {
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
-                  isInvalid={error.name}
+                  isInvalid={formError.name}
                   type="text"
                   value={form.name}
                   disabled={nameDisabled}
                   onChange={(e) => {
                     setForm({ ...form, name: e.target.value });
-                    setError({ ...error, name: false });
+                    setFormError({ ...formError, name: false });
                   }}
                 />
-                {error.name && (
+                {formError.name && (
                   <Form.Text className="text-danger">
                     Please add a name
                   </Form.Text>
@@ -144,18 +172,20 @@ export default function UserAccount(props: Props) {
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
-                  isInvalid={error.email}
+                  isInvalid={formError.email}
                   type="email"
+                  minLength={5}
+                  maxLength={50}
                   value={form.email}
                   disabled={emailDisabled}
                   onChange={(e) => {
                     setForm({ ...form, email: e.target.value });
-                    setError({ ...error, email: false });
+                    setFormError({ ...formError, email: false });
                   }}
                 />
-                {error.email && (
+                {formError.email && (
                   <Form.Text className="text-danger">
-                    Please add an email address
+                    Please add a valid email address
                   </Form.Text>
                 )}
               </Col>
@@ -199,7 +229,7 @@ export default function UserAccount(props: Props) {
               <Button
                 variant="warning"
                 className="save-button"
-                onClick={handleClick}
+                onClick={handleSubmit}
               >
                 Save changes
               </Button>

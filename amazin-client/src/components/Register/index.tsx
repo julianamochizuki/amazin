@@ -69,9 +69,15 @@ export default function RegisterForm(props: Props) {
         navigate('/');
       })
       .catch((e) => {
-        console.log('error authenticating user:', e);
-        setError(true);
-        setErrorMessage("We're sorry, there was a problem signing you in.");
+        if (e.response.status === 401) {
+          const { message } = e.response.data;
+          setError(true);
+          setErrorMessage(message);
+        } else {
+          console.log('error authenticating user:', e);
+          setError(true);
+          setErrorMessage("We're sorry, there was a problem signing you in.");
+        }
       });
   };
 
@@ -79,15 +85,17 @@ export default function RegisterForm(props: Props) {
     e.preventDefault();
 
     const emailRegex = /\S+@\S+\.\S+/;
+    const nameRegex = /^[a-zA-Z ]{2,30}$/;
+    const isValidName = nameRegex.test(name);
     const isValidEmail = emailRegex.test(email);
 
     setFormError({
-      name: name === '' ? true : false,
+      name: !isValidName ? true : false,
       email: !isValidEmail ? true : false,
       password: password === '' ? true : false,
     });
 
-    if (name === '' || !isValidEmail || password === '') {
+    if (!isValidName || !isValidEmail || password === '') {
       return;
     }
 

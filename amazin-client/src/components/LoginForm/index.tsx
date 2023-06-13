@@ -30,12 +30,15 @@ export default function LoginForm(props: Props) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    const emailRegex = /\S+@\S+\.\S+/;
+    const isValidEmail = emailRegex.test(email);
+
     setFormError({
-      email: email === '' ? true : false,
+      email: !isValidEmail ? true : false,
       password: password === '' ? true : false,
     });
 
-    if (email === '' || password === '') {
+    if (!isValidEmail || password === '') {
       return;
     }
 
@@ -107,6 +110,8 @@ export default function LoginForm(props: Props) {
                   isInvalid={formError.email}
                   type="email"
                   placeholder="Enter email"
+                  minLength={5}
+                  maxLength={50}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     setFormError({ ...formError, email: false });
@@ -114,7 +119,7 @@ export default function LoginForm(props: Props) {
                 />
                 {formError.email && (
                   <Form.Text className="text-danger">
-                    Please add your email address
+                    Please add a valid email address
                   </Form.Text>
                 )}
               </Form.Group>

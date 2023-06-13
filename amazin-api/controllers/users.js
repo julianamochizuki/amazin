@@ -86,28 +86,40 @@ const createUser = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
-  const user = await prisma.user.update({
+  const existingUser = await prisma.user.findUnique({
     where: {
-      id: Number(req.params.userId),
-    },
-    data: {
-      ...req.body,
+      email: req.body.email,
     },
   });
+  if (existingUser && existingUser.id !== Number(req.params.userId)) {
+    res.status(401).json({
+      error: 'email_already_exists',
+      message: 'An account with that e-mail address already exists',
+    });
+  } else {
+    const user = await prisma.user.update({
+      where: {
+        id: Number(req.params.userId),
+      },
+      data: {
+        ...req.body,
+      },
+    });
 
-  const expiresIn = new Date();
-  expiresIn.setDate(expiresIn.getDate() + 1);
-  const payload = {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    address: user.address,
-    isSeller: user.isSeller,
-    expiresAt: expiresIn,
-  };
+    const expiresIn = new Date();
+    expiresIn.setDate(expiresIn.getDate() + 1);
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      address: user.address,
+      isSeller: user.isSeller,
+      expiresAt: expiresIn,
+    };
 
-  const updatedToken = jwt.sign(payload, secretKey, { expiresIn: '1d' });
-  res.json(updatedToken);
+    const updatedToken = jwt.sign(payload, secretKey, { expiresIn: '1d' });
+    res.json(updatedToken);
+  }
 };
 
 const updatePasswordById = async (req, res) => {
