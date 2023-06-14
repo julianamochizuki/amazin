@@ -86,7 +86,7 @@ export default function OrderListItem(props: Props) {
                 src={item.product!.image}
               />
             </Col>
-            <Col xs={12} md={5}>
+            <Col xs={12} md={4}>
               <Row>{item.product!.name}</Row>
               {today < deliveryDate && (
                 <Row className="delivery-info">On the way</Row>
