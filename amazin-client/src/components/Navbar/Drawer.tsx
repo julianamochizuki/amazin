@@ -198,7 +198,7 @@ export default function Drawer(props: Props) {
                     <Row>
                       <Col xs={2}>
                         <Image
-                          src="https://media.licdn.com/dms/image/C5603AQHq3PqasQyTHQ/profile-displayphoto-shrink_400_400/0/1636783614052?e=1691625600&v=beta&t=eIGuQ8Ug1uN4nfZJTlC4uAFvMEGAVr18sSrtHBYFlNk"
+                          src="https://media.licdn.com/dms/image/C5603AQHq3PqasQyTHQ/profile-displayphoto-shrink_800_800/0/1636783614052?e=1698278400&v=beta&t=pt0DDOLdE1Bl2CHgmIYH08zbpTDPcxoMjX-8hHiRPO8"
                           className="developer-image"
                           onClick={() => {
                             window.open(
